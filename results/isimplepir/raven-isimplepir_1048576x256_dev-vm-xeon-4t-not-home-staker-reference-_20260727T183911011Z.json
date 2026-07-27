@@ -1,0 +1,40 @@
+{
+  "scheme": "iSimplePIR",
+  "implementation": {
+    "name": "raven-isimplepir",
+    "repo": "https://github.com/hisoka-io/raven",
+    "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+    "language": "rust"
+  },
+  "params": {
+    "num_records": 1048576,
+    "record_bytes": 256,
+    "security_bits": 128,
+    "threads": 4,
+    "scheme_params": {
+      "variant": "isimplepir-default-q-setup-owned",
+      "throughput_qps_per_core": 8.05962835441732,
+      "measured_queries": 5
+    }
+  },
+  "environment": {
+    "cpu_model": "Intel(R) Xeon(R) Processor @ 2.80GHz",
+    "cpu_features": [
+      "avx2"
+    ],
+    "logical_cores": 4,
+    "os": "linux",
+    "timestamp": "2026-07-27T18:39:11.011Z",
+    "runner_version": "raven-bench@5a899b5dc60c"
+  },
+  "metrics": {
+    "query_bytes": 61796,
+    "response_bytes": 61796,
+    "offline_hint_bytes": 63270944,
+    "preprocessing_ms": 82567.627121,
+    "server_answer_ms": 25.038,
+    "server_throughput_mbps": 10721.122134355779,
+    "client_query_gen_ms": 61.284
+  },
+  "notes": "Measured on dev-vm-xeon-4t (NOT home-staker reference). Variant \"isimplepir-default-q-setup-owned\"; client_query_gen_ms includes decode. security_bits=128 is nominal — confirm against scheme params."
+}

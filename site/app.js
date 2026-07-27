@@ -45,9 +45,10 @@ async function load() {
 }
 
 function initControls() {
-  el("recordBytes").innerHTML = uniqueSorted(state.records.map((r) => r.params.record_bytes))
-    .map((b) => `<option value="${b}">${b} B</option>`)
-    .join("");
+  const recordSizes = uniqueSorted(state.records.map((r) => r.params.record_bytes));
+  el("recordBytes").innerHTML = recordSizes.map((b) => `<option value="${b}">${b} B</option>`).join("");
+  // Default to 32 B (Ethereum storage-slot width, usually the best-populated axis).
+  if (recordSizes.includes(32)) el("recordBytes").value = "32";
   el("metric").innerHTML = METRICS.map((m) => `<option value="${m.key}">${m.label}</option>`).join("");
   el("recordBytes").onchange = render;
   el("metric").onchange = render;
