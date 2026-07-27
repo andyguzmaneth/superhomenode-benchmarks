@@ -23,16 +23,25 @@ Until these are wired in, three synthetic profiles (`mock-paper`, `mock-poulpy`,
 `mock-hisoka`) stand in so the pipeline and site are exercised. Their numbers are
 **not** representative.
 
-## ⚠️ Open question: is "paper code" distinct from "poulpy"?
+## RESOLVED: Poulpy is not an InsPIRe implementation
 
-InsPIRe comes out of the same Phantom Zone / Bossuat orbit as Poulpy. The reference
-implementation may *be* the Poulpy one (or a fork of it) rather than an independent
-codebase. Before presenting "paper vs. Poulpy" as two columns, confirm the exact
-repos and commits. If they collapse into one, the honest comparison is
-**Poulpy vs. Hisoka `raven`** (with Respire added later as a *different* scheme).
+Investigated (2026-07): **Poulpy contains no InsPIRe / PIR code** — it is the FHE
+backend library only (`grep -ri inspir` over the tree is clean). So the original
+"paper code vs. Poulpy" comparison does not exist today; it would only become real if
+someone builds InsPIRe *on* Poulpy.
 
-**TODO:** find the paper's artifact link (the eprint PDF's References/Availability
-section, or the CCS/USENIX artifact appendix) and record repo + commit here.
+The actual InsPIRe implementation is **`github.com/hisoka-io/inspire-rs`** (reachable
+over HTTPS; `respond()`/`extract()`, variants `no-packing` / `two-packing` /
+`inspiring`). Hisoka's `raven` **vendors a fork of `inspire-rs`** as the
+`crates/inspire` submodule and drives it via `benches/b1-bench` (`b1-inspire`), which
+emits the same `BenchReport` JSON as the iSimplePIR bench.
+
+Consequence: "paper reference" and "Hisoka's InsPIRe" are the **same lineage**, not
+two independent codebases. The project was therefore reframed (see
+`docs/benchmark-plan.md`) to a **cross-scheme** comparison on Ethereum-shaped data.
+
+**Next step:** run `b1-inspire` on the reference machine and import via
+`harness/import-bench-report.mjs --scheme InsPIRe --impl raven-inspire`.
 
 ## Shared parameter grid (starting point)
 

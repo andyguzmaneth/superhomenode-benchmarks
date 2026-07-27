@@ -1,12 +1,14 @@
 {
-  "generated_from": "24 record(s)",
+  "generated_from": "25 record(s)",
   "schemes": [
-    "InsPIRe"
+    "InsPIRe",
+    "iSimplePIR"
   ],
   "implementations": [
     "mock-hisoka",
     "mock-paper",
-    "mock-poulpy"
+    "mock-poulpy",
+    "raven-isimplepir"
   ],
   "records": [
     {
@@ -944,6 +946,46 @@
         "peak_memory_bytes": 6012954214
       },
       "notes": "MODELED metrics (no real cryptography executed)."
+    },
+    {
+      "scheme": "iSimplePIR",
+      "implementation": {
+        "name": "raven-isimplepir",
+        "repo": "https://github.com/hisoka-io/raven",
+        "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+        "language": "rust"
+      },
+      "params": {
+        "num_records": 1048576,
+        "record_bytes": 32,
+        "security_bits": 128,
+        "threads": 4,
+        "scheme_params": {
+          "variant": "isimplepir-default-q-setup-owned",
+          "throughput_qps_per_core": 61.221990939145336,
+          "measured_queries": 5
+        }
+      },
+      "environment": {
+        "cpu_model": "Intel(R) Xeon(R) Processor @ 2.80GHz",
+        "cpu_features": [
+          "avx2"
+        ],
+        "logical_cores": 4,
+        "os": "linux",
+        "timestamp": "2026-07-27T17:58:42.341Z",
+        "runner_version": "raven-bench@5a899b5dc60c"
+      },
+      "metrics": {
+        "query_bytes": 21856,
+        "response_bytes": 21856,
+        "offline_hint_bytes": 22372384,
+        "preprocessing_ms": 10110.676373,
+        "server_answer_ms": 3.89,
+        "server_throughput_mbps": 8625.817994858611,
+        "client_query_gen_ms": 12.501
+      },
+      "notes": "Measured on dev-vm-xeon-4t (NOT home-staker reference). Variant \"isimplepir-default-q-setup-owned\"; client_query_gen_ms includes decode. security_bits=128 is nominal — confirm against scheme params."
     }
   ]
 }

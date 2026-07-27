@@ -23,17 +23,24 @@ docs/              methodology + per-scheme notes
 
 ## Status
 
-Project #1 is a comparison of **InsPIRe** implementations
-([eprint 2025/1352](https://eprint.iacr.org/2025/1352)):
+Project #1: compare PIR **schemes** on one home-staker-class machine over a database
+shaped like a subset of Ethereum state (full plan + the reference-machine decision in
+[`docs/benchmark-plan.md`](docs/benchmark-plan.md)).
 
-| Implementation | Source | Status |
+| Scheme | Source | Status |
 | --- | --- | --- |
-| Paper reference | TBD (see `docs/schemes/inspire.md`) | not yet wired |
-| Poulpy | [phantomzone-org/poulpy](https://github.com/phantomzone-org/poulpy) | not yet wired |
-| Hisoka `raven` | [hisoka-io](https://github.com/hisoka-io) | not yet wired |
+| **iSimplePIR** (eprint 2026/030) | [hisoka-io/raven](https://github.com/hisoka-io) `crates/isimplepir` | ✅ real numbers imported (dev VM) |
+| **InsPIRe** (eprint 2025/1352) | [hisoka-io/inspire-rs](https://github.com/hisoka-io) (raven vendors a fork) | ⏭ next: run `b1-inspire`, import |
+| Spiral / Respire / YPIR | TBD | later |
 
-A `mock-inspire` adapter is included so the full pipeline (run → record → explore)
-works today, before any real library is wired in.
+We don't reimplement the crypto: Hisoka's `raven` bench binaries emit a `BenchReport`
+JSON per (scheme, cell); [`harness/import-bench-report.mjs`](harness/import-bench-report.mjs)
+normalizes those into our schema. `harness/`'s `mock-*` adapters remain so the pipeline
+runs with zero external code, and produce clearly-badged placeholder rows for InsPIRe
+until it's wired.
+
+> **Note:** Poulpy has **no** InsPIRe implementation — it's the FHE backend library
+> only. See `docs/schemes/inspire.md`.
 
 ## Quick start
 
