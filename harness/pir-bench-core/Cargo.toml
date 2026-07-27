@@ -1,0 +1,10 @@
+[package]
+name = "pir-bench-core"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Result types and the unified PIR implementation trait for pir-bench."
+
+[dependencies]
+serde = { workspace = true }
+serde_json = { workspace = true }

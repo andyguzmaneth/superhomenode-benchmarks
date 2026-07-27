@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>pir-bench · PIR scheme explorer</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>pir-bench</h1>
+      <p class="sub">Interactive explorer for PIR benchmark results.</p>
+    </header>
+
+    <section class="controls" id="controls" hidden>
+      <div class="control">
+        <label for="scheme">Scheme</label>
+        <select id="scheme"></select>
+      </div>
+      <div class="control">
+        <label for="recordBytes">Record size</label>
+        <select id="recordBytes"></select>
+      </div>
+      <div class="control">
+        <label for="metric">Metric (Y)</label>
+        <select id="metric"></select>
+      </div>
+      <div class="control impls">
+        <label>Implementations</label>
+        <div id="impls" class="chips"></div>
+      </div>
+    </section>
+
+    <section id="chartWrap" class="card" hidden>
+      <canvas id="chart" width="900" height="440"></canvas>
+      <p class="axis-note">X axis: database size N (records), log scale.</p>
+    </section>
+
+    <section id="tableWrap" class="card" hidden>
+      <div class="table-scroll">
+        <table id="table"></table>
+      </div>
+    </section>
+
+    <p id="status" class="status">Loading results…</p>
+    <footer>
+      Records are produced by the Rust harness and committed under
+      <code>results/</code>. Rows flagged <span class="badge">modeled</span> are
+      synthetic placeholders, not measurements.
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>

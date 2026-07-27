@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/andyguzmaneth/pir-bench/schema/result.schema.json",
+  "title": "PIR benchmark result record",
+  "description": "One measurement of one PIR implementation at one parameter point. This is the single source of truth consumed by the site.",
+  "type": "object",
+  "required": ["scheme", "implementation", "params", "environment", "metrics"],
+  "additionalProperties": false,
+  "properties": {
+    "scheme": {
+      "type": "string",
+      "description": "PIR scheme name, e.g. 'InsPIRe', 'Respire', 'Spiral'."
+    },
+    "implementation": {
+      "type": "object",
+      "description": "Which concrete codebase produced this record.",
+      "required": ["name"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string", "description": "e.g. 'poulpy', 'hisoka-raven', 'paper-ref', 'mock-inspire'." },
+        "repo": { "type": "string", "description": "Source repository URL." },
+        "commit": { "type": "string", "description": "Exact commit hash benchmarked (reproducibility)." },
+        "language": { "type": "string" }
+      }
+    },
+    "params": {
+      "type": "object",
+      "description": "The benchmark configuration. Rows are only comparable when these match.",
+      "required": ["num_records", "record_bytes", "security_bits", "threads"],
+      "additionalProperties": true,
+      "properties": {
+        "num_records": { "type": "integer", "minimum": 1, "description": "Database size N." },
+        "record_bytes": { "type": "integer", "minimum": 1, "description": "Size of one record in bytes." },
+        "security_bits": { "type": "integer", "description": "Target computational security level lambda." },
+        "threads": { "type": "integer", "minimum": 1, "description": "Server-side thread count used." },
+        "scheme_params": {
+          "type": "object",
+          "description": "Scheme-specific tuning (poly degree, moduli, packing params, ...).",
+          "additionalProperties": true
+        }
+      }
+    },
+    "environment": {
+      "type": "object",
+      "description": "Where it ran. Two rows with different environments are not directly comparable.",
+      "required": ["cpu_model"],
+      "additionalProperties": false,
+      "properties": {
+        "cpu_model": { "type": "string" },
+        "cpu_features": { "type": "array", "items": { "type": "string" }, "description": "e.g. ['avx2'], ['avx512']." },
+        "logical_cores": { "type": "integer" },
+        "ram_bytes": { "type": "integer" },
+        "os": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time", "description": "RFC3339 UTC time the run completed." },
+        "runner_version": { "type": "string" }
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "description": "Measured quantities. All optional so partial runs are still valid; omit what was not measured rather than reporting 0.",
+      "additionalProperties": false,
+      "properties": {
+        "query_bytes": { "type": "integer", "description": "Uploaded query size (per query)." },
+        "response_bytes": { "type": "integer", "description": "Downloaded response size (per query)." },
+        "offline_hint_bytes": { "type": "integer", "description": "One-time offline download (hint/params), 0 for silent-preprocessing schemes." },
+        "preprocessing_ms": { "type": "number", "description": "One-time server preprocessing time." },
+        "server_answer_ms": { "type": "number", "description": "Per-query server compute time." },
+        "server_throughput_mbps": { "type": "number", "description": "Database bytes processed / server_answer_ms, in MB/s." },
+        "client_query_gen_ms": { "type": "number", "description": "Per-query client query-generation time." },
+        "client_decode_ms": { "type": "number", "description": "Per-query client response-decode time." },
+        "peak_memory_bytes": { "type": "integer", "description": "Peak server RSS during answer." }
+      }
+    },
+    "notes": { "type": "string", "description": "Free-form caveats, e.g. 'single-threaded only', 'estimated from paper Table 3'." }
+  }
+}
