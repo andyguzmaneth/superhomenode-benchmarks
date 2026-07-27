@@ -14,10 +14,6 @@
 
     <section class="controls" id="controls" hidden>
       <div class="control">
-        <label for="scheme">Scheme</label>
-        <select id="scheme"></select>
-      </div>
-      <div class="control">
         <label for="recordBytes">Record size</label>
         <select id="recordBytes"></select>
       </div>
@@ -26,14 +22,14 @@
         <select id="metric"></select>
       </div>
       <div class="control impls">
-        <label>Implementations</label>
+        <label>Schemes (compared)</label>
         <div id="impls" class="chips"></div>
       </div>
     </section>
 
     <section id="chartWrap" class="card" hidden>
       <canvas id="chart" width="900" height="440"></canvas>
-      <p class="axis-note">X axis: database size N (records), log scale.</p>
+      <p class="axis-note">X axis: database size N (records, log₂). Each series is a scheme · implementation; toggle with the chips above.</p>
     </section>
 
     <section id="tableWrap" class="card" hidden>

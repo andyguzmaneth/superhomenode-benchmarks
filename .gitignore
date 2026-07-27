@@ -7,3 +7,9 @@ node_modules/
 
 # OS / editor
 .DS_Store
+
+# local implementation clones (see scripts/setup-implementations.sh)
+.bench-out/
+bench-out*/
+implementations/*/
+!implementations/README.md

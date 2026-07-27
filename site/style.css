@@ -51,15 +51,26 @@ select {
 .impls { flex: 1 1 240px; }
 .chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
 .chip {
-  padding: 0.3rem 0.65rem;
+  padding: 0.3rem 0.65rem 0.3rem 0.5rem;
   border: 1px solid var(--line);
   border-radius: 999px;
   background: var(--card);
   cursor: pointer;
   font-size: 0.85rem;
   user-select: none;
+  opacity: 0.5;
 }
-.chip.on { border-color: var(--accent); color: var(--accent); font-weight: 600; }
+.chip::before {
+  content: "";
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--dot, #888);
+  margin-right: 6px;
+  vertical-align: middle;
+}
+.chip.on { border-color: var(--accent); font-weight: 600; opacity: 1; }
 .card {
   background: var(--card);
   border: 1px solid var(--line);
