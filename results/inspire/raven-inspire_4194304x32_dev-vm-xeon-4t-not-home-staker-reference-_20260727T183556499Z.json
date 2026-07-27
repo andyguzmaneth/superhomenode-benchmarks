@@ -1,0 +1,40 @@
+{
+  "scheme": "InsPIRe",
+  "implementation": {
+    "name": "raven-inspire",
+    "repo": "https://github.com/hisoka-io/inspire-rs",
+    "commit": "3be3cc7d56db9535ab93101864c5468c654dbddf",
+    "language": "rust"
+  },
+  "params": {
+    "num_records": 4194304,
+    "record_bytes": 32,
+    "security_bits": 128,
+    "threads": 4,
+    "scheme_params": {
+      "variant": "inspire-default-q-twopacking-inspiring-commit-e-handshake-solinas",
+      "throughput_qps_per_core": 53.77674048420577,
+      "measured_queries": 5
+    }
+  },
+  "environment": {
+    "cpu_model": "Intel(R) Xeon(R) Processor @ 2.80GHz",
+    "cpu_features": [
+      "avx2"
+    ],
+    "logical_cores": 4,
+    "os": "linux",
+    "timestamp": "2026-07-27T18:35:56.499Z",
+    "runner_version": "raven-bench@3be3cc7d56db"
+  },
+  "metrics": {
+    "query_bytes": 98840,
+    "response_bytes": 32879,
+    "offline_hint_bytes": 0,
+    "preprocessing_ms": 12486.833315,
+    "server_answer_ms": 14.991,
+    "server_throughput_mbps": 8953.220465612701,
+    "client_query_gen_ms": 3.566
+  },
+  "notes": "Measured on dev-vm-xeon-4t (NOT home-staker reference). Variant \"inspire-default-q-twopacking-inspiring-commit-e-handshake-solinas\"; client_query_gen_ms includes decode. security_bits=128 is nominal — confirm against scheme params."
+}

@@ -1,0 +1,10 @@
+{
+  "name": "pir-bench",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Reproducible cross-scheme PIR benchmarks over Ethereum-state-shaped data, with an interactive explorer.",
+  "scripts": {
+    "build": "node site/build-data.mjs"
+  }
+}
