@@ -3,48 +3,68 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>pir-bench · PIR scheme explorer</title>
+    <title>superhomenode-benchmarks · PIR on home-staker hardware</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <header>
-      <h1>pir-bench</h1>
-      <p class="sub">Interactive explorer for PIR benchmark results.</p>
+      <h1>superhomenode-benchmarks</h1>
+      <p class="sub">
+        PIR-scheme benchmarks on home-staker hardware, over databases shaped like
+        Ethereum state. Reference spec follows the staking tier of
+        <a href="https://ethereum.org/en/run-a-node/">ethereum.org/run-a-node</a>.
+      </p>
+      <p class="meta" id="meta"></p>
     </header>
+
+    <div id="refWarning" class="warning" hidden>
+      <strong>Not reference data.</strong> All current rows were measured on a dev
+      VM, not the home-staker reference machine — treat shapes as real, absolute
+      numbers as provisional.
+    </div>
 
     <section class="controls" id="controls" hidden>
       <div class="control">
         <label for="recordBytes">Record size</label>
         <select id="recordBytes"></select>
       </div>
-      <div class="control">
-        <label for="metric">Metric (Y)</label>
-        <select id="metric"></select>
-      </div>
       <div class="control impls">
-        <label>Schemes (compared)</label>
+        <label>Schemes (legend · click to toggle)</label>
         <div id="impls" class="chips"></div>
       </div>
     </section>
 
-    <section id="chartWrap" class="card" hidden>
-      <canvas id="chart" width="900" height="440"></canvas>
-      <p class="axis-note">X axis: database size N (records, log₂). Each series is a scheme · implementation; toggle with the chips above.</p>
+    <section id="charts" class="chart-grid" hidden></section>
+
+    <section id="propsWrap" hidden>
+      <h2>Scheme properties</h2>
+      <div class="table-scroll card">
+        <table id="props"></table>
+      </div>
     </section>
 
-    <section id="tableWrap" class="card" hidden>
-      <div class="table-scroll">
+    <section id="tableWrap" hidden>
+      <h2>All results</h2>
+      <div class="table-scroll card">
         <table id="table"></table>
       </div>
+    </section>
+
+    <section id="hostWrap" hidden>
+      <h2>Host machines</h2>
+      <div id="hosts"></div>
     </section>
 
     <p id="status" class="status">Loading results…</p>
     <footer>
       Records are produced by the Rust harness and committed under
-      <code>results/</code>. Rows flagged <span class="badge">modeled</span> are
-      synthetic placeholders, not measurements.
+      <code>results/</code> — the site only reads them.
+      Source &amp; methodology:
+      <a href="https://github.com/andyguzmaneth/superhomenode-benchmarks">github.com/andyguzmaneth/superhomenode-benchmarks</a>.
+      Presentation inspired by <a href="https://ethproofs.org/csp-benchmarks">ethproofs.org</a>.
     </footer>
 
+    <div id="tooltip" class="tooltip" hidden></div>
     <script src="app.js"></script>
   </body>
 </html>
