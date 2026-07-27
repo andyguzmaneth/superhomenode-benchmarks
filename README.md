@@ -1,7 +1,13 @@
-# pir-bench
+# superhomenode-benchmarks
 
 Reproducible, apples-to-apples benchmarks for **PIR (Private Information Retrieval)**
-schemes, presented as an interactive explorer.
+schemes on **home-staker hardware**, over databases shaped like Ethereum state —
+presented as an interactive explorer.
+
+Presentation model: [ethproofs.org/csp-benchmarks](https://ethproofs.org/csp-benchmarks)
+(per-metric comparison charts, a scheme-properties matrix, an all-results table, and
+an explicit host-machine block). Reference hardware follows the staking tier of
+[ethereum.org/run-a-node](https://ethereum.org/en/run-a-node/).
 
 The project is **data-first**: every benchmark run emits one standardized JSON
 record. The harness produces those records; the site only ever *reads* them. This
@@ -29,9 +35,12 @@ shaped like a subset of Ethereum state (full plan + the reference-machine decisi
 
 | Scheme | Source | Status |
 | --- | --- | --- |
-| **iSimplePIR** (eprint 2026/030) | [hisoka-io/raven](https://github.com/hisoka-io) `crates/isimplepir` | ✅ real numbers imported (dev VM) |
-| **InsPIRe** (eprint 2025/1352) | [hisoka-io/inspire-rs](https://github.com/hisoka-io) (raven vendors a fork) | ⏭ next: run `b1-inspire`, import |
+| **iSimplePIR** (eprint 2026/030) | [hisoka-io/raven](https://github.com/hisoka-io) `crates/isimplepir` | ✅ real numbers (dev VM, 5 cells) |
+| **InsPIRe** (eprint 2025/1352) | [hisoka-io/inspire-rs](https://github.com/hisoka-io) (raven vendors a fork) | ✅ real numbers (dev VM, 5 cells) |
 | Spiral / Respire / YPIR | TBD | later |
+
+All current rows are labeled **dev VM (NOT reference)** — authoritative numbers come
+from the reference machine (see [`docs/reference-machine.md`](docs/reference-machine.md)).
 
 We don't reimplement the crypto: Hisoka's `raven` bench binaries emit a `BenchReport`
 JSON per (scheme, cell); [`harness/import-bench-report.mjs`](harness/import-bench-report.mjs)

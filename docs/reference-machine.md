@@ -7,14 +7,17 @@ box — not a cloud server, and not this dev VM.
 
 ## Recommended reference spec
 
-Aligned with typical EthStaker / EF full-node guidance:
+Normative source: **[ethereum.org/run-a-node](https://ethereum.org/en/run-a-node/)**,
+staking tier — this is what makes "home staker" a defensible claim rather than an
+arbitrary box:
 
-| Component | Target |
-| --- | --- |
-| CPU | 8-core modern consumer x86 (Ryzen 7 / Intel i7, mini-PC / NUC class) |
-| RAM | 32 GB |
-| Storage | NVMe SSD (≥ 2 TB for a real node; the bench itself needs far less) |
-| OS | Linux |
+| Component | run-a-node (staking) | Our target |
+| --- | --- | --- |
+| CPU | x86, cpubenchmark.net score ≥ 6667 | 8-core modern consumer x86 (Ryzen 7 / Intel i7, mini-PC / NUC class) |
+| RAM | 16 GB min, 32 GB better | 32 GB |
+| Storage | 2 TB SSD (write-speed bound) | NVMe SSD (≥ 2 TB for a real node; the bench itself needs far less) |
+| Network | wired, high bandwidth | wired |
+| OS | — | Linux |
 
 Pin threads to **physical** cores for stable measurement (see the `taskset` note in
 `raven/benches/b1-bench/README.md`). Record the exact CPU in every result — the
@@ -28,7 +31,7 @@ comparable.
 On the reference machine:
 
 ```bash
-git clone <this-repo> && cd pir-bench
+git clone https://github.com/andyguzmaneth/superhomenode-benchmarks && cd superhomenode-benchmarks
 scripts/setup-implementations.sh                    # clone + pin raven & inspire-rs
 scripts/run-reference-suite.sh "nuc13-i7-8t"        # <- your machine label
 ```
