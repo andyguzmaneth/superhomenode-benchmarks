@@ -1,0 +1,40 @@
+{
+  "scheme": "InsPIRe",
+  "implementation": {
+    "name": "raven-inspire",
+    "repo": "https://github.com/hisoka-io/raven",
+    "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+    "language": "rust"
+  },
+  "params": {
+    "num_records": 268435456,
+    "record_bytes": 32,
+    "security_bits": 128,
+    "threads": 8,
+    "scheme_params": {
+      "variant": "inspire-default-q-twopacking-inspiring-commit-e-handshake-solinas",
+      "throughput_qps_per_core": 111.5425639452605,
+      "measured_queries": 16
+    }
+  },
+  "environment": {
+    "cpu_model": "AMD Ryzen 9 9900X 12-Core Processor",
+    "cpu_features": [
+      "avx2"
+    ],
+    "logical_cores": 8,
+    "os": "linux",
+    "timestamp": "2026-07-28T02:09:17.585Z",
+    "runner_version": "raven-bench@5a899b5dc60c"
+  },
+  "metrics": {
+    "query_bytes": 98840,
+    "response_bytes": 32879,
+    "offline_hint_bytes": 0,
+    "preprocessing_ms": 27077.425855,
+    "server_answer_ms": 6.613,
+    "server_throughput_mbps": 1298946.7098140025,
+    "client_query_gen_ms": 2.302
+  },
+  "notes": "Measured on ryzen9900x-8t-48g. Variant \"inspire-default-q-twopacking-inspiring-commit-e-handshake-solinas\"; client_query_gen_ms includes decode. security_bits=128 is nominal — confirm against scheme params."
+}
