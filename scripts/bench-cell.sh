@@ -36,9 +36,11 @@ case "$SCHEME" in
   *) echo "unknown scheme: $SCHEME" >&2; exit 2 ;;
 esac
 
-# Import the first seed's report (all seeds share the same sizes; medians are stable).
-REPORT="$(find "$OUT" -name 'cell-*.json' | sort | head -1)"
-[ -n "$REPORT" ] || { echo "no BenchReport produced" >&2; exit 1; }
+# Import seed 0's report for THIS cell (all seeds share the same sizes; medians
+# are stable). Never glob the accumulating out-dir — an earlier cell's report
+# would win the sort and get re-imported under this cell's label.
+REPORT="$OUT/seed-0/cell-2e${ELOG2}x${RBYTES}.json"
+[ -f "$REPORT" ] || { echo "expected BenchReport missing: $REPORT" >&2; exit 1; }
 
 node "$ROOT/harness/import-bench-report.mjs" \
   --file "$REPORT" --scheme "$NICE" --impl "$IMPL" \
