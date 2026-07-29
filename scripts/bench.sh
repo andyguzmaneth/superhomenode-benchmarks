@@ -132,7 +132,15 @@ EXP_RAM="$(jsonval "$REF" ram_bytes)"
 EXP_FEATURES="$(jsonval "$REF" cpu_features)"
 RAM_TOL="$(jsonval "$REF" tolerance.ram_bytes_pct)"
 
+# Swap turns "does not fit in RAM" into "fits, 10x slower", which is not a
+# measurement of the software — it is a measurement of the disk. Treat any
+# enabled swap as a machine mismatch.
+DET_SWAP="$(awk '/SwapTotal/ {print $2; exit}' /proc/meminfo 2>/dev/null || echo 0)"
+
 mismatch=""
+if [ "${DET_SWAP:-0}" -gt 0 ]; then
+  mismatch="$mismatch\n  swap:  expected disabled, got ${DET_SWAP} kB (swapoff -a, and comment the fstab entry)"
+fi
 [ "$DET_CPU" = "$EXP_CPU" ] || mismatch="$mismatch\n  cpu:   expected '$EXP_CPU', got '$DET_CPU'"
 [ "$DET_CORES" = "$EXP_CORES" ] || mismatch="$mismatch\n  cores: expected $EXP_CORES, got $DET_CORES"
 if [ "$DET_RAM" -gt 0 ] && [ "$EXP_RAM" -gt 0 ]; then

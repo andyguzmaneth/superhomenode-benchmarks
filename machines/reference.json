@@ -7,10 +7,15 @@
   "logical_cores": 8,
   "threads": 8,
   "ram_bytes": 34359738368,
-  "cpu_features": ["avx2", "avx512f"],
+  "cpu_features": [
+    "avx2",
+    "avx512f"
+  ],
   "os": "linux",
   "tolerance": {
     "ram_bytes_pct": 5,
     "note": "The guest reports slightly less RAM than provisioned; anything outside this band is a different machine and the driver refuses to label it as the reference."
-  }
+  },
+  "swap": "disabled",
+  "swap_note": "A benchmark host must never swap. This VM shipped with an 8 GiB /swap.img and had written ~24 GB to it, which silently turned 'does not fit in RAM' into 'fits, but 10x slower' — the iSimplePIR 2^28x32B figure of 4892 ms was a swapping artefact against a 17.6 GB/s trend predicting ~489 ms. Swap is now off (swapoff -a, fstab entry commented) and scripts/bench.sh refuses to publish if it is ever back on."
 }

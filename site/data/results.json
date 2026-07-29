@@ -1,15 +1,1032 @@
 {
-  "generated_from": "15 record(s)",
+  "generated_from": "43 record(s)",
   "schemes": [
     "InsPIRe",
+    "InsPIRe2",
     "iSimplePIR"
   ],
   "implementations": [
+    "inspire-lianghuiqiang9",
+    "inspire-poulpy",
     "inspire-raven",
+    "inspire-upstream",
+    "inspire2-poulpy",
     "isimplepir-raven"
   ],
   "records": [
     {
+      "scheme": "InsPIRe2",
+      "implementation": {
+        "name": "inspire2-poulpy",
+        "repo": "https://github.com/poulpy-fhe/poulpy-pir",
+        "commit": "625ac4094b2a99b23bc57e44e080dbc2dd526768",
+        "language": "rust",
+        "backend": [
+          "avx512f",
+          "private-gemm-x86"
+        ],
+        "online_work_scope": {
+          "kind": "full_database",
+          "leaks_shard_id": false,
+          "note": "The online answer is over the whole database; no index partition is revealed."
+        }
+      },
+      "params": {
+        "num_records": 33554432,
+        "record_bytes": 32,
+        "security_bits": 128,
+        "threads": 8,
+        "scheme_params": {
+          "variant": "InsPIRe2-g32-1GiB-c32768",
+          "preset": "InsPIRe2-g32-1GiB-c32768",
+          "collapse": "Recursion { gamma0: 32, gamma1: 1024, gamma2: 32 }",
+          "ring_degree_n": 2048,
+          "packing_widths": "32 / 1024 / 32",
+          "online_repeats": 10,
+          "batch": 1,
+          "phase_breakdown_ms": {
+            "setup": 105.482024,
+            "database_fill": 190.885485,
+            "query_mask": 475.970609,
+            "offline": 4930.264346000001
+          },
+          "noise_log2_max": "-24.232",
+          "poulpy_reported_peak_rss_bytes": 6334003020,
+          "seeds": [
+            0
+          ],
+          "measured_per_seed": 10
+        }
+      },
+      "environment": {
+        "cpu_model": "AMD Ryzen 9 9900X 12-Core Processor",
+        "cpu_features": [
+          "avx2",
+          "avx512f"
+        ],
+        "logical_cores": 8,
+        "ram_bytes": 33646014464,
+        "os": "linux",
+        "timestamp": "2026-07-29T17:24:12.299Z",
+        "runner_version": "inspire2-poulpy@625ac4094b2a"
+      },
+      "metrics": {
+        "query_bytes": 428117,
+        "response_bytes": 196889,
+        "offline_hint_bytes": 0,
+        "preprocessing_ms": 5702.6024640000005,
+        "server_answer_ms": 89.54353,
+        "preprocessing_throughput_mbps": 188.2897906312832,
+        "client_query_gen_ms": 0.882396,
+        "peak_memory_bytes": 6334201856
+      },
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. CAVEAT: Same measurement caveat as inspire-poulpy: one run averaged over the example's REPEATS=10, no cross-seed spread, no separately reported client decode. The second InsPIRe construction from the paper: adds a recursive second PIR level, trading a larger query for a smaller response and less per-query work, which the authors expect to pay off on large databases. Published as its own implementation row rather than folded into inspire-poulpy — it is a different protocol and comparing it directly against single-level InsPIRe rows would be a category error. gamma0=32 with gamma1=1024; the g16 and g64 families exist in the crate and can be added as further rows if the width turns out to matter."
+    },
+    {
+      "scheme": "InsPIRe2",
+      "implementation": {
+        "name": "inspire2-poulpy",
+        "repo": "https://github.com/poulpy-fhe/poulpy-pir",
+        "commit": "625ac4094b2a99b23bc57e44e080dbc2dd526768",
+        "language": "rust",
+        "backend": [
+          "avx512f",
+          "private-gemm-x86"
+        ],
+        "online_work_scope": {
+          "kind": "full_database",
+          "leaks_shard_id": false,
+          "note": "The online answer is over the whole database; no index partition is revealed."
+        }
+      },
+      "params": {
+        "num_records": 67108864,
+        "record_bytes": 32,
+        "security_bits": 128,
+        "threads": 8,
+        "scheme_params": {
+          "variant": "InsPIRe2-g32-2GiB-c65536",
+          "preset": "InsPIRe2-g32-2GiB-c65536",
+          "collapse": "Recursion { gamma0: 32, gamma1: 1024, gamma2: 32 }",
+          "ring_degree_n": 2048,
+          "packing_widths": "32 / 1024 / 32",
+          "online_repeats": 10,
+          "batch": 1,
+          "phase_breakdown_ms": {
+            "setup": 139.107731,
+            "database_fill": 442.326143,
+            "query_mask": 808.332524,
+            "offline": 7887.533957
+          },
+          "noise_log2_max": "-23.286",
+          "poulpy_reported_peak_rss_bytes": 7892002406,
+          "seeds": [
+            0
+          ],
+          "measured_per_seed": 10
+        }
+      },
+      "environment": {
+        "cpu_model": "AMD Ryzen 9 9900X 12-Core Processor",
+        "cpu_features": [
+          "avx2",
+          "avx512f"
+        ],
+        "logical_cores": 8,
+        "ram_bytes": 33646014464,
+        "os": "linux",
+        "timestamp": "2026-07-29T17:24:23.048Z",
+        "runner_version": "inspire2-poulpy@625ac4094b2a"
+      },
+      "metrics": {
+        "query_bytes": 691541,
+        "response_bytes": 196889,
+        "offline_hint_bytes": 0,
+        "preprocessing_ms": 9277.300355,
+        "server_answer_ms": 106.055251,
+        "preprocessing_throughput_mbps": 231.47721490364532,
+        "client_query_gen_ms": 1.381854,
+        "peak_memory_bytes": 7891836928
+      },
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. CAVEAT: Same measurement caveat as inspire-poulpy: one run averaged over the example's REPEATS=10, no cross-seed spread, no separately reported client decode. The second InsPIRe construction from the paper: adds a recursive second PIR level, trading a larger query for a smaller response and less per-query work, which the authors expect to pay off on large databases. Published as its own implementation row rather than folded into inspire-poulpy — it is a different protocol and comparing it directly against single-level InsPIRe rows would be a category error. gamma0=32 with gamma1=1024; the g16 and g64 families exist in the crate and can be added as further rows if the width turns out to matter."
+    },
+    {
+      "scheme": "InsPIRe2",
+      "implementation": {
+        "name": "inspire2-poulpy",
+        "repo": "https://github.com/poulpy-fhe/poulpy-pir",
+        "commit": "625ac4094b2a99b23bc57e44e080dbc2dd526768",
+        "language": "rust",
+        "backend": [
+          "avx512f",
+          "private-gemm-x86"
+        ],
+        "online_work_scope": {
+          "kind": "full_database",
+          "leaks_shard_id": false,
+          "note": "The online answer is over the whole database; no index partition is revealed."
+        }
+      },
+      "params": {
+        "num_records": 134217728,
+        "record_bytes": 32,
+        "security_bits": 128,
+        "threads": 8,
+        "scheme_params": {
+          "variant": "InsPIRe2-g32-4GiB-c65536",
+          "preset": "InsPIRe2-g32-4GiB-c65536",
+          "collapse": "Recursion { gamma0: 32, gamma1: 1024, gamma2: 32 }",
+          "ring_degree_n": 2048,
+          "packing_widths": "32 / 1024 / 32",
+          "online_repeats": 10,
+          "batch": 1,
+          "phase_breakdown_ms": {
+            "setup": 225.720778,
+            "database_fill": 637.099045,
+            "query_mask": 788.611551,
+            "offline": 14290.16397
+          },
+          "noise_log2_max": "-23.060",
+          "poulpy_reported_peak_rss_bytes": 11753178006,
+          "seeds": [
+            0
+          ],
+          "measured_per_seed": 10
+        }
+      },
+      "environment": {
+        "cpu_model": "AMD Ryzen 9 9900X 12-Core Processor",
+        "cpu_features": [
+          "avx2",
+          "avx512f"
+        ],
+        "logical_cores": 8,
+        "ram_bytes": 33646014464,
+        "os": "linux",
+        "timestamp": "2026-07-29T17:24:41.088Z",
+        "runner_version": "inspire2-poulpy@625ac4094b2a"
+      },
+      "metrics": {
+        "query_bytes": 691541,
+        "response_bytes": 196889,
+        "offline_hint_bytes": 0,
+        "preprocessing_ms": 15941.595344,
+        "server_answer_ms": 162.291225,
+        "preprocessing_throughput_mbps": 269.4189134349413,
+        "client_query_gen_ms": 1.394633,
+        "peak_memory_bytes": 11753062400
+      },
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. CAVEAT: Same measurement caveat as inspire-poulpy: one run averaged over the example's REPEATS=10, no cross-seed spread, no separately reported client decode. The second InsPIRe construction from the paper: adds a recursive second PIR level, trading a larger query for a smaller response and less per-query work, which the authors expect to pay off on large databases. Published as its own implementation row rather than folded into inspire-poulpy — it is a different protocol and comparing it directly against single-level InsPIRe rows would be a category error. gamma0=32 with gamma1=1024; the g16 and g64 families exist in the crate and can be added as further rows if the width turns out to matter."
+    },
+    {
+      "scheme": "InsPIRe2",
+      "implementation": {
+        "name": "inspire2-poulpy",
+        "repo": "https://github.com/poulpy-fhe/poulpy-pir",
+        "commit": "625ac4094b2a99b23bc57e44e080dbc2dd526768",
+        "language": "rust",
+        "backend": [
+          "avx512f",
+          "private-gemm-x86"
+        ],
+        "online_work_scope": {
+          "kind": "full_database",
+          "leaks_shard_id": false,
+          "note": "The online answer is over the whole database; no index partition is revealed."
+        }
+      },
+      "params": {
+        "num_records": 268435456,
+        "record_bytes": 32,
+        "security_bits": 128,
+        "threads": 8,
+        "scheme_params": {
+          "variant": "InsPIRe2-g32-8GiB-c131072",
+          "preset": "InsPIRe2-g32-8GiB-c131072",
+          "collapse": "Recursion { gamma0: 32, gamma1: 1024, gamma2: 32 }",
+          "ring_degree_n": 2048,
+          "packing_widths": "32 / 1024 / 32",
+          "online_repeats": 10,
+          "batch": 1,
+          "phase_breakdown_ms": {
+            "setup": 404.238462,
+            "database_fill": 1225.644635,
+            "query_mask": 1474.47433,
+            "offline": 25944.479229
+          },
+          "noise_log2_max": "-22.685",
+          "poulpy_reported_peak_rss_bytes": 16967268303,
+          "seeds": [
+            0
+          ],
+          "measured_per_seed": 10
+        }
+      },
+      "environment": {
+        "cpu_model": "AMD Ryzen 9 9900X 12-Core Processor",
+        "cpu_features": [
+          "avx2",
+          "avx512f"
+        ],
+        "logical_cores": 8,
+        "ram_bytes": 33646014464,
+        "os": "linux",
+        "timestamp": "2026-07-29T17:25:13.031Z",
+        "runner_version": "inspire2-poulpy@625ac4094b2a"
+      },
+      "metrics": {
+        "query_bytes": 1218389,
+        "response_bytes": 196889,
+        "offline_hint_bytes": 0,
+        "preprocessing_ms": 29048.836656,
+        "server_answer_ms": 236.198397,
+        "preprocessing_throughput_mbps": 295.70666439152427,
+        "client_query_gen_ms": 2.428336,
+        "peak_memory_bytes": 16967372800
+      },
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. CAVEAT: Same measurement caveat as inspire-poulpy: one run averaged over the example's REPEATS=10, no cross-seed spread, no separately reported client decode. The second InsPIRe construction from the paper: adds a recursive second PIR level, trading a larger query for a smaller response and less per-query work, which the authors expect to pay off on large databases. Published as its own implementation row rather than folded into inspire-poulpy — it is a different protocol and comparing it directly against single-level InsPIRe rows would be a category error. gamma0=32 with gamma1=1024; the g16 and g64 families exist in the crate and can be added as further rows if the width turns out to matter."
+    },
+    {
+      "scheme": "InsPIRe",
+      "implementation": {
+        "name": "inspire-lianghuiqiang9",
+        "repo": "https://github.com/lianghuiqiang9/inspire-rs",
+        "commit": "a76dfdc90dc291eb2dd6343c5f87f3a963f20ba9",
+        "forked_from": "https://github.com/igor53627/inspire-rs",
+        "language": "rust",
+        "backend": [
+          "avx2",
+          "rayon"
+        ],
+        "online_work_scope": {
+          "kind": "shard",
+          "entries": 2048,
+          "leaks_shard_id": true,
+          "note": "setup() fixes shard_size_bytes = ring_dim * record_bytes = 2048 records, independent of N. The online answer therefore touches one 2048-record shard no matter how large the database is, and ClientQuery.shard_id is sent in cleartext, so the server learns which shard the query is in. The anonymity set is 2048 records, not N."
+        }
+      },
+      "params": {
+        "num_records": 1048576,
+        "record_bytes": 8,
+        "security_bits": 128,
+        "threads": 8,
+        "scheme_params": {
+          "variant": "inspire-lianghuiqiang9-two-packing-inspiring",
+          "crt_moduli": [
+            268369921,
+            249561089
+          ],
+          "gadget_base": 1048576,
+          "gadget_len": 3,
+          "log_q": 55.894465510993015,
+          "plaintext_modulus": 65537,
+          "ring_dim": 2048,
+          "sigma": 6.4,
+          "seeds": [
+            0
+          ],
+          "measured_per_seed": 4
+        }
+      },
+      "environment": {
+        "cpu_model": "AMD Ryzen 9 9900X 12-Core Processor",
+        "cpu_features": [
+          "avx2",
+          "avx512f"
+        ],
+        "logical_cores": 8,
+        "ram_bytes": 33646014464,
+        "os": "linux",
+        "timestamp": "2026-07-29T19:38:54.622Z",
+        "runner_version": "inspire-lianghuiqiang9@a76dfdc90dc2"
+      },
+      "metrics": {
+        "query_bytes": 492433,
+        "response_bytes": 65658,
+        "offline_hint_bytes": 0,
+        "preprocessing_ms": 4175.834747999999,
+        "server_answer_ms": 4004.2367360000003,
+        "preprocessing_throughput_mbps": 2.0088457772467394,
+        "client_query_gen_ms": 4003.283488,
+        "client_decode_ms": 0.5679190000000001,
+        "peak_memory_bytes": 762740736
+      },
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. CAVEAT: Inherits the upstream's behaviour: query() regenerates InspiRING packing keys on every call, so client_query_gen_ms and query_bytes include per-query key generation and shipping. inspire-raven's do not. CODE PATH: in this codebase respond_with_variant() dispatches OnePacking and TwoPacking to the same function (respond_inspiring), so requesting TwoPacking actually runs InsPIRe^1, not InsPIRe^2. Raven's fork patched this exact fall-through. The row is therefore not executing the same algorithm as inspire-raven's TwoPacking row even though both are labelled two-packing. CAVEAT: Run with 1 seed x 4 measured iterations instead of the 3 x 16 used for inspire-raven. This implementation's per-query cost is ~2000x higher (4.0 s vs 1.9 ms at 2^20 x 8 B on the reference machine), so the default counts are unfinishable at the larger cells. Fewer iterations lowers confidence in the number; it does not change what is being measured. The counts actually used are recorded in params.scheme_params. A second fork of the deleted igor53627/inspire-rs, diverged 2026-04-24 — after the upstream's last substantive commit but before Raven's patches. Declares the same crate name and version (inspire 0.2.0) and exports an identical public API, so it is benchmarked through the same shared driver as inspire-upstream; the interesting question is whether the fork changed anything measurable. Last pushed 2026-04-24."
+    },
+    {
+      "scheme": "InsPIRe",
+      "implementation": {
+        "name": "inspire-lianghuiqiang9",
+        "repo": "https://github.com/lianghuiqiang9/inspire-rs",
+        "commit": "a76dfdc90dc291eb2dd6343c5f87f3a963f20ba9",
+        "forked_from": "https://github.com/igor53627/inspire-rs",
+        "language": "rust",
+        "backend": [
+          "avx2",
+          "rayon"
+        ],
+        "online_work_scope": {
+          "kind": "shard",
+          "entries": 2048,
+          "leaks_shard_id": true,
+          "note": "setup() fixes shard_size_bytes = ring_dim * record_bytes = 2048 records, independent of N. The online answer therefore touches one 2048-record shard no matter how large the database is, and ClientQuery.shard_id is sent in cleartext, so the server learns which shard the query is in. The anonymity set is 2048 records, not N."
+        }
+      },
+      "params": {
+        "num_records": 1048576,
+        "record_bytes": 32,
+        "security_bits": 128,
+        "threads": 8,
+        "scheme_params": {
+          "variant": "inspire-lianghuiqiang9-two-packing-inspiring",
+          "crt_moduli": [
+            268369921,
+            249561089
+          ],
+          "gadget_base": 1048576,
+          "gadget_len": 3,
+          "log_q": 55.894465510993015,
+          "plaintext_modulus": 65537,
+          "ring_dim": 2048,
+          "sigma": 6.4,
+          "seeds": [
+            0
+          ],
+          "measured_per_seed": 4
+        }
+      },
+      "environment": {
+        "cpu_model": "AMD Ryzen 9 9900X 12-Core Processor",
+        "cpu_features": [
+          "avx2",
+          "avx512f"
+        ],
+        "logical_cores": 8,
+        "ram_bytes": 33646014464,
+        "os": "linux",
+        "timestamp": "2026-07-29T19:39:39.404Z",
+        "runner_version": "inspire-lianghuiqiang9@a76dfdc90dc2"
+      },
+      "metrics": {
+        "query_bytes": 492433,
+        "response_bytes": 65658,
+        "offline_hint_bytes": 0,
+        "preprocessing_ms": 4315.31578,
+        "server_answer_ms": 4057.5750405,
+        "preprocessing_throughput_mbps": 7.77566085789439,
+        "client_query_gen_ms": 4005.5993455000003,
+        "client_decode_ms": 0.5583085,
+        "peak_memory_bytes": 1005436928
+      },
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. CAVEAT: Inherits the upstream's behaviour: query() regenerates InspiRING packing keys on every call, so client_query_gen_ms and query_bytes include per-query key generation and shipping. inspire-raven's do not. CODE PATH: in this codebase respond_with_variant() dispatches OnePacking and TwoPacking to the same function (respond_inspiring), so requesting TwoPacking actually runs InsPIRe^1, not InsPIRe^2. Raven's fork patched this exact fall-through. The row is therefore not executing the same algorithm as inspire-raven's TwoPacking row even though both are labelled two-packing. CAVEAT: Run with 1 seed x 4 measured iterations instead of the 3 x 16 used for inspire-raven. This implementation's per-query cost is ~2000x higher (4.0 s vs 1.9 ms at 2^20 x 8 B on the reference machine), so the default counts are unfinishable at the larger cells. Fewer iterations lowers confidence in the number; it does not change what is being measured. The counts actually used are recorded in params.scheme_params. A second fork of the deleted igor53627/inspire-rs, diverged 2026-04-24 — after the upstream's last substantive commit but before Raven's patches. Declares the same crate name and version (inspire 0.2.0) and exports an identical public API, so it is benchmarked through the same shared driver as inspire-upstream; the interesting question is whether the fork changed anything measurable. Last pushed 2026-04-24."
+    },
+    {
+      "scheme": "InsPIRe",
+      "implementation": {
+        "name": "inspire-lianghuiqiang9",
+        "repo": "https://github.com/lianghuiqiang9/inspire-rs",
+        "commit": "a76dfdc90dc291eb2dd6343c5f87f3a963f20ba9",
+        "forked_from": "https://github.com/igor53627/inspire-rs",
+        "language": "rust",
+        "backend": [
+          "avx2",
+          "rayon"
+        ],
+        "online_work_scope": {
+          "kind": "shard",
+          "entries": 2048,
+          "leaks_shard_id": true,
+          "note": "setup() fixes shard_size_bytes = ring_dim * record_bytes = 2048 records, independent of N. The online answer therefore touches one 2048-record shard no matter how large the database is, and ClientQuery.shard_id is sent in cleartext, so the server learns which shard the query is in. The anonymity set is 2048 records, not N."
+        }
+      },
+      "params": {
+        "num_records": 1048576,
+        "record_bytes": 256,
+        "security_bits": 128,
+        "threads": 8,
+        "scheme_params": {
+          "variant": "inspire-lianghuiqiang9-two-packing-inspiring",
+          "crt_moduli": [
+            268369921,
+            249561089
+          ],
+          "gadget_base": 1048576,
+          "gadget_len": 3,
+          "log_q": 55.894465510993015,
+          "plaintext_modulus": 65537,
+          "ring_dim": 2048,
+          "sigma": 6.4,
+          "seeds": [
+            0
+          ],
+          "measured_per_seed": 4
+        }
+      },
+      "environment": {
+        "cpu_model": "AMD Ryzen 9 9900X 12-Core Processor",
+        "cpu_features": [
+          "avx2",
+          "avx512f"
+        ],
+        "logical_cores": 8,
+        "ram_bytes": 33646014464,
+        "os": "linux",
+        "timestamp": "2026-07-29T19:40:30.185Z",
+        "runner_version": "inspire-lianghuiqiang9@a76dfdc90dc2"
+      },
+      "metrics": {
+        "query_bytes": 492433,
+        "response_bytes": 65658,
+        "offline_hint_bytes": 0,
+        "preprocessing_ms": 5872.037189000001,
+        "server_answer_ms": 4791.5795165,
+        "preprocessing_throughput_mbps": 45.71419549298089,
+        "client_query_gen_ms": 4131.2155915,
+        "client_decode_ms": 0.56704,
+        "peak_memory_bytes": 3258089472
+      },
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. CAVEAT: Inherits the upstream's behaviour: query() regenerates InspiRING packing keys on every call, so client_query_gen_ms and query_bytes include per-query key generation and shipping. inspire-raven's do not. CODE PATH: in this codebase respond_with_variant() dispatches OnePacking and TwoPacking to the same function (respond_inspiring), so requesting TwoPacking actually runs InsPIRe^1, not InsPIRe^2. Raven's fork patched this exact fall-through. The row is therefore not executing the same algorithm as inspire-raven's TwoPacking row even though both are labelled two-packing. CAVEAT: Run with 1 seed x 4 measured iterations instead of the 3 x 16 used for inspire-raven. This implementation's per-query cost is ~2000x higher (4.0 s vs 1.9 ms at 2^20 x 8 B on the reference machine), so the default counts are unfinishable at the larger cells. Fewer iterations lowers confidence in the number; it does not change what is being measured. The counts actually used are recorded in params.scheme_params. A second fork of the deleted igor53627/inspire-rs, diverged 2026-04-24 — after the upstream's last substantive commit but before Raven's patches. Declares the same crate name and version (inspire 0.2.0) and exports an identical public API, so it is benchmarked through the same shared driver as inspire-upstream; the interesting question is whether the fork changed anything measurable. Last pushed 2026-04-24."
+    },
+    {
+      "scheme": "InsPIRe",
+      "implementation": {
+        "name": "inspire-lianghuiqiang9",
+        "repo": "https://github.com/lianghuiqiang9/inspire-rs",
+        "commit": "a76dfdc90dc291eb2dd6343c5f87f3a963f20ba9",
+        "forked_from": "https://github.com/igor53627/inspire-rs",
+        "language": "rust",
+        "backend": [
+          "avx2",
+          "rayon"
+        ],
+        "online_work_scope": {
+          "kind": "shard",
+          "entries": 2048,
+          "leaks_shard_id": true,
+          "note": "setup() fixes shard_size_bytes = ring_dim * record_bytes = 2048 records, independent of N. The online answer therefore touches one 2048-record shard no matter how large the database is, and ClientQuery.shard_id is sent in cleartext, so the server learns which shard the query is in. The anonymity set is 2048 records, not N."
+        }
+      },
+      "params": {
+        "num_records": 16777216,
+        "record_bytes": 8,
+        "security_bits": 128,
+        "threads": 8,
+        "scheme_params": {
+          "variant": "inspire-lianghuiqiang9-two-packing-inspiring",
+          "crt_moduli": [
+            268369921,
+            249561089
+          ],
+          "gadget_base": 1048576,
+          "gadget_len": 3,
+          "log_q": 55.894465510993015,
+          "plaintext_modulus": 65537,
+          "ring_dim": 2048,
+          "sigma": 6.4,
+          "seeds": [
+            0
+          ],
+          "measured_per_seed": 4
+        }
+      },
+      "environment": {
+        "cpu_model": "AMD Ryzen 9 9900X 12-Core Processor",
+        "cpu_features": [
+          "avx2",
+          "avx512f"
+        ],
+        "logical_cores": 8,
+        "ram_bytes": 33646014464,
+        "os": "linux",
+        "timestamp": "2026-07-29T19:41:15.248Z",
+        "runner_version": "inspire-lianghuiqiang9@a76dfdc90dc2"
+      },
+      "metrics": {
+        "query_bytes": 492433,
+        "response_bytes": 65658,
+        "offline_hint_bytes": 0,
+        "preprocessing_ms": 4720.106572,
+        "server_answer_ms": 4008.8575615,
+        "preprocessing_throughput_mbps": 28.43531728630639,
+        "client_query_gen_ms": 4014.4862285,
+        "client_decode_ms": 0.5590634999999999,
+        "peak_memory_bytes": 1899995136
+      },
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. CAVEAT: Inherits the upstream's behaviour: query() regenerates InspiRING packing keys on every call, so client_query_gen_ms and query_bytes include per-query key generation and shipping. inspire-raven's do not. CODE PATH: in this codebase respond_with_variant() dispatches OnePacking and TwoPacking to the same function (respond_inspiring), so requesting TwoPacking actually runs InsPIRe^1, not InsPIRe^2. Raven's fork patched this exact fall-through. The row is therefore not executing the same algorithm as inspire-raven's TwoPacking row even though both are labelled two-packing. CAVEAT: Run with 1 seed x 4 measured iterations instead of the 3 x 16 used for inspire-raven. This implementation's per-query cost is ~2000x higher (4.0 s vs 1.9 ms at 2^20 x 8 B on the reference machine), so the default counts are unfinishable at the larger cells. Fewer iterations lowers confidence in the number; it does not change what is being measured. The counts actually used are recorded in params.scheme_params. A second fork of the deleted igor53627/inspire-rs, diverged 2026-04-24 — after the upstream's last substantive commit but before Raven's patches. Declares the same crate name and version (inspire 0.2.0) and exports an identical public API, so it is benchmarked through the same shared driver as inspire-upstream; the interesting question is whether the fork changed anything measurable. Last pushed 2026-04-24."
+    },
+    {
+      "scheme": "InsPIRe",
+      "implementation": {
+        "name": "inspire-lianghuiqiang9",
+        "repo": "https://github.com/lianghuiqiang9/inspire-rs",
+        "commit": "a76dfdc90dc291eb2dd6343c5f87f3a963f20ba9",
+        "forked_from": "https://github.com/igor53627/inspire-rs",
+        "language": "rust",
+        "backend": [
+          "avx2",
+          "rayon"
+        ],
+        "online_work_scope": {
+          "kind": "shard",
+          "entries": 2048,
+          "leaks_shard_id": true,
+          "note": "setup() fixes shard_size_bytes = ring_dim * record_bytes = 2048 records, independent of N. The online answer therefore touches one 2048-record shard no matter how large the database is, and ClientQuery.shard_id is sent in cleartext, so the server learns which shard the query is in. The anonymity set is 2048 records, not N."
+        }
+      },
+      "params": {
+        "num_records": 16777216,
+        "record_bytes": 32,
+        "security_bits": 128,
+        "threads": 8,
+        "scheme_params": {
+          "variant": "inspire-lianghuiqiang9-two-packing-inspiring",
+          "crt_moduli": [
+            268369921,
+            249561089
+          ],
+          "gadget_base": 1048576,
+          "gadget_len": 3,
+          "log_q": 55.894465510993015,
+          "plaintext_modulus": 65537,
+          "ring_dim": 2048,
+          "sigma": 6.4,
+          "seeds": [
+            0
+          ],
+          "measured_per_seed": 4
+        }
+      },
+      "environment": {
+        "cpu_model": "AMD Ryzen 9 9900X 12-Core Processor",
+        "cpu_features": [
+          "avx2",
+          "avx512f"
+        ],
+        "logical_cores": 8,
+        "ram_bytes": 33646014464,
+        "os": "linux",
+        "timestamp": "2026-07-29T19:42:02.538Z",
+        "runner_version": "inspire-lianghuiqiang9@a76dfdc90dc2"
+      },
+      "metrics": {
+        "query_bytes": 492433,
+        "response_bytes": 65658,
+        "offline_hint_bytes": 0,
+        "preprocessing_ms": 6461.563334,
+        "server_answer_ms": 4055.5686095,
+        "preprocessing_throughput_mbps": 83.0868451253967,
+        "client_query_gen_ms": 4003.5452625,
+        "client_decode_ms": 0.562091,
+        "peak_memory_bytes": 5551243264
+      },
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. CAVEAT: Inherits the upstream's behaviour: query() regenerates InspiRING packing keys on every call, so client_query_gen_ms and query_bytes include per-query key generation and shipping. inspire-raven's do not. CODE PATH: in this codebase respond_with_variant() dispatches OnePacking and TwoPacking to the same function (respond_inspiring), so requesting TwoPacking actually runs InsPIRe^1, not InsPIRe^2. Raven's fork patched this exact fall-through. The row is therefore not executing the same algorithm as inspire-raven's TwoPacking row even though both are labelled two-packing. CAVEAT: Run with 1 seed x 4 measured iterations instead of the 3 x 16 used for inspire-raven. This implementation's per-query cost is ~2000x higher (4.0 s vs 1.9 ms at 2^20 x 8 B on the reference machine), so the default counts are unfinishable at the larger cells. Fewer iterations lowers confidence in the number; it does not change what is being measured. The counts actually used are recorded in params.scheme_params. A second fork of the deleted igor53627/inspire-rs, diverged 2026-04-24 — after the upstream's last substantive commit but before Raven's patches. Declares the same crate name and version (inspire 0.2.0) and exports an identical public API, so it is benchmarked through the same shared driver as inspire-upstream; the interesting question is whether the fork changed anything measurable. Last pushed 2026-04-24."
+    },
+    {
+      "scheme": "InsPIRe",
+      "implementation": {
+        "name": "inspire-lianghuiqiang9",
+        "repo": "https://github.com/lianghuiqiang9/inspire-rs",
+        "commit": "a76dfdc90dc291eb2dd6343c5f87f3a963f20ba9",
+        "forked_from": "https://github.com/igor53627/inspire-rs",
+        "language": "rust",
+        "backend": [
+          "avx2",
+          "rayon"
+        ],
+        "online_work_scope": {
+          "kind": "shard",
+          "entries": 2048,
+          "leaks_shard_id": true,
+          "note": "setup() fixes shard_size_bytes = ring_dim * record_bytes = 2048 records, independent of N. The online answer therefore touches one 2048-record shard no matter how large the database is, and ClientQuery.shard_id is sent in cleartext, so the server learns which shard the query is in. The anonymity set is 2048 records, not N."
+        }
+      },
+      "params": {
+        "num_records": 33554432,
+        "record_bytes": 32,
+        "security_bits": 128,
+        "threads": 8,
+        "scheme_params": {
+          "variant": "inspire-lianghuiqiang9-two-packing-inspiring",
+          "crt_moduli": [
+            268369921,
+            249561089
+          ],
+          "gadget_base": 1048576,
+          "gadget_len": 3,
+          "log_q": 55.894465510993015,
+          "plaintext_modulus": 65537,
+          "ring_dim": 2048,
+          "sigma": 6.4,
+          "seeds": [
+            0
+          ],
+          "measured_per_seed": 4
+        }
+      },
+      "environment": {
+        "cpu_model": "AMD Ryzen 9 9900X 12-Core Processor",
+        "cpu_features": [
+          "avx2",
+          "avx512f"
+        ],
+        "logical_cores": 8,
+        "ram_bytes": 33646014464,
+        "os": "linux",
+        "timestamp": "2026-07-29T19:43:13.518Z",
+        "runner_version": "inspire-lianghuiqiang9@a76dfdc90dc2"
+      },
+      "metrics": {
+        "query_bytes": 492433,
+        "response_bytes": 65658,
+        "offline_hint_bytes": 0,
+        "preprocessing_ms": 8761.439338,
+        "server_answer_ms": 4058.6590100000003,
+        "preprocessing_throughput_mbps": 122.55313112115961,
+        "client_query_gen_ms": 4005.8736394999996,
+        "client_decode_ms": 0.5614645,
+        "peak_memory_bytes": 10400358400
+      },
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. CAVEAT: Inherits the upstream's behaviour: query() regenerates InspiRING packing keys on every call, so client_query_gen_ms and query_bytes include per-query key generation and shipping. inspire-raven's do not. CODE PATH: in this codebase respond_with_variant() dispatches OnePacking and TwoPacking to the same function (respond_inspiring), so requesting TwoPacking actually runs InsPIRe^1, not InsPIRe^2. Raven's fork patched this exact fall-through. The row is therefore not executing the same algorithm as inspire-raven's TwoPacking row even though both are labelled two-packing. CAVEAT: Run with 1 seed x 4 measured iterations instead of the 3 x 16 used for inspire-raven. This implementation's per-query cost is ~2000x higher (4.0 s vs 1.9 ms at 2^20 x 8 B on the reference machine), so the default counts are unfinishable at the larger cells. Fewer iterations lowers confidence in the number; it does not change what is being measured. The counts actually used are recorded in params.scheme_params. A second fork of the deleted igor53627/inspire-rs, diverged 2026-04-24 — after the upstream's last substantive commit but before Raven's patches. Declares the same crate name and version (inspire 0.2.0) and exports an identical public API, so it is benchmarked through the same shared driver as inspire-upstream; the interesting question is whether the fork changed anything measurable. Last pushed 2026-04-24."
+    },
+    {
+      "scheme": "InsPIRe",
+      "implementation": {
+        "name": "inspire-lianghuiqiang9",
+        "repo": "https://github.com/lianghuiqiang9/inspire-rs",
+        "commit": "a76dfdc90dc291eb2dd6343c5f87f3a963f20ba9",
+        "forked_from": "https://github.com/igor53627/inspire-rs",
+        "language": "rust",
+        "backend": [
+          "avx2",
+          "rayon"
+        ],
+        "online_work_scope": {
+          "kind": "shard",
+          "entries": 2048,
+          "leaks_shard_id": true,
+          "note": "setup() fixes shard_size_bytes = ring_dim * record_bytes = 2048 records, independent of N. The online answer therefore touches one 2048-record shard no matter how large the database is, and ClientQuery.shard_id is sent in cleartext, so the server learns which shard the query is in. The anonymity set is 2048 records, not N."
+        }
+      },
+      "params": {
+        "num_records": 67108864,
+        "record_bytes": 32,
+        "security_bits": 128,
+        "threads": 8,
+        "scheme_params": {
+          "variant": "inspire-lianghuiqiang9-two-packing-inspiring",
+          "crt_moduli": [
+            268369921,
+            249561089
+          ],
+          "gadget_base": 1048576,
+          "gadget_len": 3,
+          "log_q": 55.894465510993015,
+          "plaintext_modulus": 65537,
+          "ring_dim": 2048,
+          "sigma": 6.4,
+          "seeds": [
+            0
+          ],
+          "measured_per_seed": 4
+        }
+      },
+      "environment": {
+        "cpu_model": "AMD Ryzen 9 9900X 12-Core Processor",
+        "cpu_features": [
+          "avx2",
+          "avx512f"
+        ],
+        "logical_cores": 8,
+        "ram_bytes": 33646014464,
+        "os": "linux",
+        "timestamp": "2026-07-29T19:44:08.861Z",
+        "runner_version": "inspire-lianghuiqiang9@a76dfdc90dc2"
+      },
+      "metrics": {
+        "query_bytes": 492433,
+        "response_bytes": 65658,
+        "offline_hint_bytes": 0,
+        "preprocessing_ms": 13346.103771,
+        "server_answer_ms": 4058.5874890000005,
+        "preprocessing_throughput_mbps": 160.90715948622457,
+        "client_query_gen_ms": 4005.1477765,
+        "client_decode_ms": 0.5647005,
+        "peak_memory_bytes": 20098469888
+      },
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. CAVEAT: Inherits the upstream's behaviour: query() regenerates InspiRING packing keys on every call, so client_query_gen_ms and query_bytes include per-query key generation and shipping. inspire-raven's do not. CODE PATH: in this codebase respond_with_variant() dispatches OnePacking and TwoPacking to the same function (respond_inspiring), so requesting TwoPacking actually runs InsPIRe^1, not InsPIRe^2. Raven's fork patched this exact fall-through. The row is therefore not executing the same algorithm as inspire-raven's TwoPacking row even though both are labelled two-packing. CAVEAT: Run with 1 seed x 4 measured iterations instead of the 3 x 16 used for inspire-raven. This implementation's per-query cost is ~2000x higher (4.0 s vs 1.9 ms at 2^20 x 8 B on the reference machine), so the default counts are unfinishable at the larger cells. Fewer iterations lowers confidence in the number; it does not change what is being measured. The counts actually used are recorded in params.scheme_params. A second fork of the deleted igor53627/inspire-rs, diverged 2026-04-24 — after the upstream's last substantive commit but before Raven's patches. Declares the same crate name and version (inspire 0.2.0) and exports an identical public API, so it is benchmarked through the same shared driver as inspire-upstream; the interesting question is whether the fork changed anything measurable. Last pushed 2026-04-24."
+    },
+    {
+      "scheme": "InsPIRe",
+      "implementation": {
+        "name": "inspire-lianghuiqiang9",
+        "repo": "https://github.com/lianghuiqiang9/inspire-rs",
+        "commit": "a76dfdc90dc291eb2dd6343c5f87f3a963f20ba9",
+        "forked_from": "https://github.com/igor53627/inspire-rs",
+        "language": "rust",
+        "backend": [
+          "avx2",
+          "rayon"
+        ],
+        "online_work_scope": {
+          "kind": "shard",
+          "entries": 2048,
+          "leaks_shard_id": true,
+          "note": "setup() fixes shard_size_bytes = ring_dim * record_bytes = 2048 records, independent of N. The online answer therefore touches one 2048-record shard no matter how large the database is, and ClientQuery.shard_id is sent in cleartext, so the server learns which shard the query is in. The anonymity set is 2048 records, not N."
+        }
+      },
+      "params": {
+        "num_records": 268435456,
+        "record_bytes": 8,
+        "security_bits": 128,
+        "threads": 8,
+        "scheme_params": {
+          "variant": "inspire-lianghuiqiang9-two-packing-inspiring",
+          "crt_moduli": [
+            268369921,
+            249561089
+          ],
+          "gadget_base": 1048576,
+          "gadget_len": 3,
+          "log_q": 55.894465510993015,
+          "plaintext_modulus": 65537,
+          "ring_dim": 2048,
+          "sigma": 6.4,
+          "seeds": [
+            0
+          ],
+          "measured_per_seed": 4
+        }
+      },
+      "environment": {
+        "cpu_model": "AMD Ryzen 9 9900X 12-Core Processor",
+        "cpu_features": [
+          "avx2",
+          "avx512f"
+        ],
+        "logical_cores": 8,
+        "ram_bytes": 33646014464,
+        "os": "linux",
+        "timestamp": "2026-07-29T19:45:24.117Z",
+        "runner_version": "inspire-lianghuiqiang9@a76dfdc90dc2"
+      },
+      "metrics": {
+        "query_bytes": 492433,
+        "response_bytes": 65658,
+        "offline_hint_bytes": 0,
+        "preprocessing_ms": 13323.344516000001,
+        "server_answer_ms": 4007.3956515,
+        "preprocessing_throughput_mbps": 161.18202493533718,
+        "client_query_gen_ms": 4008.736317,
+        "client_decode_ms": 0.5584785000000001,
+        "peak_memory_bytes": 20087681024
+      },
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. CAVEAT: Inherits the upstream's behaviour: query() regenerates InspiRING packing keys on every call, so client_query_gen_ms and query_bytes include per-query key generation and shipping. inspire-raven's do not. CODE PATH: in this codebase respond_with_variant() dispatches OnePacking and TwoPacking to the same function (respond_inspiring), so requesting TwoPacking actually runs InsPIRe^1, not InsPIRe^2. Raven's fork patched this exact fall-through. The row is therefore not executing the same algorithm as inspire-raven's TwoPacking row even though both are labelled two-packing. CAVEAT: Run with 1 seed x 4 measured iterations instead of the 3 x 16 used for inspire-raven. This implementation's per-query cost is ~2000x higher (4.0 s vs 1.9 ms at 2^20 x 8 B on the reference machine), so the default counts are unfinishable at the larger cells. Fewer iterations lowers confidence in the number; it does not change what is being measured. The counts actually used are recorded in params.scheme_params. A second fork of the deleted igor53627/inspire-rs, diverged 2026-04-24 — after the upstream's last substantive commit but before Raven's patches. Declares the same crate name and version (inspire 0.2.0) and exports an identical public API, so it is benchmarked through the same shared driver as inspire-upstream; the interesting question is whether the fork changed anything measurable. Last pushed 2026-04-24."
+    },
+    {
+      "scheme": "InsPIRe",
+      "implementation": {
+        "name": "inspire-poulpy",
+        "repo": "https://github.com/poulpy-fhe/poulpy-pir",
+        "commit": "625ac4094b2a99b23bc57e44e080dbc2dd526768",
+        "language": "rust",
+        "backend": [
+          "avx512f",
+          "private-gemm-x86"
+        ],
+        "online_work_scope": {
+          "kind": "full_database",
+          "leaks_shard_id": false,
+          "note": "The online answer is over the whole database; no index partition is revealed."
+        }
+      },
+      "params": {
+        "num_records": 33554432,
+        "record_bytes": 32,
+        "security_bits": 128,
+        "threads": 8,
+        "scheme_params": {
+          "variant": "InsPIRe-1GiB-c32768",
+          "preset": "InsPIRe-1GiB-c32768",
+          "collapse": "Interpolation",
+          "ring_degree_n": 2048,
+          "interpolation_degree_t": "8",
+          "online_repeats": 10,
+          "batch": 1,
+          "phase_breakdown_ms": {
+            "setup": 169.150056,
+            "database_fill": 616.599797,
+            "query_mask": 1914.015971,
+            "offline": 13928.428644
+          },
+          "noise_log2_max": "-20.809",
+          "poulpy_reported_peak_rss_bytes": 10051297214,
+          "seeds": [
+            0
+          ],
+          "measured_per_seed": 10
+        }
+      },
+      "environment": {
+        "cpu_model": "AMD Ryzen 9 9900X 12-Core Processor",
+        "cpu_features": [
+          "avx2",
+          "avx512f"
+        ],
+        "logical_cores": 8,
+        "ram_bytes": 33646014464,
+        "os": "linux",
+        "timestamp": "2026-07-29T19:46:02.656Z",
+        "runner_version": "inspire-poulpy@625ac4094b2a"
+      },
+      "metrics": {
+        "query_bytes": 460993,
+        "response_bytes": 32813,
+        "offline_hint_bytes": 0,
+        "preprocessing_ms": 16628.194468,
+        "server_answer_ms": 36.100162,
+        "preprocessing_throughput_mbps": 64.57356666512135,
+        "client_query_gen_ms": 1.37087,
+        "peak_memory_bytes": 10051543040
+      },
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. CAVEAT: poulpy's example averages the online phase over its own REPEATS=10 and exposes no seed parameter, so this row reports a single run with no cross-seed spread, where the raven and upstream rows report a median over 3 seeds. client_decode_ms is not reported by the example and is omitted rather than invented. Independent implementation of InsPIRe on the Poulpy FHE library — not a fork of inspire-rs. Interpolation construction (the direct analogue of the other InsPIRe rows here); the recursive InsPIRe² construction is published separately as inspire2-poulpy because it is a different protocol, not a tuning knob. Requires AVX-512F: the crate's avx512-fhe feature has a compile-time guard and only builds on an AVX-512 host. Database layouts follow the crate's DefaultPirParameters32B presets, which are 32-byte payloads only at 1/2/4/8/16/32 GiB — mapping to entries_log2 25..30. The cols choice per size follows the crate's own examples/README pairing."
+    },
+    {
+      "scheme": "InsPIRe",
+      "implementation": {
+        "name": "inspire-poulpy",
+        "repo": "https://github.com/poulpy-fhe/poulpy-pir",
+        "commit": "625ac4094b2a99b23bc57e44e080dbc2dd526768",
+        "language": "rust",
+        "backend": [
+          "avx512f",
+          "private-gemm-x86"
+        ],
+        "online_work_scope": {
+          "kind": "full_database",
+          "leaks_shard_id": false,
+          "note": "The online answer is over the whole database; no index partition is revealed."
+        }
+      },
+      "params": {
+        "num_records": 67108864,
+        "record_bytes": 32,
+        "security_bits": 128,
+        "threads": 8,
+        "scheme_params": {
+          "variant": "InsPIRe-2GiB-c65536",
+          "preset": "InsPIRe-2GiB-c65536",
+          "collapse": "Interpolation",
+          "ring_degree_n": 2048,
+          "interpolation_degree_t": "8",
+          "online_repeats": 10,
+          "batch": 1,
+          "phase_breakdown_ms": {
+            "setup": 256.151075,
+            "database_fill": 1119.55488,
+            "query_mask": 3814.012659,
+            "offline": 21595.669255
+          },
+          "noise_log2_max": "-20.688",
+          "poulpy_reported_peak_rss_bytes": 13813688566,
+          "seeds": [
+            0
+          ],
+          "measured_per_seed": 10
+        }
+      },
+      "environment": {
+        "cpu_model": "AMD Ryzen 9 9900X 12-Core Processor",
+        "cpu_features": [
+          "avx2",
+          "avx512f"
+        ],
+        "logical_cores": 8,
+        "ram_bytes": 33646014464,
+        "os": "linux",
+        "timestamp": "2026-07-29T19:46:30.879Z",
+        "runner_version": "inspire-poulpy@625ac4094b2a"
+      },
+      "metrics": {
+        "query_bytes": 724417,
+        "response_bytes": 32813,
+        "offline_hint_bytes": 0,
+        "preprocessing_ms": 26785.387869,
+        "server_answer_ms": 56.692062,
+        "preprocessing_throughput_mbps": 80.17369987333224,
+        "client_query_gen_ms": 2.288162,
+        "peak_memory_bytes": 13813624832
+      },
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. CAVEAT: poulpy's example averages the online phase over its own REPEATS=10 and exposes no seed parameter, so this row reports a single run with no cross-seed spread, where the raven and upstream rows report a median over 3 seeds. client_decode_ms is not reported by the example and is omitted rather than invented. Independent implementation of InsPIRe on the Poulpy FHE library — not a fork of inspire-rs. Interpolation construction (the direct analogue of the other InsPIRe rows here); the recursive InsPIRe² construction is published separately as inspire2-poulpy because it is a different protocol, not a tuning knob. Requires AVX-512F: the crate's avx512-fhe feature has a compile-time guard and only builds on an AVX-512 host. Database layouts follow the crate's DefaultPirParameters32B presets, which are 32-byte payloads only at 1/2/4/8/16/32 GiB — mapping to entries_log2 25..30. The cols choice per size follows the crate's own examples/README pairing."
+    },
+    {
+      "scheme": "InsPIRe",
+      "implementation": {
+        "name": "inspire-poulpy",
+        "repo": "https://github.com/poulpy-fhe/poulpy-pir",
+        "commit": "625ac4094b2a99b23bc57e44e080dbc2dd526768",
+        "language": "rust",
+        "backend": [
+          "avx512f",
+          "private-gemm-x86"
+        ],
+        "online_work_scope": {
+          "kind": "full_database",
+          "leaks_shard_id": false,
+          "note": "The online answer is over the whole database; no index partition is revealed."
+        }
+      },
+      "params": {
+        "num_records": 134217728,
+        "record_bytes": 32,
+        "security_bits": 128,
+        "threads": 8,
+        "scheme_params": {
+          "variant": "InsPIRe-4GiB-c65536",
+          "preset": "InsPIRe-4GiB-c65536",
+          "collapse": "Interpolation",
+          "ring_degree_n": 2048,
+          "interpolation_degree_t": "16",
+          "online_repeats": 10,
+          "batch": 1,
+          "phase_breakdown_ms": {
+            "setup": 435.486757,
+            "database_fill": 2214.843383,
+            "query_mask": 3834.030705,
+            "offline": 43551.406835999995
+          },
+          "noise_log2_max": "-20.146",
+          "poulpy_reported_peak_rss_bytes": 21636971495,
+          "seeds": [
+            0
+          ],
+          "measured_per_seed": 10
+        }
+      },
+      "environment": {
+        "cpu_model": "AMD Ryzen 9 9900X 12-Core Processor",
+        "cpu_features": [
+          "avx2",
+          "avx512f"
+        ],
+        "logical_cores": 8,
+        "ram_bytes": 33646014464,
+        "os": "linux",
+        "timestamp": "2026-07-29T19:47:22.802Z",
+        "runner_version": "inspire-poulpy@625ac4094b2a"
+      },
+      "metrics": {
+        "query_bytes": 724417,
+        "response_bytes": 32813,
+        "offline_hint_bytes": 0,
+        "preprocessing_ms": 50035.767681,
+        "server_answer_ms": 103.665013,
+        "preprocessing_throughput_mbps": 85.83794143785909,
+        "client_query_gen_ms": 1.669603,
+        "peak_memory_bytes": 21637312512
+      },
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. CAVEAT: poulpy's example averages the online phase over its own REPEATS=10 and exposes no seed parameter, so this row reports a single run with no cross-seed spread, where the raven and upstream rows report a median over 3 seeds. client_decode_ms is not reported by the example and is omitted rather than invented. Independent implementation of InsPIRe on the Poulpy FHE library — not a fork of inspire-rs. Interpolation construction (the direct analogue of the other InsPIRe rows here); the recursive InsPIRe² construction is published separately as inspire2-poulpy because it is a different protocol, not a tuning knob. Requires AVX-512F: the crate's avx512-fhe feature has a compile-time guard and only builds on an AVX-512 host. Database layouts follow the crate's DefaultPirParameters32B presets, which are 32-byte payloads only at 1/2/4/8/16/32 GiB — mapping to entries_log2 25..30. The cols choice per size follows the crate's own examples/README pairing."
+    },
+    {
       "scheme": "InsPIRe",
       "implementation": {
         "name": "inspire-raven",
@@ -40,8 +1057,13 @@
         "threads": 8,
         "scheme_params": {
           "variant": "inspire-default-q-twopacking-inspiring-commit-e-handshake-solinas",
-          "throughput_qps_per_core": 237.31830317413232,
-          "measured_queries": 16
+          "throughput_qps_per_core": 237.24440622173455,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "measured_per_seed": 16
         }
       },
       "environment": {
@@ -51,18 +1073,37 @@
           "avx512f"
         ],
         "logical_cores": 8,
+        "ram_bytes": 33646014464,
         "os": "linux",
-        "timestamp": "2026-07-28T02:00:34.059Z",
-        "runner_version": "raven-bench@5a899b5dc60c"
+        "timestamp": "2026-07-29T19:48:30.703Z",
+        "runner_version": "inspire-raven@3be3cc7d56db"
       },
       "metrics": {
         "query_bytes": 98840,
         "response_bytes": 32879,
         "offline_hint_bytes": 0,
-        "preprocessing_ms": 3439.6684419999997,
+        "preprocessing_ms": 3455.479272,
         "server_answer_ms": 1.888,
-        "client_query_gen_ms": 2.322,
-        "preprocessing_throughput_mbps": 2.438783894857736
+        "preprocessing_throughput_mbps": 2.427625038290202,
+        "client_query_gen_ms": 2.328,
+        "peak_memory_bytes": 726585344
+      },
+      "metrics_spread": {
+        "server_answer_ms": {
+          "min": 1.87,
+          "max": 1.892,
+          "n": 3
+        },
+        "client_query_gen_ms": {
+          "min": 2.325,
+          "max": 2.33,
+          "n": 3
+        },
+        "preprocessing_ms": {
+          "min": 3455.479272,
+          "max": 3455.479272,
+          "n": 3
+        }
       },
       "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. Raven's fork, driven through raven's b1-inspire bench binary. UPSTREAM.md documents 6 local patches, including replacing upstream's under-provisioned 2-CRT moduli in secure_128_d{2048,4096} with a single-prime q, and a CRS shrink from ~34.9 to ~1.1 MiB."
     },
@@ -97,8 +1138,13 @@
         "threads": 8,
         "scheme_params": {
           "variant": "inspire-default-q-twopacking-inspiring-commit-e-handshake-solinas",
-          "throughput_qps_per_core": 111.75915901232844,
-          "measured_queries": 16
+          "throughput_qps_per_core": 111.31131688244828,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "measured_per_seed": 16
         }
       },
       "environment": {
@@ -108,18 +1154,37 @@
           "avx512f"
         ],
         "logical_cores": 8,
+        "ram_bytes": 33646014464,
         "os": "linux",
-        "timestamp": "2026-07-28T02:00:34.001Z",
-        "runner_version": "raven-bench@5a899b5dc60c"
+        "timestamp": "2026-07-29T19:48:41.763Z",
+        "runner_version": "inspire-raven@3be3cc7d56db"
       },
       "metrics": {
         "query_bytes": 98840,
         "response_bytes": 32879,
         "offline_hint_bytes": 0,
-        "preprocessing_ms": 3513.009624,
-        "server_answer_ms": 6.598,
-        "client_query_gen_ms": 2.308,
-        "preprocessing_throughput_mbps": 9.55147739156891
+        "preprocessing_ms": 3521.681903,
+        "server_answer_ms": 6.633,
+        "preprocessing_throughput_mbps": 9.527956506070616,
+        "client_query_gen_ms": 2.307,
+        "peak_memory_bytes": 861818880
+      },
+      "metrics_spread": {
+        "server_answer_ms": {
+          "min": 6.625,
+          "max": 6.681,
+          "n": 3
+        },
+        "client_query_gen_ms": {
+          "min": 2.307,
+          "max": 2.316,
+          "n": 3
+        },
+        "preprocessing_ms": {
+          "min": 3521.681903,
+          "max": 3521.681903,
+          "n": 3
+        }
       },
       "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. Raven's fork, driven through raven's b1-inspire bench binary. UPSTREAM.md documents 6 local patches, including replacing upstream's under-provisioned 2-CRT moduli in secure_128_d{2048,4096} with a single-prime q, and a CRS shrink from ~34.9 to ~1.1 MiB."
     },
@@ -154,8 +1219,13 @@
         "threads": 8,
         "scheme_params": {
           "variant": "inspire-default-q-twopacking-inspiring-commit-e-handshake-solinas",
-          "throughput_qps_per_core": 10.149431346391845,
-          "measured_queries": 16
+          "throughput_qps_per_core": 10.154281616307776,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "measured_per_seed": 16
         }
       },
       "environment": {
@@ -165,18 +1235,37 @@
           "avx512f"
         ],
         "logical_cores": 8,
+        "ram_bytes": 33646014464,
         "os": "linux",
-        "timestamp": "2026-07-28T02:00:33.930Z",
-        "runner_version": "raven-bench@5a899b5dc60c"
+        "timestamp": "2026-07-29T19:48:59.353Z",
+        "runner_version": "inspire-raven@3be3cc7d56db"
       },
       "metrics": {
         "query_bytes": 98840,
         "response_bytes": 32879,
         "offline_hint_bytes": 0,
-        "preprocessing_ms": 4194.352578,
-        "server_answer_ms": 96.337,
-        "client_query_gen_ms": 2.345,
-        "preprocessing_throughput_mbps": 63.9992587671298
+        "preprocessing_ms": 4203.042331,
+        "server_answer_ms": 96.232,
+        "preprocessing_throughput_mbps": 63.866940863318185,
+        "client_query_gen_ms": 2.328,
+        "peak_memory_bytes": 2121203712
+      },
+      "metrics_spread": {
+        "server_answer_ms": {
+          "min": 96.139,
+          "max": 96.26,
+          "n": 3
+        },
+        "client_query_gen_ms": {
+          "min": 2.327,
+          "max": 2.338,
+          "n": 3
+        },
+        "preprocessing_ms": {
+          "min": 4203.042331,
+          "max": 4203.042331,
+          "n": 3
+        }
       },
       "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. Raven's fork, driven through raven's b1-inspire bench binary. UPSTREAM.md documents 6 local patches, including replacing upstream's under-provisioned 2-CRT moduli in secure_128_d{2048,4096} with a single-prime q, and a CRS shrink from ~34.9 to ~1.1 MiB."
     },
@@ -211,8 +1300,13 @@
         "threads": 8,
         "scheme_params": {
           "variant": "inspire-default-q-twopacking-inspiring-commit-e-handshake-solinas",
-          "throughput_qps_per_core": 237.54379713759724,
-          "measured_queries": 16
+          "throughput_qps_per_core": 236.65138293151898,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "measured_per_seed": 16
         }
       },
       "environment": {
@@ -222,18 +1316,37 @@
           "avx512f"
         ],
         "logical_cores": 8,
+        "ram_bytes": 33646014464,
         "os": "linux",
-        "timestamp": "2026-07-28T02:00:34.233Z",
-        "runner_version": "raven-bench@5a899b5dc60c"
+        "timestamp": "2026-07-29T19:49:10.450Z",
+        "runner_version": "inspire-raven@3be3cc7d56db"
       },
       "metrics": {
         "query_bytes": 98840,
         "response_bytes": 32879,
         "offline_hint_bytes": 0,
-        "preprocessing_ms": 3791.513067,
-        "server_answer_ms": 1.887,
-        "client_query_gen_ms": 2.321,
-        "preprocessing_throughput_mbps": 35.39951613728673
+        "preprocessing_ms": 3794.908984,
+        "server_answer_ms": 1.891,
+        "preprocessing_throughput_mbps": 35.36783848199928,
+        "client_query_gen_ms": 2.329,
+        "peak_memory_bytes": 1360166912
+      },
+      "metrics_spread": {
+        "server_answer_ms": {
+          "min": 1.869,
+          "max": 1.894,
+          "n": 3
+        },
+        "client_query_gen_ms": {
+          "min": 2.32,
+          "max": 2.33,
+          "n": 3
+        },
+        "preprocessing_ms": {
+          "min": 3794.908984,
+          "max": 3794.908984,
+          "n": 3
+        }
       },
       "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. Raven's fork, driven through raven's b1-inspire bench binary. UPSTREAM.md documents 6 local patches, including replacing upstream's under-provisioned 2-CRT moduli in secure_128_d{2048,4096} with a single-prime q, and a CRS shrink from ~34.9 to ~1.1 MiB."
     },
@@ -268,8 +1381,13 @@
         "threads": 8,
         "scheme_params": {
           "variant": "inspire-default-q-twopacking-inspiring-commit-e-handshake-solinas",
-          "throughput_qps_per_core": 111.43458093632907,
-          "measured_queries": 16
+          "throughput_qps_per_core": 111.11959941384411,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "measured_per_seed": 16
         }
       },
       "environment": {
@@ -279,18 +1397,37 @@
           "avx512f"
         ],
         "logical_cores": 8,
+        "ram_bytes": 33646014464,
         "os": "linux",
-        "timestamp": "2026-07-28T02:00:34.175Z",
-        "runner_version": "raven-bench@5a899b5dc60c"
+        "timestamp": "2026-07-29T19:49:23.274Z",
+        "runner_version": "inspire-raven@3be3cc7d56db"
       },
       "metrics": {
         "query_bytes": 98840,
         "response_bytes": 32879,
         "offline_hint_bytes": 0,
-        "preprocessing_ms": 4907.525393,
-        "server_answer_ms": 6.619,
-        "client_query_gen_ms": 2.31,
-        "preprocessing_throughput_mbps": 109.3974801976129
+        "preprocessing_ms": 4909.518153999999,
+        "server_answer_ms": 6.651,
+        "preprocessing_throughput_mbps": 109.35307603712346,
+        "client_query_gen_ms": 2.312,
+        "peak_memory_bytes": 3394428928
+      },
+      "metrics_spread": {
+        "server_answer_ms": {
+          "min": 6.635,
+          "max": 6.709,
+          "n": 3
+        },
+        "client_query_gen_ms": {
+          "min": 2.31,
+          "max": 2.317,
+          "n": 3
+        },
+        "preprocessing_ms": {
+          "min": 4909.518153999999,
+          "max": 4909.518153999999,
+          "n": 3
+        }
       },
       "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. Raven's fork, driven through raven's b1-inspire bench binary. UPSTREAM.md documents 6 local patches, including replacing upstream's under-provisioned 2-CRT moduli in secure_128_d{2048,4096} with a single-prime q, and a CRS shrink from ~34.9 to ~1.1 MiB."
     },
@@ -325,8 +1462,13 @@
         "threads": 8,
         "scheme_params": {
           "variant": "inspire-default-q-twopacking-inspiring-commit-e-handshake-solinas",
-          "throughput_qps_per_core": 9.649616397593144,
-          "measured_queries": 16
+          "throughput_qps_per_core": 9.715311026574412,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "measured_per_seed": 16
         }
       },
       "environment": {
@@ -336,18 +1478,280 @@
           "avx512f"
         ],
         "logical_cores": 8,
+        "ram_bytes": 33646014464,
         "os": "linux",
-        "timestamp": "2026-07-28T02:00:34.116Z",
-        "runner_version": "raven-bench@5a899b5dc60c"
+        "timestamp": "2026-07-29T19:49:55.681Z",
+        "runner_version": "inspire-raven@3be3cc7d56db"
       },
       "metrics": {
         "query_bytes": 98840,
         "response_bytes": 32879,
         "offline_hint_bytes": 0,
-        "preprocessing_ms": 15612.651301,
-        "server_answer_ms": 101.298,
-        "client_query_gen_ms": 2.353,
-        "preprocessing_throughput_mbps": 275.0953193789004
+        "preprocessing_ms": 15626.24237,
+        "server_answer_ms": 100.705,
+        "preprocessing_throughput_mbps": 274.85605267749344,
+        "client_query_gen_ms": 2.351,
+        "peak_memory_bytes": 22395338752
+      },
+      "metrics_spread": {
+        "server_answer_ms": {
+          "min": 100.546,
+          "max": 100.806,
+          "n": 3
+        },
+        "client_query_gen_ms": {
+          "min": 2.351,
+          "max": 2.353,
+          "n": 3
+        },
+        "preprocessing_ms": {
+          "min": 15626.24237,
+          "max": 15626.24237,
+          "n": 3
+        }
+      },
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. Raven's fork, driven through raven's b1-inspire bench binary. UPSTREAM.md documents 6 local patches, including replacing upstream's under-provisioned 2-CRT moduli in secure_128_d{2048,4096} with a single-prime q, and a CRS shrink from ~34.9 to ~1.1 MiB."
+    },
+    {
+      "scheme": "InsPIRe",
+      "implementation": {
+        "name": "inspire-raven",
+        "repo": "https://github.com/hisoka-io/inspire-rs",
+        "commit": "3be3cc7d56db9535ab93101864c5468c654dbddf",
+        "framework": {
+          "repo": "https://github.com/hisoka-io/raven",
+          "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+          "note": "raven provides the b1-inspire bench binary; the measured crypto is inspire-rs at the commit above."
+        },
+        "forked_from": "https://github.com/igor53627/inspire-rs",
+        "language": "rust",
+        "backend": [
+          "avx2",
+          "rayon"
+        ],
+        "online_work_scope": {
+          "kind": "shard",
+          "entries": 2048,
+          "leaks_shard_id": true,
+          "note": "setup() fixes shard_size_bytes = ring_dim * record_bytes = 2048 records, independent of N. The online answer therefore touches one 2048-record shard no matter how large the database is, and ClientQuery.shard_id is sent in cleartext, so the server learns which shard the query is in. The anonymity set is 2048 records, not N."
+        }
+      },
+      "params": {
+        "num_records": 33554432,
+        "record_bytes": 32,
+        "security_bits": 128,
+        "threads": 8,
+        "scheme_params": {
+          "variant": "inspire-default-q-twopacking-inspiring-commit-e-handshake-solinas",
+          "throughput_qps_per_core": 111.08179785889834,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "measured_per_seed": 16
+        }
+      },
+      "environment": {
+        "cpu_model": "AMD Ryzen 9 9900X 12-Core Processor",
+        "cpu_features": [
+          "avx2",
+          "avx512f"
+        ],
+        "logical_cores": 8,
+        "ram_bytes": 33646014464,
+        "os": "linux",
+        "timestamp": "2026-07-29T19:50:10.432Z",
+        "runner_version": "inspire-raven@3be3cc7d56db"
+      },
+      "metrics": {
+        "query_bytes": 98840,
+        "response_bytes": 32879,
+        "offline_hint_bytes": 0,
+        "preprocessing_ms": 6402.424713,
+        "server_answer_ms": 6.642,
+        "preprocessing_throughput_mbps": 167.70862167575166,
+        "client_query_gen_ms": 2.314,
+        "peak_memory_bytes": 6095970304
+      },
+      "metrics_spread": {
+        "server_answer_ms": {
+          "min": 6.639,
+          "max": 6.697,
+          "n": 3
+        },
+        "client_query_gen_ms": {
+          "min": 2.312,
+          "max": 2.319,
+          "n": 3
+        },
+        "preprocessing_ms": {
+          "min": 6402.424713,
+          "max": 6402.424713,
+          "n": 3
+        }
+      },
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. Raven's fork, driven through raven's b1-inspire bench binary. UPSTREAM.md documents 6 local patches, including replacing upstream's under-provisioned 2-CRT moduli in secure_128_d{2048,4096} with a single-prime q, and a CRS shrink from ~34.9 to ~1.1 MiB."
+    },
+    {
+      "scheme": "InsPIRe",
+      "implementation": {
+        "name": "inspire-raven",
+        "repo": "https://github.com/hisoka-io/inspire-rs",
+        "commit": "3be3cc7d56db9535ab93101864c5468c654dbddf",
+        "framework": {
+          "repo": "https://github.com/hisoka-io/raven",
+          "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+          "note": "raven provides the b1-inspire bench binary; the measured crypto is inspire-rs at the commit above."
+        },
+        "forked_from": "https://github.com/igor53627/inspire-rs",
+        "language": "rust",
+        "backend": [
+          "avx2",
+          "rayon"
+        ],
+        "online_work_scope": {
+          "kind": "shard",
+          "entries": 2048,
+          "leaks_shard_id": true,
+          "note": "setup() fixes shard_size_bytes = ring_dim * record_bytes = 2048 records, independent of N. The online answer therefore touches one 2048-record shard no matter how large the database is, and ClientQuery.shard_id is sent in cleartext, so the server learns which shard the query is in. The anonymity set is 2048 records, not N."
+        }
+      },
+      "params": {
+        "num_records": 67108864,
+        "record_bytes": 32,
+        "security_bits": 128,
+        "threads": 8,
+        "scheme_params": {
+          "variant": "inspire-default-q-twopacking-inspiring-commit-e-handshake-solinas",
+          "throughput_qps_per_core": 111.37252718185741,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "measured_per_seed": 16
+        }
+      },
+      "environment": {
+        "cpu_model": "AMD Ryzen 9 9900X 12-Core Processor",
+        "cpu_features": [
+          "avx2",
+          "avx512f"
+        ],
+        "logical_cores": 8,
+        "ram_bytes": 33646014464,
+        "os": "linux",
+        "timestamp": "2026-07-29T19:50:28.935Z",
+        "runner_version": "inspire-raven@3be3cc7d56db"
+      },
+      "metrics": {
+        "query_bytes": 98840,
+        "response_bytes": 32879,
+        "offline_hint_bytes": 0,
+        "preprocessing_ms": 9370.697729,
+        "server_answer_ms": 6.648,
+        "preprocessing_throughput_mbps": 229.17009064907379,
+        "client_query_gen_ms": 2.311,
+        "peak_memory_bytes": 11498958848
+      },
+      "metrics_spread": {
+        "server_answer_ms": {
+          "min": 6.624,
+          "max": 6.696,
+          "n": 3
+        },
+        "client_query_gen_ms": {
+          "min": 2.308,
+          "max": 2.325,
+          "n": 3
+        },
+        "preprocessing_ms": {
+          "min": 9370.697729,
+          "max": 9370.697729,
+          "n": 3
+        }
+      },
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. Raven's fork, driven through raven's b1-inspire bench binary. UPSTREAM.md documents 6 local patches, including replacing upstream's under-provisioned 2-CRT moduli in secure_128_d{2048,4096} with a single-prime q, and a CRS shrink from ~34.9 to ~1.1 MiB."
+    },
+    {
+      "scheme": "InsPIRe",
+      "implementation": {
+        "name": "inspire-raven",
+        "repo": "https://github.com/hisoka-io/inspire-rs",
+        "commit": "3be3cc7d56db9535ab93101864c5468c654dbddf",
+        "framework": {
+          "repo": "https://github.com/hisoka-io/raven",
+          "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+          "note": "raven provides the b1-inspire bench binary; the measured crypto is inspire-rs at the commit above."
+        },
+        "forked_from": "https://github.com/igor53627/inspire-rs",
+        "language": "rust",
+        "backend": [
+          "avx2",
+          "rayon"
+        ],
+        "online_work_scope": {
+          "kind": "shard",
+          "entries": 2048,
+          "leaks_shard_id": true,
+          "note": "setup() fixes shard_size_bytes = ring_dim * record_bytes = 2048 records, independent of N. The online answer therefore touches one 2048-record shard no matter how large the database is, and ClientQuery.shard_id is sent in cleartext, so the server learns which shard the query is in. The anonymity set is 2048 records, not N."
+        }
+      },
+      "params": {
+        "num_records": 134217728,
+        "record_bytes": 32,
+        "security_bits": 128,
+        "threads": 8,
+        "scheme_params": {
+          "variant": "inspire-default-q-twopacking-inspiring-commit-e-handshake-solinas",
+          "throughput_qps_per_core": 111.05095850858562,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "measured_per_seed": 16
+        }
+      },
+      "environment": {
+        "cpu_model": "AMD Ryzen 9 9900X 12-Core Processor",
+        "cpu_features": [
+          "avx2",
+          "avx512f"
+        ],
+        "logical_cores": 8,
+        "ram_bytes": 33646014464,
+        "os": "linux",
+        "timestamp": "2026-07-29T19:50:55.085Z",
+        "runner_version": "inspire-raven@3be3cc7d56db"
+      },
+      "metrics": {
+        "query_bytes": 98840,
+        "response_bytes": 32879,
+        "offline_hint_bytes": 0,
+        "preprocessing_ms": 15304.048279999999,
+        "server_answer_ms": 6.659,
+        "preprocessing_throughput_mbps": 280.6425605447711,
+        "client_query_gen_ms": 2.314,
+        "peak_memory_bytes": 22305112064
+      },
+      "metrics_spread": {
+        "server_answer_ms": {
+          "min": 6.648,
+          "max": 6.717,
+          "n": 3
+        },
+        "client_query_gen_ms": {
+          "min": 2.31,
+          "max": 2.319,
+          "n": 3
+        },
+        "preprocessing_ms": {
+          "min": 15304.048279999999,
+          "max": 15304.048279999999,
+          "n": 3
+        }
       },
       "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. Raven's fork, driven through raven's b1-inspire bench binary. UPSTREAM.md documents 6 local patches, including replacing upstream's under-provisioned 2-CRT moduli in secure_128_d{2048,4096} with a single-prime q, and a CRS shrink from ~34.9 to ~1.1 MiB."
     },
@@ -382,8 +1786,13 @@
         "threads": 8,
         "scheme_params": {
           "variant": "inspire-default-q-twopacking-inspiring-commit-e-handshake-solinas",
-          "throughput_qps_per_core": 236.2216349489909,
-          "measured_queries": 16
+          "throughput_qps_per_core": 236.45203718208282,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "measured_per_seed": 16
         }
       },
       "environment": {
@@ -393,20 +1802,567 @@
           "avx512f"
         ],
         "logical_cores": 8,
+        "ram_bytes": 33646014464,
         "os": "linux",
-        "timestamp": "2026-07-28T02:00:34.289Z",
-        "runner_version": "raven-bench@5a899b5dc60c"
+        "timestamp": "2026-07-29T19:51:13.357Z",
+        "runner_version": "inspire-raven@3be3cc7d56db"
       },
       "metrics": {
         "query_bytes": 98840,
         "response_bytes": 32879,
         "offline_hint_bytes": 0,
-        "preprocessing_ms": 9379.533581,
-        "server_answer_ms": 1.9,
-        "client_query_gen_ms": 2.33,
-        "preprocessing_throughput_mbps": 228.9542043274017
+        "preprocessing_ms": 9368.351961,
+        "server_answer_ms": 1.899,
+        "preprocessing_throughput_mbps": 229.22747319271002,
+        "client_query_gen_ms": 2.324,
+        "peak_memory_bytes": 11495358464
+      },
+      "metrics_spread": {
+        "server_answer_ms": {
+          "min": 1.869,
+          "max": 1.9,
+          "n": 3
+        },
+        "client_query_gen_ms": {
+          "min": 2.321,
+          "max": 2.325,
+          "n": 3
+        },
+        "preprocessing_ms": {
+          "min": 9368.351961,
+          "max": 9368.351961,
+          "n": 3
+        }
       },
       "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. Raven's fork, driven through raven's b1-inspire bench binary. UPSTREAM.md documents 6 local patches, including replacing upstream's under-provisioned 2-CRT moduli in secure_128_d{2048,4096} with a single-prime q, and a CRS shrink from ~34.9 to ~1.1 MiB."
+    },
+    {
+      "scheme": "InsPIRe",
+      "implementation": {
+        "name": "inspire-upstream",
+        "repo": "https://crates.io/crates/inspire/0.2.0",
+        "commit": "0.2.0",
+        "language": "rust",
+        "backend": [
+          "avx2",
+          "rayon"
+        ],
+        "online_work_scope": {
+          "kind": "shard",
+          "entries": 2048,
+          "leaks_shard_id": true,
+          "note": "setup() fixes shard_size_bytes = ring_dim * record_bytes = 2048 records, independent of N. The online answer therefore touches one 2048-record shard no matter how large the database is, and ClientQuery.shard_id is sent in cleartext, so the server learns which shard the query is in. The anonymity set is 2048 records, not N."
+        }
+      },
+      "params": {
+        "num_records": 1048576,
+        "record_bytes": 8,
+        "security_bits": 128,
+        "threads": 8,
+        "scheme_params": {
+          "variant": "inspire-upstream-0.2.0-two-packing-inspiring",
+          "crt_moduli": [
+            268369921,
+            249561089
+          ],
+          "gadget_base": 1048576,
+          "gadget_len": 3,
+          "log_q": 55.894465510993015,
+          "plaintext_modulus": 65537,
+          "ring_dim": 2048,
+          "sigma": 6.4,
+          "seeds": [
+            0
+          ],
+          "measured_per_seed": 4
+        }
+      },
+      "environment": {
+        "cpu_model": "AMD Ryzen 9 9900X 12-Core Processor",
+        "cpu_features": [
+          "avx2",
+          "avx512f"
+        ],
+        "logical_cores": 8,
+        "ram_bytes": 33646014464,
+        "os": "linux",
+        "timestamp": "2026-07-29T19:52:21.925Z",
+        "runner_version": "inspire-upstream@0.2.0"
+      },
+      "metrics": {
+        "query_bytes": 492433,
+        "response_bytes": 65658,
+        "offline_hint_bytes": 0,
+        "preprocessing_ms": 4201.200212,
+        "server_answer_ms": 4008.1573305,
+        "preprocessing_throughput_mbps": 1.9967170276816124,
+        "client_query_gen_ms": 4011.4696239999994,
+        "client_decode_ms": 0.5527785,
+        "peak_memory_bytes": 763174912
+      },
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. CAVEAT: Upstream 0.2.0's query() calls maybe_generate_packing_keys() on EVERY query — there is no session or key-cache API. Raven's fork added pir/session.rs (ClientSession + a packing-key pre-exchange handshake, keys uploaded once and referenced by handle). So client_query_gen_ms and query_bytes for this row include per-query InspiRING key generation and shipping, while inspire-raven's do not. That is a real difference between the implementations, not a harness artifact — but the two per-query numbers are not measuring the same work, and any comparison must say so. CODE PATH: in this codebase respond_with_variant() dispatches OnePacking and TwoPacking to the same function (respond_inspiring), so requesting TwoPacking actually runs InsPIRe^1, not InsPIRe^2. Raven's fork patched this exact fall-through. The row is therefore not executing the same algorithm as inspire-raven's TwoPacking row even though both are labelled two-packing. CAVEAT: Run with 1 seed x 4 measured iterations instead of the 3 x 16 used for inspire-raven. This implementation's per-query cost is ~2000x higher (4.0 s vs 1.9 ms at 2^20 x 8 B on the reference machine), so the default counts are unfinishable at the larger cells. Fewer iterations lowers confidence in the number; it does not change what is being measured. The counts actually used are recorded in params.scheme_params. The pre-fork baseline. github.com/igor53627/inspire-rs — the upstream that inspire-raven and inspire-lianghuiqiang9 both descend from — has been DELETED from GitHub; crates.io inspire 0.2.0 (published 2026-02-15) is the only surviving copy. Its secure_128_d2048 uses the 2-CRT moduli [268369921, 249561089] (q ~ 2^56), which is exactly the parameter set Raven's fork replaced with a single-prime q = 2^60 - 2^14 + 1, calling it under-provisioned. Benchmarked through a driver crate in this repo, since the published crate ships no BenchReport emitter."
+    },
+    {
+      "scheme": "InsPIRe",
+      "implementation": {
+        "name": "inspire-upstream",
+        "repo": "https://crates.io/crates/inspire/0.2.0",
+        "commit": "0.2.0",
+        "language": "rust",
+        "backend": [
+          "avx2",
+          "rayon"
+        ],
+        "online_work_scope": {
+          "kind": "shard",
+          "entries": 2048,
+          "leaks_shard_id": true,
+          "note": "setup() fixes shard_size_bytes = ring_dim * record_bytes = 2048 records, independent of N. The online answer therefore touches one 2048-record shard no matter how large the database is, and ClientQuery.shard_id is sent in cleartext, so the server learns which shard the query is in. The anonymity set is 2048 records, not N."
+        }
+      },
+      "params": {
+        "num_records": 1048576,
+        "record_bytes": 32,
+        "security_bits": 128,
+        "threads": 8,
+        "scheme_params": {
+          "variant": "inspire-upstream-0.2.0-two-packing-inspiring",
+          "crt_moduli": [
+            268369921,
+            249561089
+          ],
+          "gadget_base": 1048576,
+          "gadget_len": 3,
+          "log_q": 55.894465510993015,
+          "plaintext_modulus": 65537,
+          "ring_dim": 2048,
+          "sigma": 6.4,
+          "seeds": [
+            0
+          ],
+          "measured_per_seed": 4
+        }
+      },
+      "environment": {
+        "cpu_model": "AMD Ryzen 9 9900X 12-Core Processor",
+        "cpu_features": [
+          "avx2",
+          "avx512f"
+        ],
+        "logical_cores": 8,
+        "ram_bytes": 33646014464,
+        "os": "linux",
+        "timestamp": "2026-07-29T19:53:06.714Z",
+        "runner_version": "inspire-upstream@0.2.0"
+      },
+      "metrics": {
+        "query_bytes": 492433,
+        "response_bytes": 65658,
+        "offline_hint_bytes": 0,
+        "preprocessing_ms": 4314.725888,
+        "server_answer_ms": 4056.4213805,
+        "preprocessing_throughput_mbps": 7.776723915027994,
+        "client_query_gen_ms": 4002.862206,
+        "client_decode_ms": 0.556394,
+        "peak_memory_bytes": 1005375488
+      },
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. CAVEAT: Upstream 0.2.0's query() calls maybe_generate_packing_keys() on EVERY query — there is no session or key-cache API. Raven's fork added pir/session.rs (ClientSession + a packing-key pre-exchange handshake, keys uploaded once and referenced by handle). So client_query_gen_ms and query_bytes for this row include per-query InspiRING key generation and shipping, while inspire-raven's do not. That is a real difference between the implementations, not a harness artifact — but the two per-query numbers are not measuring the same work, and any comparison must say so. CODE PATH: in this codebase respond_with_variant() dispatches OnePacking and TwoPacking to the same function (respond_inspiring), so requesting TwoPacking actually runs InsPIRe^1, not InsPIRe^2. Raven's fork patched this exact fall-through. The row is therefore not executing the same algorithm as inspire-raven's TwoPacking row even though both are labelled two-packing. CAVEAT: Run with 1 seed x 4 measured iterations instead of the 3 x 16 used for inspire-raven. This implementation's per-query cost is ~2000x higher (4.0 s vs 1.9 ms at 2^20 x 8 B on the reference machine), so the default counts are unfinishable at the larger cells. Fewer iterations lowers confidence in the number; it does not change what is being measured. The counts actually used are recorded in params.scheme_params. The pre-fork baseline. github.com/igor53627/inspire-rs — the upstream that inspire-raven and inspire-lianghuiqiang9 both descend from — has been DELETED from GitHub; crates.io inspire 0.2.0 (published 2026-02-15) is the only surviving copy. Its secure_128_d2048 uses the 2-CRT moduli [268369921, 249561089] (q ~ 2^56), which is exactly the parameter set Raven's fork replaced with a single-prime q = 2^60 - 2^14 + 1, calling it under-provisioned. Benchmarked through a driver crate in this repo, since the published crate ships no BenchReport emitter."
+    },
+    {
+      "scheme": "InsPIRe",
+      "implementation": {
+        "name": "inspire-upstream",
+        "repo": "https://crates.io/crates/inspire/0.2.0",
+        "commit": "0.2.0",
+        "language": "rust",
+        "backend": [
+          "avx2",
+          "rayon"
+        ],
+        "online_work_scope": {
+          "kind": "shard",
+          "entries": 2048,
+          "leaks_shard_id": true,
+          "note": "setup() fixes shard_size_bytes = ring_dim * record_bytes = 2048 records, independent of N. The online answer therefore touches one 2048-record shard no matter how large the database is, and ClientQuery.shard_id is sent in cleartext, so the server learns which shard the query is in. The anonymity set is 2048 records, not N."
+        }
+      },
+      "params": {
+        "num_records": 1048576,
+        "record_bytes": 256,
+        "security_bits": 128,
+        "threads": 8,
+        "scheme_params": {
+          "variant": "inspire-upstream-0.2.0-two-packing-inspiring",
+          "crt_moduli": [
+            268369921,
+            249561089
+          ],
+          "gadget_base": 1048576,
+          "gadget_len": 3,
+          "log_q": 55.894465510993015,
+          "plaintext_modulus": 65537,
+          "ring_dim": 2048,
+          "sigma": 6.4,
+          "seeds": [
+            0
+          ],
+          "measured_per_seed": 4
+        }
+      },
+      "environment": {
+        "cpu_model": "AMD Ryzen 9 9900X 12-Core Processor",
+        "cpu_features": [
+          "avx2",
+          "avx512f"
+        ],
+        "logical_cores": 8,
+        "ram_bytes": 33646014464,
+        "os": "linux",
+        "timestamp": "2026-07-29T19:53:57.531Z",
+        "runner_version": "inspire-upstream@0.2.0"
+      },
+      "metrics": {
+        "query_bytes": 492433,
+        "response_bytes": 65658,
+        "offline_hint_bytes": 0,
+        "preprocessing_ms": 5874.6589890000005,
+        "server_answer_ms": 4791.8790835,
+        "preprocessing_throughput_mbps": 45.69379371681517,
+        "client_query_gen_ms": 4133.313379499999,
+        "client_decode_ms": 0.553574,
+        "peak_memory_bytes": 3257782272
+      },
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. CAVEAT: Upstream 0.2.0's query() calls maybe_generate_packing_keys() on EVERY query — there is no session or key-cache API. Raven's fork added pir/session.rs (ClientSession + a packing-key pre-exchange handshake, keys uploaded once and referenced by handle). So client_query_gen_ms and query_bytes for this row include per-query InspiRING key generation and shipping, while inspire-raven's do not. That is a real difference between the implementations, not a harness artifact — but the two per-query numbers are not measuring the same work, and any comparison must say so. CODE PATH: in this codebase respond_with_variant() dispatches OnePacking and TwoPacking to the same function (respond_inspiring), so requesting TwoPacking actually runs InsPIRe^1, not InsPIRe^2. Raven's fork patched this exact fall-through. The row is therefore not executing the same algorithm as inspire-raven's TwoPacking row even though both are labelled two-packing. CAVEAT: Run with 1 seed x 4 measured iterations instead of the 3 x 16 used for inspire-raven. This implementation's per-query cost is ~2000x higher (4.0 s vs 1.9 ms at 2^20 x 8 B on the reference machine), so the default counts are unfinishable at the larger cells. Fewer iterations lowers confidence in the number; it does not change what is being measured. The counts actually used are recorded in params.scheme_params. The pre-fork baseline. github.com/igor53627/inspire-rs — the upstream that inspire-raven and inspire-lianghuiqiang9 both descend from — has been DELETED from GitHub; crates.io inspire 0.2.0 (published 2026-02-15) is the only surviving copy. Its secure_128_d2048 uses the 2-CRT moduli [268369921, 249561089] (q ~ 2^56), which is exactly the parameter set Raven's fork replaced with a single-prime q = 2^60 - 2^14 + 1, calling it under-provisioned. Benchmarked through a driver crate in this repo, since the published crate ships no BenchReport emitter."
+    },
+    {
+      "scheme": "InsPIRe",
+      "implementation": {
+        "name": "inspire-upstream",
+        "repo": "https://crates.io/crates/inspire/0.2.0",
+        "commit": "0.2.0",
+        "language": "rust",
+        "backend": [
+          "avx2",
+          "rayon"
+        ],
+        "online_work_scope": {
+          "kind": "shard",
+          "entries": 2048,
+          "leaks_shard_id": true,
+          "note": "setup() fixes shard_size_bytes = ring_dim * record_bytes = 2048 records, independent of N. The online answer therefore touches one 2048-record shard no matter how large the database is, and ClientQuery.shard_id is sent in cleartext, so the server learns which shard the query is in. The anonymity set is 2048 records, not N."
+        }
+      },
+      "params": {
+        "num_records": 16777216,
+        "record_bytes": 8,
+        "security_bits": 128,
+        "threads": 8,
+        "scheme_params": {
+          "variant": "inspire-upstream-0.2.0-two-packing-inspiring",
+          "crt_moduli": [
+            268369921,
+            249561089
+          ],
+          "gadget_base": 1048576,
+          "gadget_len": 3,
+          "log_q": 55.894465510993015,
+          "plaintext_modulus": 65537,
+          "ring_dim": 2048,
+          "sigma": 6.4,
+          "seeds": [
+            0
+          ],
+          "measured_per_seed": 4
+        }
+      },
+      "environment": {
+        "cpu_model": "AMD Ryzen 9 9900X 12-Core Processor",
+        "cpu_features": [
+          "avx2",
+          "avx512f"
+        ],
+        "logical_cores": 8,
+        "ram_bytes": 33646014464,
+        "os": "linux",
+        "timestamp": "2026-07-29T19:54:42.586Z",
+        "runner_version": "inspire-upstream@0.2.0"
+      },
+      "metrics": {
+        "query_bytes": 492433,
+        "response_bytes": 65658,
+        "offline_hint_bytes": 0,
+        "preprocessing_ms": 4722.669507,
+        "server_answer_ms": 4010.675781,
+        "preprocessing_throughput_mbps": 28.41988578727789,
+        "client_query_gen_ms": 4006.442485,
+        "client_decode_ms": 0.5597000000000001,
+        "peak_memory_bytes": 1899401216
+      },
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. CAVEAT: Upstream 0.2.0's query() calls maybe_generate_packing_keys() on EVERY query — there is no session or key-cache API. Raven's fork added pir/session.rs (ClientSession + a packing-key pre-exchange handshake, keys uploaded once and referenced by handle). So client_query_gen_ms and query_bytes for this row include per-query InspiRING key generation and shipping, while inspire-raven's do not. That is a real difference between the implementations, not a harness artifact — but the two per-query numbers are not measuring the same work, and any comparison must say so. CODE PATH: in this codebase respond_with_variant() dispatches OnePacking and TwoPacking to the same function (respond_inspiring), so requesting TwoPacking actually runs InsPIRe^1, not InsPIRe^2. Raven's fork patched this exact fall-through. The row is therefore not executing the same algorithm as inspire-raven's TwoPacking row even though both are labelled two-packing. CAVEAT: Run with 1 seed x 4 measured iterations instead of the 3 x 16 used for inspire-raven. This implementation's per-query cost is ~2000x higher (4.0 s vs 1.9 ms at 2^20 x 8 B on the reference machine), so the default counts are unfinishable at the larger cells. Fewer iterations lowers confidence in the number; it does not change what is being measured. The counts actually used are recorded in params.scheme_params. The pre-fork baseline. github.com/igor53627/inspire-rs — the upstream that inspire-raven and inspire-lianghuiqiang9 both descend from — has been DELETED from GitHub; crates.io inspire 0.2.0 (published 2026-02-15) is the only surviving copy. Its secure_128_d2048 uses the 2-CRT moduli [268369921, 249561089] (q ~ 2^56), which is exactly the parameter set Raven's fork replaced with a single-prime q = 2^60 - 2^14 + 1, calling it under-provisioned. Benchmarked through a driver crate in this repo, since the published crate ships no BenchReport emitter."
+    },
+    {
+      "scheme": "InsPIRe",
+      "implementation": {
+        "name": "inspire-upstream",
+        "repo": "https://crates.io/crates/inspire/0.2.0",
+        "commit": "0.2.0",
+        "language": "rust",
+        "backend": [
+          "avx2",
+          "rayon"
+        ],
+        "online_work_scope": {
+          "kind": "shard",
+          "entries": 2048,
+          "leaks_shard_id": true,
+          "note": "setup() fixes shard_size_bytes = ring_dim * record_bytes = 2048 records, independent of N. The online answer therefore touches one 2048-record shard no matter how large the database is, and ClientQuery.shard_id is sent in cleartext, so the server learns which shard the query is in. The anonymity set is 2048 records, not N."
+        }
+      },
+      "params": {
+        "num_records": 16777216,
+        "record_bytes": 32,
+        "security_bits": 128,
+        "threads": 8,
+        "scheme_params": {
+          "variant": "inspire-upstream-0.2.0-two-packing-inspiring",
+          "crt_moduli": [
+            268369921,
+            249561089
+          ],
+          "gadget_base": 1048576,
+          "gadget_len": 3,
+          "log_q": 55.894465510993015,
+          "plaintext_modulus": 65537,
+          "ring_dim": 2048,
+          "sigma": 6.4,
+          "seeds": [
+            0
+          ],
+          "measured_per_seed": 4
+        }
+      },
+      "environment": {
+        "cpu_model": "AMD Ryzen 9 9900X 12-Core Processor",
+        "cpu_features": [
+          "avx2",
+          "avx512f"
+        ],
+        "logical_cores": 8,
+        "ram_bytes": 33646014464,
+        "os": "linux",
+        "timestamp": "2026-07-29T19:55:29.898Z",
+        "runner_version": "inspire-upstream@0.2.0"
+      },
+      "metrics": {
+        "query_bytes": 492433,
+        "response_bytes": 65658,
+        "offline_hint_bytes": 0,
+        "preprocessing_ms": 6458.502677,
+        "server_answer_ms": 4059.8024975,
+        "preprocessing_throughput_mbps": 83.12621962856855,
+        "client_query_gen_ms": 4007.583746,
+        "client_decode_ms": 0.5600505,
+        "peak_memory_bytes": 5551411200
+      },
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. CAVEAT: Upstream 0.2.0's query() calls maybe_generate_packing_keys() on EVERY query — there is no session or key-cache API. Raven's fork added pir/session.rs (ClientSession + a packing-key pre-exchange handshake, keys uploaded once and referenced by handle). So client_query_gen_ms and query_bytes for this row include per-query InspiRING key generation and shipping, while inspire-raven's do not. That is a real difference between the implementations, not a harness artifact — but the two per-query numbers are not measuring the same work, and any comparison must say so. CODE PATH: in this codebase respond_with_variant() dispatches OnePacking and TwoPacking to the same function (respond_inspiring), so requesting TwoPacking actually runs InsPIRe^1, not InsPIRe^2. Raven's fork patched this exact fall-through. The row is therefore not executing the same algorithm as inspire-raven's TwoPacking row even though both are labelled two-packing. CAVEAT: Run with 1 seed x 4 measured iterations instead of the 3 x 16 used for inspire-raven. This implementation's per-query cost is ~2000x higher (4.0 s vs 1.9 ms at 2^20 x 8 B on the reference machine), so the default counts are unfinishable at the larger cells. Fewer iterations lowers confidence in the number; it does not change what is being measured. The counts actually used are recorded in params.scheme_params. The pre-fork baseline. github.com/igor53627/inspire-rs — the upstream that inspire-raven and inspire-lianghuiqiang9 both descend from — has been DELETED from GitHub; crates.io inspire 0.2.0 (published 2026-02-15) is the only surviving copy. Its secure_128_d2048 uses the 2-CRT moduli [268369921, 249561089] (q ~ 2^56), which is exactly the parameter set Raven's fork replaced with a single-prime q = 2^60 - 2^14 + 1, calling it under-provisioned. Benchmarked through a driver crate in this repo, since the published crate ships no BenchReport emitter."
+    },
+    {
+      "scheme": "InsPIRe",
+      "implementation": {
+        "name": "inspire-upstream",
+        "repo": "https://crates.io/crates/inspire/0.2.0",
+        "commit": "0.2.0",
+        "language": "rust",
+        "backend": [
+          "avx2",
+          "rayon"
+        ],
+        "online_work_scope": {
+          "kind": "shard",
+          "entries": 2048,
+          "leaks_shard_id": true,
+          "note": "setup() fixes shard_size_bytes = ring_dim * record_bytes = 2048 records, independent of N. The online answer therefore touches one 2048-record shard no matter how large the database is, and ClientQuery.shard_id is sent in cleartext, so the server learns which shard the query is in. The anonymity set is 2048 records, not N."
+        }
+      },
+      "params": {
+        "num_records": 33554432,
+        "record_bytes": 32,
+        "security_bits": 128,
+        "threads": 8,
+        "scheme_params": {
+          "variant": "inspire-upstream-0.2.0-two-packing-inspiring",
+          "crt_moduli": [
+            268369921,
+            249561089
+          ],
+          "gadget_base": 1048576,
+          "gadget_len": 3,
+          "log_q": 55.894465510993015,
+          "plaintext_modulus": 65537,
+          "ring_dim": 2048,
+          "sigma": 6.4,
+          "seeds": [
+            0
+          ],
+          "measured_per_seed": 4
+        }
+      },
+      "environment": {
+        "cpu_model": "AMD Ryzen 9 9900X 12-Core Processor",
+        "cpu_features": [
+          "avx2",
+          "avx512f"
+        ],
+        "logical_cores": 8,
+        "ram_bytes": 33646014464,
+        "os": "linux",
+        "timestamp": "2026-07-29T19:56:40.806Z",
+        "runner_version": "inspire-upstream@0.2.0"
+      },
+      "metrics": {
+        "query_bytes": 492433,
+        "response_bytes": 65658,
+        "offline_hint_bytes": 0,
+        "preprocessing_ms": 8768.631251,
+        "server_answer_ms": 4059.7811745000004,
+        "preprocessing_throughput_mbps": 122.45261469713957,
+        "client_query_gen_ms": 4002.0279965,
+        "client_decode_ms": 0.5576315000000001,
+        "peak_memory_bytes": 10400239616
+      },
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. CAVEAT: Upstream 0.2.0's query() calls maybe_generate_packing_keys() on EVERY query — there is no session or key-cache API. Raven's fork added pir/session.rs (ClientSession + a packing-key pre-exchange handshake, keys uploaded once and referenced by handle). So client_query_gen_ms and query_bytes for this row include per-query InspiRING key generation and shipping, while inspire-raven's do not. That is a real difference between the implementations, not a harness artifact — but the two per-query numbers are not measuring the same work, and any comparison must say so. CODE PATH: in this codebase respond_with_variant() dispatches OnePacking and TwoPacking to the same function (respond_inspiring), so requesting TwoPacking actually runs InsPIRe^1, not InsPIRe^2. Raven's fork patched this exact fall-through. The row is therefore not executing the same algorithm as inspire-raven's TwoPacking row even though both are labelled two-packing. CAVEAT: Run with 1 seed x 4 measured iterations instead of the 3 x 16 used for inspire-raven. This implementation's per-query cost is ~2000x higher (4.0 s vs 1.9 ms at 2^20 x 8 B on the reference machine), so the default counts are unfinishable at the larger cells. Fewer iterations lowers confidence in the number; it does not change what is being measured. The counts actually used are recorded in params.scheme_params. The pre-fork baseline. github.com/igor53627/inspire-rs — the upstream that inspire-raven and inspire-lianghuiqiang9 both descend from — has been DELETED from GitHub; crates.io inspire 0.2.0 (published 2026-02-15) is the only surviving copy. Its secure_128_d2048 uses the 2-CRT moduli [268369921, 249561089] (q ~ 2^56), which is exactly the parameter set Raven's fork replaced with a single-prime q = 2^60 - 2^14 + 1, calling it under-provisioned. Benchmarked through a driver crate in this repo, since the published crate ships no BenchReport emitter."
+    },
+    {
+      "scheme": "InsPIRe",
+      "implementation": {
+        "name": "inspire-upstream",
+        "repo": "https://crates.io/crates/inspire/0.2.0",
+        "commit": "0.2.0",
+        "language": "rust",
+        "backend": [
+          "avx2",
+          "rayon"
+        ],
+        "online_work_scope": {
+          "kind": "shard",
+          "entries": 2048,
+          "leaks_shard_id": true,
+          "note": "setup() fixes shard_size_bytes = ring_dim * record_bytes = 2048 records, independent of N. The online answer therefore touches one 2048-record shard no matter how large the database is, and ClientQuery.shard_id is sent in cleartext, so the server learns which shard the query is in. The anonymity set is 2048 records, not N."
+        }
+      },
+      "params": {
+        "num_records": 67108864,
+        "record_bytes": 32,
+        "security_bits": 128,
+        "threads": 8,
+        "scheme_params": {
+          "variant": "inspire-upstream-0.2.0-two-packing-inspiring",
+          "crt_moduli": [
+            268369921,
+            249561089
+          ],
+          "gadget_base": 1048576,
+          "gadget_len": 3,
+          "log_q": 55.894465510993015,
+          "plaintext_modulus": 65537,
+          "ring_dim": 2048,
+          "sigma": 6.4,
+          "seeds": [
+            0
+          ],
+          "measured_per_seed": 4
+        }
+      },
+      "environment": {
+        "cpu_model": "AMD Ryzen 9 9900X 12-Core Processor",
+        "cpu_features": [
+          "avx2",
+          "avx512f"
+        ],
+        "logical_cores": 8,
+        "ram_bytes": 33646014464,
+        "os": "linux",
+        "timestamp": "2026-07-29T19:57:36.169Z",
+        "runner_version": "inspire-upstream@0.2.0"
+      },
+      "metrics": {
+        "query_bytes": 492433,
+        "response_bytes": 65658,
+        "offline_hint_bytes": 0,
+        "preprocessing_ms": 13364.956490999999,
+        "server_answer_ms": 4054.5432490000003,
+        "preprocessing_throughput_mbps": 160.68018249413095,
+        "client_query_gen_ms": 4000.319622,
+        "client_decode_ms": 0.5535669999999999,
+        "peak_memory_bytes": 20098453504
+      },
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. CAVEAT: Upstream 0.2.0's query() calls maybe_generate_packing_keys() on EVERY query — there is no session or key-cache API. Raven's fork added pir/session.rs (ClientSession + a packing-key pre-exchange handshake, keys uploaded once and referenced by handle). So client_query_gen_ms and query_bytes for this row include per-query InspiRING key generation and shipping, while inspire-raven's do not. That is a real difference between the implementations, not a harness artifact — but the two per-query numbers are not measuring the same work, and any comparison must say so. CODE PATH: in this codebase respond_with_variant() dispatches OnePacking and TwoPacking to the same function (respond_inspiring), so requesting TwoPacking actually runs InsPIRe^1, not InsPIRe^2. Raven's fork patched this exact fall-through. The row is therefore not executing the same algorithm as inspire-raven's TwoPacking row even though both are labelled two-packing. CAVEAT: Run with 1 seed x 4 measured iterations instead of the 3 x 16 used for inspire-raven. This implementation's per-query cost is ~2000x higher (4.0 s vs 1.9 ms at 2^20 x 8 B on the reference machine), so the default counts are unfinishable at the larger cells. Fewer iterations lowers confidence in the number; it does not change what is being measured. The counts actually used are recorded in params.scheme_params. The pre-fork baseline. github.com/igor53627/inspire-rs — the upstream that inspire-raven and inspire-lianghuiqiang9 both descend from — has been DELETED from GitHub; crates.io inspire 0.2.0 (published 2026-02-15) is the only surviving copy. Its secure_128_d2048 uses the 2-CRT moduli [268369921, 249561089] (q ~ 2^56), which is exactly the parameter set Raven's fork replaced with a single-prime q = 2^60 - 2^14 + 1, calling it under-provisioned. Benchmarked through a driver crate in this repo, since the published crate ships no BenchReport emitter."
+    },
+    {
+      "scheme": "InsPIRe",
+      "implementation": {
+        "name": "inspire-upstream",
+        "repo": "https://crates.io/crates/inspire/0.2.0",
+        "commit": "0.2.0",
+        "language": "rust",
+        "backend": [
+          "avx2",
+          "rayon"
+        ],
+        "online_work_scope": {
+          "kind": "shard",
+          "entries": 2048,
+          "leaks_shard_id": true,
+          "note": "setup() fixes shard_size_bytes = ring_dim * record_bytes = 2048 records, independent of N. The online answer therefore touches one 2048-record shard no matter how large the database is, and ClientQuery.shard_id is sent in cleartext, so the server learns which shard the query is in. The anonymity set is 2048 records, not N."
+        }
+      },
+      "params": {
+        "num_records": 268435456,
+        "record_bytes": 8,
+        "security_bits": 128,
+        "threads": 8,
+        "scheme_params": {
+          "variant": "inspire-upstream-0.2.0-two-packing-inspiring",
+          "crt_moduli": [
+            268369921,
+            249561089
+          ],
+          "gadget_base": 1048576,
+          "gadget_len": 3,
+          "log_q": 55.894465510993015,
+          "plaintext_modulus": 65537,
+          "ring_dim": 2048,
+          "sigma": 6.4,
+          "seeds": [
+            0
+          ],
+          "measured_per_seed": 4
+        }
+      },
+      "environment": {
+        "cpu_model": "AMD Ryzen 9 9900X 12-Core Processor",
+        "cpu_features": [
+          "avx2",
+          "avx512f"
+        ],
+        "logical_cores": 8,
+        "ram_bytes": 33646014464,
+        "os": "linux",
+        "timestamp": "2026-07-29T19:58:51.352Z",
+        "runner_version": "inspire-upstream@0.2.0"
+      },
+      "metrics": {
+        "query_bytes": 492433,
+        "response_bytes": 65658,
+        "offline_hint_bytes": 0,
+        "preprocessing_ms": 13272.888205,
+        "server_answer_ms": 4007.6789005,
+        "preprocessing_throughput_mbps": 161.79475143857735,
+        "client_query_gen_ms": 4012.7152875,
+        "client_decode_ms": 0.559288,
+        "peak_memory_bytes": 20088135680
+      },
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. CAVEAT: Upstream 0.2.0's query() calls maybe_generate_packing_keys() on EVERY query — there is no session or key-cache API. Raven's fork added pir/session.rs (ClientSession + a packing-key pre-exchange handshake, keys uploaded once and referenced by handle). So client_query_gen_ms and query_bytes for this row include per-query InspiRING key generation and shipping, while inspire-raven's do not. That is a real difference between the implementations, not a harness artifact — but the two per-query numbers are not measuring the same work, and any comparison must say so. CODE PATH: in this codebase respond_with_variant() dispatches OnePacking and TwoPacking to the same function (respond_inspiring), so requesting TwoPacking actually runs InsPIRe^1, not InsPIRe^2. Raven's fork patched this exact fall-through. The row is therefore not executing the same algorithm as inspire-raven's TwoPacking row even though both are labelled two-packing. CAVEAT: Run with 1 seed x 4 measured iterations instead of the 3 x 16 used for inspire-raven. This implementation's per-query cost is ~2000x higher (4.0 s vs 1.9 ms at 2^20 x 8 B on the reference machine), so the default counts are unfinishable at the larger cells. Fewer iterations lowers confidence in the number; it does not change what is being measured. The counts actually used are recorded in params.scheme_params. The pre-fork baseline. github.com/igor53627/inspire-rs — the upstream that inspire-raven and inspire-lianghuiqiang9 both descend from — has been DELETED from GitHub; crates.io inspire 0.2.0 (published 2026-02-15) is the only surviving copy. Its secure_128_d2048 uses the 2-CRT moduli [268369921, 249561089] (q ~ 2^56), which is exactly the parameter set Raven's fork replaced with a single-prime q = 2^60 - 2^14 + 1, calling it under-provisioned. Benchmarked through a driver crate in this repo, since the published crate ships no BenchReport emitter."
     },
     {
       "scheme": "iSimplePIR",
@@ -431,8 +2387,13 @@
         "threads": 8,
         "scheme_params": {
           "variant": "isimplepir-default-q-setup-owned",
-          "throughput_qps_per_core": 331.6955863756038,
-          "measured_queries": 16
+          "throughput_qps_per_core": 296.61488265173705,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "measured_per_seed": 16
         }
       },
       "environment": {
@@ -442,19 +2403,38 @@
           "avx512f"
         ],
         "logical_cores": 8,
+        "ram_bytes": 33646014464,
         "os": "linux",
-        "timestamp": "2026-07-28T02:00:34.464Z",
-        "runner_version": "raven-bench@5a899b5dc60c"
+        "timestamp": "2026-07-29T19:59:12.855Z",
+        "runner_version": "isimplepir-raven@5a899b5dc60c"
       },
       "metrics": {
         "query_bytes": 10932,
         "response_bytes": 10932,
         "offline_hint_bytes": 11186208,
-        "preprocessing_ms": 473.45568399999996,
-        "server_answer_ms": 0.432,
-        "server_throughput_mbps": 19418.074074074073,
-        "client_query_gen_ms": 2.622,
-        "preprocessing_throughput_mbps": 17.717831432772492
+        "preprocessing_ms": 472.240677,
+        "server_answer_ms": 0.479,
+        "server_throughput_mbps": 17512.751565762002,
+        "preprocessing_throughput_mbps": 17.763416851954073,
+        "client_query_gen_ms": 2.782,
+        "peak_memory_bytes": 77787136
+      },
+      "metrics_spread": {
+        "server_answer_ms": {
+          "min": 0.34,
+          "max": 0.571,
+          "n": 3
+        },
+        "client_query_gen_ms": {
+          "min": 2.611,
+          "max": 2.787,
+          "n": 3
+        },
+        "preprocessing_ms": {
+          "min": 472.240677,
+          "max": 472.240677,
+          "n": 3
+        }
       },
       "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. Raven's own iSimplePIR crate (eprint 2026/030), driven through the b2-isimplepir bench binary. Kept as the hint-based contrast to the InsPIRe implementations."
     },
@@ -481,8 +2461,13 @@
         "threads": 8,
         "scheme_params": {
           "variant": "isimplepir-default-q-setup-owned",
-          "throughput_qps_per_core": 155.22978859643166,
-          "measured_queries": 16
+          "throughput_qps_per_core": 133.06387897840207,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "measured_per_seed": 16
         }
       },
       "environment": {
@@ -492,19 +2477,38 @@
           "avx512f"
         ],
         "logical_cores": 8,
+        "ram_bytes": 33646014464,
         "os": "linux",
-        "timestamp": "2026-07-28T02:00:34.405Z",
-        "runner_version": "raven-bench@5a899b5dc60c"
+        "timestamp": "2026-07-29T19:59:15.604Z",
+        "runner_version": "isimplepir-raven@5a899b5dc60c"
       },
       "metrics": {
         "query_bytes": 21856,
         "response_bytes": 21856,
         "offline_hint_bytes": 22372384,
-        "preprocessing_ms": 1829.5168390000001,
-        "server_answer_ms": 2.188,
-        "server_throughput_mbps": 15335.663619744057,
-        "client_query_gen_ms": 3.992,
-        "preprocessing_throughput_mbps": 18.340597519911647
+        "preprocessing_ms": 1845.94202,
+        "server_answer_ms": 2.331,
+        "server_throughput_mbps": 14394.865722865721,
+        "preprocessing_throughput_mbps": 18.17740299340496,
+        "client_query_gen_ms": 4.984,
+        "peak_memory_bytes": 212242432
+      },
+      "metrics_spread": {
+        "server_answer_ms": {
+          "min": 2.129,
+          "max": 2.544,
+          "n": 3
+        },
+        "client_query_gen_ms": {
+          "min": 3.862,
+          "max": 5.608,
+          "n": 3
+        },
+        "preprocessing_ms": {
+          "min": 1845.94202,
+          "max": 1845.94202,
+          "n": 3
+        }
       },
       "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. Raven's own iSimplePIR crate (eprint 2026/030), driven through the b2-isimplepir bench binary. Kept as the hint-based contrast to the InsPIRe implementations."
     },
@@ -531,8 +2535,13 @@
         "threads": 8,
         "scheme_params": {
           "variant": "isimplepir-default-q-setup-owned",
-          "throughput_qps_per_core": 34.24906778318628,
-          "measured_queries": 16
+          "throughput_qps_per_core": 31.57244593711953,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "measured_per_seed": 16
         }
       },
       "environment": {
@@ -542,19 +2551,38 @@
           "avx512f"
         ],
         "logical_cores": 8,
+        "ram_bytes": 33646014464,
         "os": "linux",
-        "timestamp": "2026-07-28T02:00:34.348Z",
-        "runner_version": "raven-bench@5a899b5dc60c"
+        "timestamp": "2026-07-29T19:59:35.428Z",
+        "runner_version": "isimplepir-raven@5a899b5dc60c"
       },
       "metrics": {
         "query_bytes": 61796,
         "response_bytes": 61796,
         "offline_hint_bytes": 63270944,
-        "preprocessing_ms": 14602.594106,
-        "server_answer_ms": 14.961,
-        "server_throughput_mbps": 17942.347169306864,
-        "client_query_gen_ms": 13.259,
-        "preprocessing_throughput_mbps": 18.382723922299782
+        "preprocessing_ms": 14707.730848000001,
+        "server_answer_ms": 14.967,
+        "server_throughput_mbps": 17935.154406360656,
+        "preprocessing_throughput_mbps": 18.25131686010576,
+        "client_query_gen_ms": 14.333,
+        "peak_memory_bytes": 1147768832
+      },
+      "metrics_spread": {
+        "server_answer_ms": {
+          "min": 14.849,
+          "max": 15.051,
+          "n": 3
+        },
+        "client_query_gen_ms": {
+          "min": 13.419,
+          "max": 16.397,
+          "n": 3
+        },
+        "preprocessing_ms": {
+          "min": 14707.730848000001,
+          "max": 14707.730848000001,
+          "n": 3
+        }
       },
       "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. Raven's own iSimplePIR crate (eprint 2026/030), driven through the b2-isimplepir bench binary. Kept as the hint-based contrast to the InsPIRe implementations."
     },
@@ -581,8 +2609,13 @@
         "threads": 8,
         "scheme_params": {
           "variant": "isimplepir-default-q-setup-owned",
-          "throughput_qps_per_core": 50.151237325058375,
-          "measured_queries": 16
+          "throughput_qps_per_core": 52.89938206909321,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "measured_per_seed": 16
         }
       },
       "environment": {
@@ -592,19 +2625,38 @@
           "avx512f"
         ],
         "logical_cores": 8,
+        "ram_bytes": 33646014464,
         "os": "linux",
-        "timestamp": "2026-07-28T02:00:34.636Z",
-        "runner_version": "raven-bench@5a899b5dc60c"
+        "timestamp": "2026-07-29T19:59:45.582Z",
+        "runner_version": "isimplepir-raven@5a899b5dc60c"
       },
       "metrics": {
         "query_bytes": 43700,
         "response_bytes": 43700,
         "offline_hint_bytes": 44740640,
-        "preprocessing_ms": 7310.928736,
-        "server_answer_ms": 8.93,
-        "server_throughput_mbps": 15029.980739081746,
-        "client_query_gen_ms": 11.59,
-        "preprocessing_throughput_mbps": 18.358505854269072
+        "preprocessing_ms": 7337.476231000001,
+        "server_answer_ms": 7.933,
+        "server_throughput_mbps": 16918.91188705408,
+        "preprocessing_throughput_mbps": 18.292083514076054,
+        "client_query_gen_ms": 9.628,
+        "peak_memory_bytes": 614998016
+      },
+      "metrics_spread": {
+        "server_answer_ms": {
+          "min": 7.784,
+          "max": 7.974,
+          "n": 3
+        },
+        "client_query_gen_ms": {
+          "min": 9.555,
+          "max": 11.527,
+          "n": 3
+        },
+        "preprocessing_ms": {
+          "min": 7337.476231000001,
+          "max": 7337.476231000001,
+          "n": 3
+        }
       },
       "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. Raven's own iSimplePIR crate (eprint 2026/030), driven through the b2-isimplepir bench binary. Kept as the hint-based contrast to the InsPIRe implementations."
     },
@@ -631,8 +2683,13 @@
         "threads": 8,
         "scheme_params": {
           "variant": "isimplepir-default-q-setup-owned",
-          "throughput_qps_per_core": 19.790394979176792,
-          "measured_queries": 16
+          "throughput_qps_per_core": 19.372383214798564,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "measured_per_seed": 16
         }
       },
       "environment": {
@@ -642,19 +2699,38 @@
           "avx512f"
         ],
         "logical_cores": 8,
+        "ram_bytes": 33646014464,
         "os": "linux",
-        "timestamp": "2026-07-28T02:00:34.579Z",
-        "runner_version": "raven-bench@5a899b5dc60c"
+        "timestamp": "2026-07-29T20:00:24.513Z",
+        "runner_version": "isimplepir-raven@5a899b5dc60c"
       },
       "metrics": {
         "query_bytes": 87392,
         "response_bytes": 87392,
         "offline_hint_bytes": 89481248,
-        "preprocessing_ms": 29309.900575,
-        "server_answer_ms": 28.493,
-        "server_throughput_mbps": 18842.20376934686,
-        "client_query_gen_ms": 20.731,
-        "preprocessing_throughput_mbps": 18.317049920596666
+        "preprocessing_ms": 29417.630965,
+        "server_answer_ms": 28.152,
+        "server_throughput_mbps": 19070.435919295254,
+        "preprocessing_throughput_mbps": 18.24997100000163,
+        "client_query_gen_ms": 22.06,
+        "peak_memory_bytes": 2180939776
+      },
+      "metrics_spread": {
+        "server_answer_ms": {
+          "min": 28.129,
+          "max": 28.845,
+          "n": 3
+        },
+        "client_query_gen_ms": {
+          "min": 19.595,
+          "max": 22.389,
+          "n": 3
+        },
+        "preprocessing_ms": {
+          "min": 29417.630965,
+          "max": 29417.630965,
+          "n": 3
+        }
       },
       "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. Raven's own iSimplePIR crate (eprint 2026/030), driven through the b2-isimplepir bench binary. Kept as the hint-based contrast to the InsPIRe implementations."
     },
@@ -681,8 +2757,13 @@
         "threads": 8,
         "scheme_params": {
           "variant": "isimplepir-default-q-setup-owned",
-          "throughput_qps_per_core": 3.2268376083889714,
-          "measured_queries": 16
+          "throughput_qps_per_core": 3.2625003721289487,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "measured_per_seed": 16
         }
       },
       "environment": {
@@ -692,19 +2773,260 @@
           "avx512f"
         ],
         "logical_cores": 8,
+        "ram_bytes": 33646014464,
         "os": "linux",
-        "timestamp": "2026-07-28T02:00:34.521Z",
-        "runner_version": "raven-bench@5a899b5dc60c"
+        "timestamp": "2026-07-29T20:06:00.675Z",
+        "runner_version": "isimplepir-raven@5a899b5dc60c"
       },
       "metrics": {
         "query_bytes": 262152,
         "response_bytes": 262152,
         "offline_hint_bytes": 268435488,
-        "preprocessing_ms": 264162.487696,
-        "server_answer_ms": 243.173,
-        "server_throughput_mbps": 17662.188219909283,
-        "client_query_gen_ms": 62.063,
-        "preprocessing_throughput_mbps": 16.258808483597704
+        "preprocessing_ms": 266565.86899,
+        "server_answer_ms": 242.631,
+        "server_throughput_mbps": 17701.642807390646,
+        "preprocessing_throughput_mbps": 16.112217637889426,
+        "client_query_gen_ms": 61.657,
+        "peak_memory_bytes": 17937203200
+      },
+      "metrics_spread": {
+        "server_answer_ms": {
+          "min": 242.58,
+          "max": 245.152,
+          "n": 3
+        },
+        "client_query_gen_ms": {
+          "min": 61.325,
+          "max": 61.865,
+          "n": 3
+        },
+        "preprocessing_ms": {
+          "min": 266565.86899,
+          "max": 266565.86899,
+          "n": 3
+        }
+      },
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. Raven's own iSimplePIR crate (eprint 2026/030), driven through the b2-isimplepir bench binary. Kept as the hint-based contrast to the InsPIRe implementations."
+    },
+    {
+      "scheme": "iSimplePIR",
+      "implementation": {
+        "name": "isimplepir-raven",
+        "repo": "https://github.com/hisoka-io/raven",
+        "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+        "language": "rust",
+        "backend": [
+          "avx2"
+        ],
+        "online_work_scope": {
+          "kind": "full_database",
+          "leaks_shard_id": false,
+          "note": "The online answer is over the whole database; no index partition is revealed."
+        }
+      },
+      "params": {
+        "num_records": 33554432,
+        "record_bytes": 32,
+        "security_bits": 128,
+        "threads": 8,
+        "scheme_params": {
+          "variant": "isimplepir-default-q-setup-owned",
+          "throughput_qps_per_core": 10.314927634335815,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "measured_per_seed": 16
+        }
+      },
+      "environment": {
+        "cpu_model": "AMD Ryzen 9 9900X 12-Core Processor",
+        "cpu_features": [
+          "avx2",
+          "avx512f"
+        ],
+        "logical_cores": 8,
+        "ram_bytes": 33646014464,
+        "os": "linux",
+        "timestamp": "2026-07-29T20:07:25.461Z",
+        "runner_version": "isimplepir-raven@5a899b5dc60c"
+      },
+      "metrics": {
+        "query_bytes": 131080,
+        "response_bytes": 131080,
+        "offline_hint_bytes": 134217760,
+        "preprocessing_ms": 66246.004728,
+        "server_answer_ms": 61.837,
+        "server_throughput_mbps": 17364.06720895257,
+        "preprocessing_throughput_mbps": 16.208401222212345,
+        "client_query_gen_ms": 28.633,
+        "peak_memory_bytes": 4701442048
+      },
+      "metrics_spread": {
+        "server_answer_ms": {
+          "min": 61.583,
+          "max": 68.137,
+          "n": 3
+        },
+        "client_query_gen_ms": {
+          "min": 28.247,
+          "max": 29.866,
+          "n": 3
+        },
+        "preprocessing_ms": {
+          "min": 66246.004728,
+          "max": 66246.004728,
+          "n": 3
+        }
+      },
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. Raven's own iSimplePIR crate (eprint 2026/030), driven through the b2-isimplepir bench binary. Kept as the hint-based contrast to the InsPIRe implementations."
+    },
+    {
+      "scheme": "iSimplePIR",
+      "implementation": {
+        "name": "isimplepir-raven",
+        "repo": "https://github.com/hisoka-io/raven",
+        "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+        "language": "rust",
+        "backend": [
+          "avx2"
+        ],
+        "online_work_scope": {
+          "kind": "full_database",
+          "leaks_shard_id": false,
+          "note": "The online answer is over the whole database; no index partition is revealed."
+        }
+      },
+      "params": {
+        "num_records": 67108864,
+        "record_bytes": 32,
+        "security_bits": 128,
+        "threads": 8,
+        "scheme_params": {
+          "variant": "isimplepir-default-q-setup-owned",
+          "throughput_qps_per_core": 6.072836846026638,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "measured_per_seed": 16
+        }
+      },
+      "environment": {
+        "cpu_model": "AMD Ryzen 9 9900X 12-Core Processor",
+        "cpu_features": [
+          "avx2",
+          "avx512f"
+        ],
+        "logical_cores": 8,
+        "ram_bytes": 33646014464,
+        "os": "linux",
+        "timestamp": "2026-07-29T20:10:13.326Z",
+        "runner_version": "isimplepir-raven@5a899b5dc60c"
+      },
+      "metrics": {
+        "query_bytes": 185372,
+        "response_bytes": 185372,
+        "offline_hint_bytes": 189812768,
+        "preprocessing_ms": 132346.432504,
+        "server_answer_ms": 121.836,
+        "server_throughput_mbps": 17626.018976328836,
+        "preprocessing_throughput_mbps": 16.226229958522644,
+        "client_query_gen_ms": 40.4,
+        "peak_memory_bytes": 9163501568
+      },
+      "metrics_spread": {
+        "server_answer_ms": {
+          "min": 121.757,
+          "max": 122.24,
+          "n": 3
+        },
+        "client_query_gen_ms": {
+          "min": 40.169,
+          "max": 40.557,
+          "n": 3
+        },
+        "preprocessing_ms": {
+          "min": 132346.432504,
+          "max": 132346.432504,
+          "n": 3
+        }
+      },
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. Raven's own iSimplePIR crate (eprint 2026/030), driven through the b2-isimplepir bench binary. Kept as the hint-based contrast to the InsPIRe implementations."
+    },
+    {
+      "scheme": "iSimplePIR",
+      "implementation": {
+        "name": "isimplepir-raven",
+        "repo": "https://github.com/hisoka-io/raven",
+        "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+        "language": "rust",
+        "backend": [
+          "avx2"
+        ],
+        "online_work_scope": {
+          "kind": "full_database",
+          "leaks_shard_id": false,
+          "note": "The online answer is over the whole database; no index partition is revealed."
+        }
+      },
+      "params": {
+        "num_records": 134217728,
+        "record_bytes": 32,
+        "security_bits": 128,
+        "threads": 8,
+        "scheme_params": {
+          "variant": "isimplepir-default-q-setup-owned",
+          "throughput_qps_per_core": 3.2442838253593904,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "measured_per_seed": 16
+        }
+      },
+      "environment": {
+        "cpu_model": "AMD Ryzen 9 9900X 12-Core Processor",
+        "cpu_features": [
+          "avx2",
+          "avx512f"
+        ],
+        "logical_cores": 8,
+        "ram_bytes": 33646014464,
+        "os": "linux",
+        "timestamp": "2026-07-29T20:15:47.712Z",
+        "runner_version": "isimplepir-raven@5a899b5dc60c"
+      },
+      "metrics": {
+        "query_bytes": 262152,
+        "response_bytes": 262152,
+        "offline_hint_bytes": 268435488,
+        "preprocessing_ms": 264674.418807,
+        "server_answer_ms": 242.853,
+        "server_throughput_mbps": 17685.461147278394,
+        "preprocessing_throughput_mbps": 16.22736082829327,
+        "client_query_gen_ms": 62.642,
+        "peak_memory_bytes": 17948958720
+      },
+      "metrics_spread": {
+        "server_answer_ms": {
+          "min": 242.271,
+          "max": 243.355,
+          "n": 3
+        },
+        "client_query_gen_ms": {
+          "min": 61.841,
+          "max": 63.007,
+          "n": 3
+        },
+        "preprocessing_ms": {
+          "min": 264674.418807,
+          "max": 264674.418807,
+          "n": 3
+        }
       },
       "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. Raven's own iSimplePIR crate (eprint 2026/030), driven through the b2-isimplepir bench binary. Kept as the hint-based contrast to the InsPIRe implementations."
     },
@@ -731,8 +3053,13 @@
         "threads": 8,
         "scheme_params": {
           "variant": "isimplepir-default-q-setup-owned",
-          "throughput_qps_per_core": 6.136308113234827,
-          "measured_queries": 16
+          "throughput_qps_per_core": 6.039027973155011,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "measured_per_seed": 16
         }
       },
       "environment": {
@@ -742,69 +3069,38 @@
           "avx512f"
         ],
         "logical_cores": 8,
+        "ram_bytes": 33646014464,
         "os": "linux",
-        "timestamp": "2026-07-28T02:00:34.759Z",
-        "runner_version": "raven-bench@5a899b5dc60c"
+        "timestamp": "2026-07-29T20:18:35.951Z",
+        "runner_version": "isimplepir-raven@5a899b5dc60c"
       },
       "metrics": {
         "query_bytes": 185372,
         "response_bytes": 185372,
         "offline_hint_bytes": 189812768,
-        "preprocessing_ms": 131551.819314,
-        "server_answer_ms": 121.895,
-        "server_throughput_mbps": 17617.487575372248,
-        "client_query_gen_ms": 39.736,
-        "preprocessing_throughput_mbps": 16.324241346097907
+        "preprocessing_ms": 132363.616093,
+        "server_answer_ms": 122.003,
+        "server_throughput_mbps": 17601.892150193027,
+        "preprocessing_throughput_mbps": 16.22412345165273,
+        "client_query_gen_ms": 40.359,
+        "peak_memory_bytes": 9163505664
       },
-      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. Raven's own iSimplePIR crate (eprint 2026/030), driven through the b2-isimplepir bench binary. Kept as the hint-based contrast to the InsPIRe implementations."
-    },
-    {
-      "scheme": "iSimplePIR",
-      "implementation": {
-        "name": "isimplepir-raven",
-        "repo": "https://github.com/hisoka-io/raven",
-        "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
-        "language": "rust",
-        "backend": [
-          "avx2"
-        ],
-        "online_work_scope": {
-          "kind": "full_database",
-          "leaks_shard_id": false,
-          "note": "The online answer is over the whole database; no index partition is revealed."
+      "metrics_spread": {
+        "server_answer_ms": {
+          "min": 121.925,
+          "max": 122.381,
+          "n": 3
+        },
+        "client_query_gen_ms": {
+          "min": 40.228,
+          "max": 40.654,
+          "n": 3
+        },
+        "preprocessing_ms": {
+          "min": 132363.616093,
+          "max": 132363.616093,
+          "n": 3
         }
-      },
-      "params": {
-        "num_records": 268435456,
-        "record_bytes": 32,
-        "security_bits": 128,
-        "threads": 8,
-        "scheme_params": {
-          "variant": "isimplepir-default-q-setup-owned",
-          "throughput_qps_per_core": 0.1708060608096692,
-          "measured_queries": 16
-        }
-      },
-      "environment": {
-        "cpu_model": "AMD Ryzen 9 9900X 12-Core Processor",
-        "cpu_features": [
-          "avx2",
-          "avx512f"
-        ],
-        "logical_cores": 8,
-        "os": "linux",
-        "timestamp": "2026-07-28T02:00:34.702Z",
-        "runner_version": "raven-bench@5a899b5dc60c"
-      },
-      "metrics": {
-        "query_bytes": 370736,
-        "response_bytes": 370736,
-        "offline_hint_bytes": 379625504,
-        "preprocessing_ms": 718930.377822,
-        "server_answer_ms": 4892.141,
-        "server_throughput_mbps": 1755.8640668778762,
-        "client_query_gen_ms": 277.707,
-        "preprocessing_throughput_mbps": 11.948214816048269
       },
       "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. Raven's own iSimplePIR crate (eprint 2026/030), driven through the b2-isimplepir bench binary. Kept as the hint-based contrast to the InsPIRe implementations."
     }

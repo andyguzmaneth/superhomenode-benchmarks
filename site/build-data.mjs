@@ -64,6 +64,24 @@ records.sort((a, b) => {
   return k(a) < k(b) ? -1 : k(a) > k(b) ? 1 : 0;
 });
 
+// The published set is single-machine by construction. A row from anywhere else
+// is a mistake — an old file resurrected by a pull, a run with
+// --allow-machine-mismatch — and silently plotting it would break the one
+// premise the whole comparison rests on.
+const REFERENCE_MACHINE = JSON.parse(
+  await readFile(join(here, "..", "machines", "reference.json"), "utf8"),
+).label;
+const offMachine = records.filter((r) => machineOf(r) !== REFERENCE_MACHINE);
+if (offMachine.length) {
+  console.error(
+    `refusing to build: ${offMachine.length} row(s) not from ${REFERENCE_MACHINE}:\n` +
+      offMachine
+        .map((r) => `  ${r.implementation?.name} 2^${Math.log2(r.params.num_records)}x${r.params.record_bytes}B on ${machineOf(r)}`)
+        .join("\n"),
+  );
+  process.exit(1);
+}
+
 const bundle = {
   generated_from: `${records.length} record(s)`,
   schemes: [...new Set(records.map((r) => r.scheme))].sort(),

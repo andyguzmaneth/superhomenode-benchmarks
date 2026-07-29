@@ -1,0 +1,68 @@
+{
+  "scheme": "InsPIRe2",
+  "implementation": {
+    "name": "inspire2-poulpy",
+    "repo": "https://github.com/poulpy-fhe/poulpy-pir",
+    "commit": "625ac4094b2a99b23bc57e44e080dbc2dd526768",
+    "language": "rust",
+    "backend": [
+      "avx512f",
+      "private-gemm-x86"
+    ],
+    "online_work_scope": {
+      "kind": "full_database",
+      "leaks_shard_id": false,
+      "note": "The online answer is over the whole database; no index partition is revealed."
+    }
+  },
+  "params": {
+    "num_records": 268435456,
+    "record_bytes": 32,
+    "security_bits": 128,
+    "threads": 8,
+    "scheme_params": {
+      "variant": "InsPIRe2-g32-8GiB-c131072",
+      "preset": "InsPIRe2-g32-8GiB-c131072",
+      "collapse": "Recursion { gamma0: 32, gamma1: 1024, gamma2: 32 }",
+      "ring_degree_n": 2048,
+      "packing_widths": "32 / 1024 / 32",
+      "online_repeats": 10,
+      "batch": 1,
+      "phase_breakdown_ms": {
+        "setup": 404.238462,
+        "database_fill": 1225.644635,
+        "query_mask": 1474.47433,
+        "offline": 25944.479229
+      },
+      "noise_log2_max": "-22.685",
+      "poulpy_reported_peak_rss_bytes": 16967268303,
+      "seeds": [
+        0
+      ],
+      "measured_per_seed": 10
+    }
+  },
+  "environment": {
+    "cpu_model": "AMD Ryzen 9 9900X 12-Core Processor",
+    "cpu_features": [
+      "avx2",
+      "avx512f"
+    ],
+    "logical_cores": 8,
+    "ram_bytes": 33646014464,
+    "os": "linux",
+    "timestamp": "2026-07-29T17:25:13.031Z",
+    "runner_version": "inspire2-poulpy@625ac4094b2a"
+  },
+  "metrics": {
+    "query_bytes": 1218389,
+    "response_bytes": 196889,
+    "offline_hint_bytes": 0,
+    "preprocessing_ms": 29048.836656,
+    "server_answer_ms": 236.198397,
+    "preprocessing_throughput_mbps": 295.70666439152427,
+    "client_query_gen_ms": 2.428336,
+    "peak_memory_bytes": 16967372800
+  },
+  "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. CAVEAT: Same measurement caveat as inspire-poulpy: one run averaged over the example's REPEATS=10, no cross-seed spread, no separately reported client decode. The second InsPIRe construction from the paper: adds a recursive second PIR level, trading a larger query for a smaller response and less per-query work, which the authors expect to pay off on large databases. Published as its own implementation row rather than folded into inspire-poulpy — it is a different protocol and comparing it directly against single-level InsPIRe rows would be a category error. gamma0=32 with gamma1=1024; the g16 and g64 families exist in the crate and can be added as further rows if the width turns out to matter."
+}

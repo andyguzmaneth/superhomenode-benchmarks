@@ -1,0 +1,67 @@
+{
+  "scheme": "InsPIRe",
+  "implementation": {
+    "name": "inspire-lianghuiqiang9",
+    "repo": "https://github.com/lianghuiqiang9/inspire-rs",
+    "commit": "a76dfdc90dc291eb2dd6343c5f87f3a963f20ba9",
+    "forked_from": "https://github.com/igor53627/inspire-rs",
+    "language": "rust",
+    "backend": [
+      "avx2",
+      "rayon"
+    ],
+    "online_work_scope": {
+      "kind": "shard",
+      "entries": 2048,
+      "leaks_shard_id": true,
+      "note": "setup() fixes shard_size_bytes = ring_dim * record_bytes = 2048 records, independent of N. The online answer therefore touches one 2048-record shard no matter how large the database is, and ClientQuery.shard_id is sent in cleartext, so the server learns which shard the query is in. The anonymity set is 2048 records, not N."
+    }
+  },
+  "params": {
+    "num_records": 1048576,
+    "record_bytes": 8,
+    "security_bits": 128,
+    "threads": 8,
+    "scheme_params": {
+      "variant": "inspire-lianghuiqiang9-two-packing-inspiring",
+      "crt_moduli": [
+        268369921,
+        249561089
+      ],
+      "gadget_base": 1048576,
+      "gadget_len": 3,
+      "log_q": 55.894465510993015,
+      "plaintext_modulus": 65537,
+      "ring_dim": 2048,
+      "sigma": 6.4,
+      "seeds": [
+        0
+      ],
+      "measured_per_seed": 4
+    }
+  },
+  "environment": {
+    "cpu_model": "AMD Ryzen 9 9900X 12-Core Processor",
+    "cpu_features": [
+      "avx2",
+      "avx512f"
+    ],
+    "logical_cores": 8,
+    "ram_bytes": 33646014464,
+    "os": "linux",
+    "timestamp": "2026-07-29T19:38:54.622Z",
+    "runner_version": "inspire-lianghuiqiang9@a76dfdc90dc2"
+  },
+  "metrics": {
+    "query_bytes": 492433,
+    "response_bytes": 65658,
+    "offline_hint_bytes": 0,
+    "preprocessing_ms": 4175.834747999999,
+    "server_answer_ms": 4004.2367360000003,
+    "preprocessing_throughput_mbps": 2.0088457772467394,
+    "client_query_gen_ms": 4003.283488,
+    "client_decode_ms": 0.5679190000000001,
+    "peak_memory_bytes": 762740736
+  },
+  "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. CAVEAT: Inherits the upstream's behaviour: query() regenerates InspiRING packing keys on every call, so client_query_gen_ms and query_bytes include per-query key generation and shipping. inspire-raven's do not. CODE PATH: in this codebase respond_with_variant() dispatches OnePacking and TwoPacking to the same function (respond_inspiring), so requesting TwoPacking actually runs InsPIRe^1, not InsPIRe^2. Raven's fork patched this exact fall-through. The row is therefore not executing the same algorithm as inspire-raven's TwoPacking row even though both are labelled two-packing. CAVEAT: Run with 1 seed x 4 measured iterations instead of the 3 x 16 used for inspire-raven. This implementation's per-query cost is ~2000x higher (4.0 s vs 1.9 ms at 2^20 x 8 B on the reference machine), so the default counts are unfinishable at the larger cells. Fewer iterations lowers confidence in the number; it does not change what is being measured. The counts actually used are recorded in params.scheme_params. A second fork of the deleted igor53627/inspire-rs, diverged 2026-04-24 — after the upstream's last substantive commit but before Raven's patches. Declares the same crate name and version (inspire 0.2.0) and exports an identical public API, so it is benchmarked through the same shared driver as inspire-upstream; the interesting question is whether the fork changed anything measurable. Last pushed 2026-04-24."
+}

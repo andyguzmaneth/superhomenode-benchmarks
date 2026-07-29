@@ -23,14 +23,19 @@
     }
   },
   "params": {
-    "num_records": 16777216,
-    "record_bytes": 8,
+    "num_records": 1048576,
+    "record_bytes": 256,
     "security_bits": 128,
     "threads": 8,
     "scheme_params": {
       "variant": "inspire-default-q-twopacking-inspiring-commit-e-handshake-solinas",
-      "throughput_qps_per_core": 237.54379713759724,
-      "measured_queries": 16
+      "throughput_qps_per_core": 10.154281616307776,
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "measured_per_seed": 16
     }
   },
   "environment": {
@@ -40,18 +45,37 @@
       "avx512f"
     ],
     "logical_cores": 8,
+    "ram_bytes": 33646014464,
     "os": "linux",
-    "timestamp": "2026-07-28T02:00:34.233Z",
-    "runner_version": "raven-bench@5a899b5dc60c"
+    "timestamp": "2026-07-29T19:48:59.353Z",
+    "runner_version": "inspire-raven@3be3cc7d56db"
   },
   "metrics": {
     "query_bytes": 98840,
     "response_bytes": 32879,
     "offline_hint_bytes": 0,
-    "preprocessing_ms": 3791.513067,
-    "server_answer_ms": 1.887,
-    "client_query_gen_ms": 2.321,
-    "preprocessing_throughput_mbps": 35.39951613728673
+    "preprocessing_ms": 4203.042331,
+    "server_answer_ms": 96.232,
+    "preprocessing_throughput_mbps": 63.866940863318185,
+    "client_query_gen_ms": 2.328,
+    "peak_memory_bytes": 2121203712
+  },
+  "metrics_spread": {
+    "server_answer_ms": {
+      "min": 96.139,
+      "max": 96.26,
+      "n": 3
+    },
+    "client_query_gen_ms": {
+      "min": 2.327,
+      "max": 2.338,
+      "n": 3
+    },
+    "preprocessing_ms": {
+      "min": 4203.042331,
+      "max": 4203.042331,
+      "n": 3
+    }
   },
   "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. Raven's fork, driven through raven's b1-inspire bench binary. UPSTREAM.md documents 6 local patches, including replacing upstream's under-provisioned 2-CRT moduli in secure_128_d{2048,4096} with a single-prime q, and a CRS shrink from ~34.9 to ~1.1 MiB."
 }

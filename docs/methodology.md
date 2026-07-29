@@ -18,7 +18,24 @@ claimed `security_bits`, `threads`, the exact `environment` (CPU model, features
 cores, RAM, OS), and the implementation's `repo` + `commit` + `forked_from` +
 `backend`.
 
-## 2. One machine, frozen
+## 2. The machine must not swap
+
+`machines/reference.json` records `swap: disabled` and `scripts/bench.sh` treats
+any enabled swap as a machine mismatch, refusing to publish.
+
+This is not hygiene, it is a correctness requirement, and it was learned the hard
+way: the VM shipped with an 8 GiB `/swap.img` and had paged ~24 GB out during
+early runs. The effect is to convert "this workload does not fit in RAM" into
+"this workload fits, 10x slower" — a statement about the disk presented as a
+statement about the software. The iSimplePIR 2^28x32B row read 4892 ms against a
+17.6 GB/s throughput trend that predicts ~489 ms for an 8.6 GB database; with
+swap off, that cell simply does not fit 32 GB. Rows measured while swap was
+available were discarded rather than corrected.
+
+Cells additionally run with `MemorySwapMax=0` in their cgroup, so a cell can
+never page out even if the host is later misconfigured.
+
+## 3. One machine, frozen
 
 All published rows come from the single configuration in
 `machines/reference.json`. `scripts/bench.sh` detects the host it is running on
@@ -30,14 +47,14 @@ to be a constant.
 Rows produced with `--allow-machine-mismatch` are labelled `…-UNVERIFIED` and are
 not publishable.
 
-## 3. Preprocessing is separated from per-query cost
+## 4. Preprocessing is separated from per-query cost
 
 `preprocessing_ms` and `offline_hint_bytes` are one-time offline costs.
 `server_answer_ms`, `query_bytes`, and `response_bytes` are per-query. Never fold
 one into the other. Silent-preprocessing implementations report
 `offline_hint_bytes: 0`.
 
-## 4. Throughput is only reported where it means something
+## 5. Throughput is only reported where it means something
 
 `server_throughput_mbps` = database bytes ÷ `server_answer_ms`. That ratio is
 only a real throughput when the online phase actually scans the database, so it
@@ -50,14 +67,14 @@ published.
 well-defined for every implementation here, because the offline phase has to
 touch the whole database once.
 
-## 5. Spread is published where it exists
+## 6. Spread is published where it exists
 
 Each cell is run over multiple seeds. Where an implementation exposes more than
 one measurement, `metrics_spread` carries min/max/n alongside the median. PIR at
 these sizes is memory-bandwidth-bound, so variance is signal, not noise to be
 averaged away.
 
-## 5b. Why the reduced iteration counts are defensible
+## 6b. Why the reduced iteration counts are defensible
 
 `inspire-upstream` and `inspire-lianghuiqiang9` run 1 seed x 4 iterations rather
 than the 3 x 16 used elsewhere, because their per-query cost is ~2000x higher and
@@ -96,7 +113,7 @@ Neither check applies to implementations with real variance. `inspire-poulpy` an
 measured over the example's own 10 repeats, and their rows carry no cross-seed
 spread, which the site shows as a point rather than a range.
 
-## 6. Latency is only comparable at equal scope
+## 7. Latency is only comparable at equal scope
 
 `server_answer_ms` answers "how long did the online phase take", not "how long
 does a private read cost" — those differ when the online phase does not cover
@@ -118,7 +135,7 @@ Plotting the two kinds on one axis without that distinction visible would be the
 most misleading thing this site could do, so the scope is a column in the
 implementations matrix and a banner whenever both kinds are present.
 
-## 7. What this benchmark does NOT do
+## 8. What this benchmark does NOT do
 
 - **It does not verify correctness.** No round-trip check gates a number. An
   implementation that returns the wrong record would still be timed.

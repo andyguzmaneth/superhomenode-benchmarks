@@ -1,0 +1,81 @@
+{
+  "scheme": "InsPIRe",
+  "implementation": {
+    "name": "inspire-raven",
+    "repo": "https://github.com/hisoka-io/inspire-rs",
+    "commit": "3be3cc7d56db9535ab93101864c5468c654dbddf",
+    "framework": {
+      "repo": "https://github.com/hisoka-io/raven",
+      "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+      "note": "raven provides the b1-inspire bench binary; the measured crypto is inspire-rs at the commit above."
+    },
+    "forked_from": "https://github.com/igor53627/inspire-rs",
+    "language": "rust",
+    "backend": [
+      "avx2",
+      "rayon"
+    ],
+    "online_work_scope": {
+      "kind": "shard",
+      "entries": 2048,
+      "leaks_shard_id": true,
+      "note": "setup() fixes shard_size_bytes = ring_dim * record_bytes = 2048 records, independent of N. The online answer therefore touches one 2048-record shard no matter how large the database is, and ClientQuery.shard_id is sent in cleartext, so the server learns which shard the query is in. The anonymity set is 2048 records, not N."
+    }
+  },
+  "params": {
+    "num_records": 16777216,
+    "record_bytes": 256,
+    "security_bits": 128,
+    "threads": 8,
+    "scheme_params": {
+      "variant": "inspire-default-q-twopacking-inspiring-commit-e-handshake-solinas",
+      "throughput_qps_per_core": 9.715311026574412,
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "measured_per_seed": 16
+    }
+  },
+  "environment": {
+    "cpu_model": "AMD Ryzen 9 9900X 12-Core Processor",
+    "cpu_features": [
+      "avx2",
+      "avx512f"
+    ],
+    "logical_cores": 8,
+    "ram_bytes": 33646014464,
+    "os": "linux",
+    "timestamp": "2026-07-29T19:49:55.681Z",
+    "runner_version": "inspire-raven@3be3cc7d56db"
+  },
+  "metrics": {
+    "query_bytes": 98840,
+    "response_bytes": 32879,
+    "offline_hint_bytes": 0,
+    "preprocessing_ms": 15626.24237,
+    "server_answer_ms": 100.705,
+    "preprocessing_throughput_mbps": 274.85605267749344,
+    "client_query_gen_ms": 2.351,
+    "peak_memory_bytes": 22395338752
+  },
+  "metrics_spread": {
+    "server_answer_ms": {
+      "min": 100.546,
+      "max": 100.806,
+      "n": 3
+    },
+    "client_query_gen_ms": {
+      "min": 2.351,
+      "max": 2.353,
+      "n": 3
+    },
+    "preprocessing_ms": {
+      "min": 15626.24237,
+      "max": 15626.24237,
+      "n": 3
+    }
+  },
+  "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. Raven's fork, driven through raven's b1-inspire bench binary. UPSTREAM.md documents 6 local patches, including replacing upstream's under-provisioned 2-CRT moduli in secure_128_d{2048,4096} with a single-prime q, and a CRS shrink from ~34.9 to ~1.1 MiB."
+}
