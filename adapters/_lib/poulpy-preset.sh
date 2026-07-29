@@ -27,8 +27,14 @@ poulpy_preset() {
     26) gib=2;  cols=65536 ;;
     27) gib=4;  cols=65536 ;;
     28) gib=8;  cols=131072 ;;
-    29|30)
-      echo "poulpy ${elog2} maps to a $((1 << (elog2 - 25))) GiB database — does not fit the 32 GB reference machine" >&2
+    # 2^29 was previously refused here on the assumption that a 16 GiB database
+    # could not fit 32 GB. The measured series says otherwise: peak RSS is
+    # 1.98x the database at 2^28 and the ratio is still falling (5.90 -> 3.67 ->
+    # 2.74 -> 1.98), so 16 GiB projects to ~24 GB. Assumption replaced with a
+    # measurement.
+    29) gib=16; cols=262144 ;;
+    30)
+      echo "poulpy 2^30 is a 32 GiB database — cannot fit alongside its own working set on a 32 GB machine" >&2
       return 2 ;;
     *)
       echo "no poulpy preset for entries_log2=${elog2} (defaults cover 25..30)" >&2
