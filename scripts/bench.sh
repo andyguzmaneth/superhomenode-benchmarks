@@ -77,13 +77,34 @@ CELL_TIMEOUT="${CELL_TIMEOUT:-5400}"
 CELL_MEMORY_MAX="${CELL_MEMORY_MAX:-28G}"
 CELL_CONFINE=()
 if command -v systemd-run >/dev/null 2>&1 && [ "${NO_CGROUP:-0}" != "1" ]; then
-  CELL_CONFINE=(systemd-run --scope --quiet --collect
-    -p MemoryMax="$CELL_MEMORY_MAX" -p MemorySwapMax=0)
-  # guest-exec runs us as root; keep the workload as the invoking user.
-  [ "$(id -u)" = "0" ] && CELL_CONFINE+=(--uid="${BENCH_USER:-andy}")
-  echo "==> each cell confined to MemoryMax=$CELL_MEMORY_MAX (no swap)"
+  if [ "$(id -u)" = "0" ]; then
+    # Running as root (e.g. via qm guest exec): a system scope is allowed, and
+    # --uid keeps the workload as the unprivileged build user.
+    CANDIDATE=(systemd-run --scope --quiet --collect
+      -p MemoryMax="$CELL_MEMORY_MAX" -p MemorySwapMax=0 --uid="${BENCH_USER:-andy}")
+  else
+    # As a normal user, a *system* scope needs polkit ("Interactive
+    # authentication required"), so use the per-user manager instead. It needs a
+    # runtime dir, which exists once the account has lingering enabled.
+    export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
+    CANDIDATE=(systemd-run --user --scope --quiet --collect
+      -p MemoryMax="$CELL_MEMORY_MAX" -p MemorySwapMax=0)
+  fi
+
+  # Probe before trusting it. Confinement is a safety net; if it cannot start,
+  # the correct behaviour is to run unconfined and say so — NOT to fail every
+  # cell, which is what an unchecked wrapper did (every cell exited 1 with
+  # "Failed to start transient scope unit" and was recorded as a failure).
+  if "${CANDIDATE[@]}" true >/dev/null 2>&1; then
+    CELL_CONFINE=("${CANDIDATE[@]}")
+    echo "==> each cell confined to MemoryMax=$CELL_MEMORY_MAX (no swap)"
+  else
+    echo "!! could not start a transient scope — cells run UNCONFINED." >&2
+    echo "   a cell that exhausts RAM can take the whole suite down." >&2
+    echo "   fix: loginctl enable-linger ${BENCH_USER:-$(id -un)}" >&2
+  fi
 else
-  echo "!! systemd-run unavailable — a cell that exhausts RAM may take the suite down" >&2
+  echo "!! systemd-run unavailable — cells run unconfined" >&2
 fi
 CHECKOUT="$(jsonval "$ADAPTER/props.json" checkout)"
 [ -n "$CHECKOUT" ] || CHECKOUT="$IMPL_ID"
