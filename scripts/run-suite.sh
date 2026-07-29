@@ -10,8 +10,21 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 PROFILE="${PROFILE:-full}"
 
 if [ -z "${IMPLS:-}" ]; then
-  IMPLS="$(cd "$ROOT/adapters" && for d in */; do [ -f "${d}props.json" ] && echo "${d%/}"; done)"
+  # `adapters/` also holds _lib/ and README.md. The trailing `|| true` matters:
+  # under `set -e` the loop's exit status is that of its last iteration, so a
+  # final non-adapter directory would abort the whole suite before it printed
+  # anything at all.
+  IMPLS="$(cd "$ROOT/adapters" && for d in */; do
+    [ -f "${d}props.json" ] && echo "${d%/}"
+  done || true)"
 fi
+
+if [ -z "$IMPLS" ]; then
+  echo "no adapters found under $ROOT/adapters" >&2
+  exit 1
+fi
+
+echo "adapters: $(echo "$IMPLS" | tr '\n' ' ')"
 
 for impl in $IMPLS; do
   echo

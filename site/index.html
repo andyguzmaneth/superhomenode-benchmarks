@@ -10,17 +10,20 @@
     <header>
       <h1>superhomenode-benchmarks</h1>
       <p class="sub">
-        PIR-scheme benchmarks on home-staker hardware, over databases shaped like
+        Performance benchmarks of <b>different implementations of the same PIR
+        scheme</b>, on one frozen home-staker machine, over databases shaped like
         Ethereum state. Reference spec follows the staking tier of
         <a href="https://ethereum.org/en/run-a-node/">ethereum.org/run-a-node</a>.
+        Security levels shown are <b>claimed by each implementation</b> and are not
+        verified here.
       </p>
       <p class="meta" id="meta"></p>
     </header>
 
     <div id="refWarning" class="warning" hidden>
-      <strong>Not reference data.</strong> All current rows were measured on a dev
-      VM, not the home-staker reference machine — treat shapes as real, absolute
-      numbers as provisional.
+      <strong>Not reference data.</strong> Some rows were produced on a host that
+      did not match the frozen reference machine, and are labelled
+      <code>UNVERIFIED</code> — treat shapes as real, absolute numbers as provisional.
     </div>
 
     <section class="controls" id="controls" hidden>
@@ -29,7 +32,7 @@
         <select id="recordBytes"></select>
       </div>
       <div class="control impls">
-        <label>Schemes (legend · click to toggle)</label>
+        <label>Implementations (legend · click to toggle)</label>
         <div id="impls" class="chips"></div>
       </div>
     </section>
@@ -37,7 +40,7 @@
     <section id="charts" class="chart-grid" hidden></section>
 
     <section id="propsWrap" hidden>
-      <h2>Scheme properties</h2>
+      <h2>Implementations</h2>
       <div class="table-scroll card">
         <table id="props"></table>
       </div>
@@ -51,14 +54,15 @@
     </section>
 
     <section id="hostWrap" hidden>
-      <h2>Host machines</h2>
+      <h2>Host machine</h2>
       <div id="hosts"></div>
     </section>
 
     <p id="status" class="status">Loading results…</p>
     <footer>
-      Records are produced by the Rust harness and committed under
-      <code>results/</code> — the site only reads them.
+      Records are produced by one adapter per implementation and committed under
+      <code>results/</code> — the site only reads them. Every implementation is
+      measured by the same driver on the same host.
       Source &amp; methodology:
       <a href="https://github.com/andyguzmaneth/superhomenode-benchmarks">github.com/andyguzmaneth/superhomenode-benchmarks</a>.
       Presentation inspired by <a href="https://ethproofs.org/csp-benchmarks">ethproofs.org</a>.
