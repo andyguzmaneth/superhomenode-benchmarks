@@ -21,6 +21,11 @@ poulpy_preset() {
     return 2
   fi
 
+  # The same database size has several valid layouts. `cols` is the first
+  # database dimension: a wider layout means a bigger query and a smaller
+  # response, and vice versa. The defaults below follow the crate's own
+  # examples/README pairing, but POULPY_COLS overrides it so the trade can be
+  # measured directly — query upload, not latency, is what limits mobile use.
   local gib cols
   case "$elog2" in
     25) gib=1;  cols=32768 ;;
@@ -40,6 +45,8 @@ poulpy_preset() {
       echo "no poulpy preset for entries_log2=${elog2} (defaults cover 25..30)" >&2
       return 2 ;;
   esac
+
+  [ -n "${POULPY_COLS:-}" ] && cols="$POULPY_COLS"
 
   case "$collapse" in
     interpolation) echo "InsPIRe-${gib}GiB-c${cols}" ;;
