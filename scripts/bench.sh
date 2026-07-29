@@ -67,14 +67,21 @@ done <<< "$(jsonenv "$ADAPTER/props.json" bench_env)"
 # time. Raise with CELL_TIMEOUT=<seconds> for a deliberate long run.
 CELL_TIMEOUT="${CELL_TIMEOUT:-5400}"
 
-# Cap each cell's memory in its own cgroup. Cells that do not fit are a expected
+# Cap each cell's memory in its own cgroup. Cells that do not fit are an expected
 # and interesting result, but a *global* OOM does not just kill the cell — it
 # takes the driver down with it and the whole remaining suite silently stops
 # (observed: 2^28x32B on the inspire-rs lineage peaks ~40 GB and killed a run
 # with four adapters still queued). Confining the kill to the cell turns "the
-# suite died" into "that cell did not fit", which is what we actually want to
-# publish. Left slightly under total RAM so the driver and node survive.
-CELL_MEMORY_MAX="${CELL_MEMORY_MAX:-28G}"
+# suite died" into "that cell did not fit".
+#
+# The cap must sit just under physical RAM, NOT comfortably under it. Set to
+# 28G it killed 2^24x256B (30.1 GiB peak) and 2^27x32B (30.4 GiB peak) — two
+# cells that had already completed successfully on this machine — which would
+# have published "did not fit" for workloads that do fit. The cap exists to
+# stop a runaway from taking the suite down, not to redefine what the machine
+# can do. Only ~0.6 GiB is needed outside the scope: between cells the driver
+# is bash plus a short-lived node import.
+CELL_MEMORY_MAX="${CELL_MEMORY_MAX:-30.5G}"
 CELL_CONFINE=()
 if command -v systemd-run >/dev/null 2>&1 && [ "${NO_CGROUP:-0}" != "1" ]; then
   if [ "$(id -u)" = "0" ]; then
