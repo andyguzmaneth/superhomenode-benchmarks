@@ -5,11 +5,11 @@
     "repo": "https://github.com/hisoka-io/inspire-rs",
     "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
     "forked_from": "https://github.com/igor53627/inspire-rs",
+    "language": "rust",
     "backend": [
       "avx2",
       "rayon"
     ],
-    "language": "rust",
     "online_work_scope": {
       "kind": "shard",
       "entries": 2048,

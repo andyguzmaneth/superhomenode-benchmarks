@@ -4,10 +4,10 @@
     "name": "isimplepir-raven",
     "repo": "https://github.com/hisoka-io/raven",
     "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+    "language": "rust",
     "backend": [
       "avx2"
     ],
-    "language": "rust",
     "online_work_scope": {
       "kind": "full_database",
       "leaks_shard_id": false,

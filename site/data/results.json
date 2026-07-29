@@ -16,11 +16,11 @@
         "repo": "https://github.com/hisoka-io/inspire-rs",
         "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
         "forked_from": "https://github.com/igor53627/inspire-rs",
+        "language": "rust",
         "backend": [
           "avx2",
           "rayon"
         ],
-        "language": "rust",
         "online_work_scope": {
           "kind": "shard",
           "entries": 2048,
@@ -68,11 +68,11 @@
         "repo": "https://github.com/hisoka-io/inspire-rs",
         "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
         "forked_from": "https://github.com/igor53627/inspire-rs",
+        "language": "rust",
         "backend": [
           "avx2",
           "rayon"
         ],
-        "language": "rust",
         "online_work_scope": {
           "kind": "shard",
           "entries": 2048,
@@ -120,11 +120,11 @@
         "repo": "https://github.com/hisoka-io/inspire-rs",
         "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
         "forked_from": "https://github.com/igor53627/inspire-rs",
+        "language": "rust",
         "backend": [
           "avx2",
           "rayon"
         ],
-        "language": "rust",
         "online_work_scope": {
           "kind": "shard",
           "entries": 2048,
@@ -172,11 +172,11 @@
         "repo": "https://github.com/hisoka-io/inspire-rs",
         "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
         "forked_from": "https://github.com/igor53627/inspire-rs",
+        "language": "rust",
         "backend": [
           "avx2",
           "rayon"
         ],
-        "language": "rust",
         "online_work_scope": {
           "kind": "shard",
           "entries": 2048,
@@ -224,11 +224,11 @@
         "repo": "https://github.com/hisoka-io/inspire-rs",
         "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
         "forked_from": "https://github.com/igor53627/inspire-rs",
+        "language": "rust",
         "backend": [
           "avx2",
           "rayon"
         ],
-        "language": "rust",
         "online_work_scope": {
           "kind": "shard",
           "entries": 2048,
@@ -276,11 +276,11 @@
         "repo": "https://github.com/hisoka-io/inspire-rs",
         "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
         "forked_from": "https://github.com/igor53627/inspire-rs",
+        "language": "rust",
         "backend": [
           "avx2",
           "rayon"
         ],
-        "language": "rust",
         "online_work_scope": {
           "kind": "shard",
           "entries": 2048,
@@ -328,11 +328,11 @@
         "repo": "https://github.com/hisoka-io/inspire-rs",
         "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
         "forked_from": "https://github.com/igor53627/inspire-rs",
+        "language": "rust",
         "backend": [
           "avx2",
           "rayon"
         ],
-        "language": "rust",
         "online_work_scope": {
           "kind": "shard",
           "entries": 2048,
@@ -379,10 +379,10 @@
         "name": "isimplepir-raven",
         "repo": "https://github.com/hisoka-io/raven",
         "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+        "language": "rust",
         "backend": [
           "avx2"
         ],
-        "language": "rust",
         "online_work_scope": {
           "kind": "full_database",
           "leaks_shard_id": false,
@@ -429,10 +429,10 @@
         "name": "isimplepir-raven",
         "repo": "https://github.com/hisoka-io/raven",
         "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+        "language": "rust",
         "backend": [
           "avx2"
         ],
-        "language": "rust",
         "online_work_scope": {
           "kind": "full_database",
           "leaks_shard_id": false,
@@ -479,10 +479,10 @@
         "name": "isimplepir-raven",
         "repo": "https://github.com/hisoka-io/raven",
         "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+        "language": "rust",
         "backend": [
           "avx2"
         ],
-        "language": "rust",
         "online_work_scope": {
           "kind": "full_database",
           "leaks_shard_id": false,
@@ -529,10 +529,10 @@
         "name": "isimplepir-raven",
         "repo": "https://github.com/hisoka-io/raven",
         "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+        "language": "rust",
         "backend": [
           "avx2"
         ],
-        "language": "rust",
         "online_work_scope": {
           "kind": "full_database",
           "leaks_shard_id": false,
@@ -579,10 +579,10 @@
         "name": "isimplepir-raven",
         "repo": "https://github.com/hisoka-io/raven",
         "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+        "language": "rust",
         "backend": [
           "avx2"
         ],
-        "language": "rust",
         "online_work_scope": {
           "kind": "full_database",
           "leaks_shard_id": false,
@@ -629,10 +629,10 @@
         "name": "isimplepir-raven",
         "repo": "https://github.com/hisoka-io/raven",
         "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+        "language": "rust",
         "backend": [
           "avx2"
         ],
-        "language": "rust",
         "online_work_scope": {
           "kind": "full_database",
           "leaks_shard_id": false,
@@ -679,10 +679,10 @@
         "name": "isimplepir-raven",
         "repo": "https://github.com/hisoka-io/raven",
         "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+        "language": "rust",
         "backend": [
           "avx2"
         ],
-        "language": "rust",
         "online_work_scope": {
           "kind": "full_database",
           "leaks_shard_id": false,
@@ -729,10 +729,10 @@
         "name": "isimplepir-raven",
         "repo": "https://github.com/hisoka-io/raven",
         "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+        "language": "rust",
         "backend": [
           "avx2"
         ],
-        "language": "rust",
         "online_work_scope": {
           "kind": "full_database",
           "leaks_shard_id": false,
