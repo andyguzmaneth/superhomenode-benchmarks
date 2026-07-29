@@ -57,6 +57,45 @@ one measurement, `metrics_spread` carries min/max/n alongside the median. PIR at
 these sizes is memory-bandwidth-bound, so variance is signal, not noise to be
 averaged away.
 
+## 5b. Why the reduced iteration counts are defensible
+
+`inspire-upstream` and `inspire-lianghuiqiang9` run 1 seed x 4 iterations rather
+than the 3 x 16 used elsewhere, because their per-query cost is ~2000x higher and
+the default counts are unfinishable at the larger cells (see each adapter's
+`measurement_caveat`). The obvious objection is that four iterations cannot
+support a published number.
+
+Two independent checks say it can, for *this* workload:
+
+**Cross-run reproducibility.** A resumed suite re-measured
+`inspire-lianghuiqiang9` from scratch, giving two fully independent runs of the
+same eight cells:
+
+| Cell | run 1 | run 2 | delta |
+| --- | --- | --- | --- |
+| 2²⁰x8B | 4008.0 ms | 4004.2 ms | 0.09% |
+| 2²⁰x32B | 4053.1 ms | 4057.6 ms | 0.11% |
+| 2²⁰x256B | 4793.9 ms | 4791.6 ms | 0.05% |
+| 2²⁴x8B | 4003.7 ms | 4008.9 ms | 0.13% |
+| 2²⁴x32B | 4053.1 ms | 4055.6 ms | 0.06% |
+| 2²⁵x32B | 4054.5 ms | 4058.7 ms | 0.10% |
+| 2²⁶x32B | 4054.5 ms | 4058.6 ms | 0.10% |
+| 2²⁸x8B | 4000.6 ms | 4007.4 ms | 0.17% |
+
+Worst case 0.17%. That is expected rather than lucky: the measured path is a
+shard-scoped, single-threaded loop over a fixed 64 KB working set, so there is
+very little for extra iterations to sample.
+
+**Cross-implementation agreement.** `inspire-upstream` (crates.io 0.2.0) and
+`inspire-lianghuiqiang9` (a fork of the same deleted upstream) agree to within
+0.10% on every shared cell — which is simultaneously a check on the harness and
+the answer to "did that fork change anything measurable": **no.**
+
+Neither check applies to implementations with real variance. `inspire-poulpy` and
+`inspire2-poulpy` are multi-threaded and memory-bandwidth-bound; they are
+measured over the example's own 10 repeats, and their rows carry no cross-seed
+spread, which the site shows as a point rather than a range.
+
 ## 6. Latency is only comparable at equal scope
 
 `server_answer_ms` answers "how long did the online phase take", not "how long
