@@ -100,6 +100,7 @@ const record = {
     name: props.implementation,
     repo: props.repo,
     commit: props.commit,
+    framework: props.framework,
     forked_from: props.forked_from,
     language: props.language,
     backend: props.backend,

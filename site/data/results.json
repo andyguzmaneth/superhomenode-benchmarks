@@ -14,7 +14,12 @@
       "implementation": {
         "name": "inspire-raven",
         "repo": "https://github.com/hisoka-io/inspire-rs",
-        "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+        "commit": "3be3cc7d56db9535ab93101864c5468c654dbddf",
+        "framework": {
+          "repo": "https://github.com/hisoka-io/raven",
+          "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+          "note": "raven provides the b1-inspire bench binary; the measured crypto is inspire-rs at the commit above."
+        },
         "forked_from": "https://github.com/igor53627/inspire-rs",
         "language": "rust",
         "backend": [
@@ -66,7 +71,12 @@
       "implementation": {
         "name": "inspire-raven",
         "repo": "https://github.com/hisoka-io/inspire-rs",
-        "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+        "commit": "3be3cc7d56db9535ab93101864c5468c654dbddf",
+        "framework": {
+          "repo": "https://github.com/hisoka-io/raven",
+          "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+          "note": "raven provides the b1-inspire bench binary; the measured crypto is inspire-rs at the commit above."
+        },
         "forked_from": "https://github.com/igor53627/inspire-rs",
         "language": "rust",
         "backend": [
@@ -118,7 +128,12 @@
       "implementation": {
         "name": "inspire-raven",
         "repo": "https://github.com/hisoka-io/inspire-rs",
-        "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+        "commit": "3be3cc7d56db9535ab93101864c5468c654dbddf",
+        "framework": {
+          "repo": "https://github.com/hisoka-io/raven",
+          "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+          "note": "raven provides the b1-inspire bench binary; the measured crypto is inspire-rs at the commit above."
+        },
         "forked_from": "https://github.com/igor53627/inspire-rs",
         "language": "rust",
         "backend": [
@@ -170,7 +185,12 @@
       "implementation": {
         "name": "inspire-raven",
         "repo": "https://github.com/hisoka-io/inspire-rs",
-        "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+        "commit": "3be3cc7d56db9535ab93101864c5468c654dbddf",
+        "framework": {
+          "repo": "https://github.com/hisoka-io/raven",
+          "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+          "note": "raven provides the b1-inspire bench binary; the measured crypto is inspire-rs at the commit above."
+        },
         "forked_from": "https://github.com/igor53627/inspire-rs",
         "language": "rust",
         "backend": [
@@ -222,7 +242,12 @@
       "implementation": {
         "name": "inspire-raven",
         "repo": "https://github.com/hisoka-io/inspire-rs",
-        "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+        "commit": "3be3cc7d56db9535ab93101864c5468c654dbddf",
+        "framework": {
+          "repo": "https://github.com/hisoka-io/raven",
+          "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+          "note": "raven provides the b1-inspire bench binary; the measured crypto is inspire-rs at the commit above."
+        },
         "forked_from": "https://github.com/igor53627/inspire-rs",
         "language": "rust",
         "backend": [
@@ -274,7 +299,12 @@
       "implementation": {
         "name": "inspire-raven",
         "repo": "https://github.com/hisoka-io/inspire-rs",
-        "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+        "commit": "3be3cc7d56db9535ab93101864c5468c654dbddf",
+        "framework": {
+          "repo": "https://github.com/hisoka-io/raven",
+          "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+          "note": "raven provides the b1-inspire bench binary; the measured crypto is inspire-rs at the commit above."
+        },
         "forked_from": "https://github.com/igor53627/inspire-rs",
         "language": "rust",
         "backend": [
@@ -326,7 +356,12 @@
       "implementation": {
         "name": "inspire-raven",
         "repo": "https://github.com/hisoka-io/inspire-rs",
-        "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+        "commit": "3be3cc7d56db9535ab93101864c5468c654dbddf",
+        "framework": {
+          "repo": "https://github.com/hisoka-io/raven",
+          "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+          "note": "raven provides the b1-inspire bench binary; the measured crypto is inspire-rs at the commit above."
+        },
         "forked_from": "https://github.com/igor53627/inspire-rs",
         "language": "rust",
         "backend": [

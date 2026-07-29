@@ -33,6 +33,16 @@
             "note": { "type": "string" }
           }
         },
+        "framework": {
+          "type": "object",
+          "description": "Set when the measured codebase is driven by a separate bench framework pinned at its own commit (e.g. inspire-rs measured through raven's b1-inspire). Both pins are needed to reproduce the row.",
+          "additionalProperties": true,
+          "properties": {
+            "repo": { "type": "string" },
+            "commit": { "type": "string" },
+            "note": { "type": "string" }
+          }
+        },
         "language": { "type": "string" }
       }
     },

@@ -8,9 +8,10 @@
 // field will not carry it. Only descriptive metadata is touched — never a
 // measured value — so this can be re-run safely.
 //
-// Fields it propagates: repo, commit, forked_from, language, backend,
-// online_work_scope. `commit` is left alone where the row already has one, since
-// a row must keep the commit it was actually measured against.
+// Fields it propagates: repo, commit, forked_from, language, backend, framework,
+// online_work_scope. The (repo, commit) pair always comes from props.json so the
+// two always describe the same codebase — an early importer paired the crypto's
+// repo with the bench framework's commit, which is not reproducible.
 
 import { readdir, readFile, writeFile } from "node:fs/promises";
 import { join, dirname } from "node:path";
@@ -59,8 +60,8 @@ for (const f of files) {
   r.implementation = {
     name: p.implementation,
     repo: p.repo,
-    // Keep the commit the row was measured against, if it has one.
-    commit: r.implementation.commit || p.commit,
+    commit: p.commit,
+    ...(p.framework ? { framework: p.framework } : {}),
     ...(p.forked_from ? { forked_from: p.forked_from } : {}),
     ...(p.language ? { language: p.language } : {}),
     ...(p.backend ? { backend: p.backend } : {}),

@@ -19,5 +19,10 @@
     "entries": 2048,
     "leaks_shard_id": true,
     "note": "setup() fixes shard_size_bytes = ring_dim * record_bytes = 2048 records, independent of N. The online answer therefore touches one 2048-record shard no matter how large the database is, and ClientQuery.shard_id is sent in cleartext, so the server learns which shard the query is in. The anonymity set is 2048 records, not N."
+  },
+  "framework": {
+    "repo": "https://github.com/hisoka-io/raven",
+    "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+    "note": "raven provides the b1-inspire bench binary; the measured crypto is inspire-rs at the commit above."
   }
 }
