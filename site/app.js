@@ -66,6 +66,12 @@ async function load() {
   for (const id of ["controls", "charts", "propsWrap", "tableWrap", "hostWrap"]) el(id).hidden = false;
   // The driver labels any row not produced on the frozen machine.
   if (state.records.some((r) => /UNVERIFIED/.test(r.notes || ""))) el("refWarning").hidden = false;
+  // Server latency is only comparable between implementations whose online
+  // phase covers the same thing. Say so up front when it does not.
+  const scopes = new Set(
+    state.records.map((r) => r.implementation.online_work_scope?.kind).filter(Boolean),
+  );
+  if (scopes.size > 1) el("scopeWarning").hidden = false;
   renderMeta();
   initControls();
   renderProps();
@@ -229,7 +235,8 @@ function renderProps() {
   for (const r of state.records) if (!bySeries.has(seriesKey(r))) bySeries.set(seriesKey(r), r);
   const rows = [...bySeries.entries()].sort((a, b) => a[0].localeCompare(b[0]));
   const head = [
-    "implementation", "scheme", "paper", "variant", "lineage", "backend", "source", "commit", "claims",
+    "implementation", "scheme", "online answer covers", "paper", "variant", "lineage",
+    "backend", "source", "commit", "claims",
   ];
   el("props").innerHTML =
     `<thead><tr>${head.map((h) => `<th>${h}</th>`).join("")}</tr></thead><tbody>` +
@@ -244,6 +251,15 @@ function renderProps() {
           ? `fork of <a href="${impl.forked_from}">${shortRepo(impl.forked_from).replace("github.com/", "")}</a>`
           : `<span class="t-dim">independent</span>`;
         const backend = (impl.backend || []).join(" + ") || "–";
+        // The single most load-bearing column: a flat latency curve means very
+        // different things depending on what the online phase touched.
+        const sc = impl.online_work_scope;
+        const scope = !sc
+          ? "–"
+          : sc.kind === "shard"
+            ? `<span class="warn-cell" title="${sc.note || ""}">one ${fmtNum(sc.entries)}-record shard` +
+              (sc.leaks_shard_id ? " · shard id in clear" : "") + `</span>`
+            : `<span title="${sc.note || ""}">whole database</span>`;
         // Implementations tag their variant verbosely (raven's runs to ~60
         // chars); truncate so the matrix stays readable, full string on hover.
         const rawVariant = r.params?.scheme_params?.variant || "–";
@@ -253,7 +269,7 @@ function renderProps() {
             : rawVariant;
         return (
           `<tr><td class="l"><span class="dot" style="background:${colorFor(key)}"></span>${impl.name}</td>` +
-          `<td class="l">${r.scheme}</td><td class="l">${paper}</td>` +
+          `<td class="l">${r.scheme}</td><td class="l">${scope}</td><td class="l">${paper}</td>` +
           `<td class="l">${variant}</td><td class="l">${lineage}</td><td class="l">${backend}</td>` +
           `<td class="l"><a href="${impl.repo}">${shortRepo(impl.repo)}</a></td>` +
           `<td class="l"><code>${String(impl.commit || "").slice(0, 10)}</code></td>` +

@@ -167,3 +167,7 @@ code { background: var(--card); border: 1px solid var(--line); padding: 0.05rem 
 }
 .tooltip .t-series { font-weight: 600; }
 .tooltip .t-dim { color: var(--muted); }
+
+/* Flags a property that limits how a row may be compared (e.g. an online phase
+   that only covers a shard). Not a status colour — it must read as a caveat. */
+.warn-cell { border-bottom: 1px dotted var(--axis); cursor: help; }

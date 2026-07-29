@@ -4,10 +4,17 @@
   "repo": "https://github.com/hisoka-io/raven",
   "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
   "language": "rust",
-  "backend": ["avx2"],
+  "backend": [
+    "avx2"
+  ],
   "variant": "setup-owned",
   "security_bits_claimed": 128,
   "online_scans_full_db": true,
   "checkout": "raven",
-  "notes": "Raven's own iSimplePIR crate (eprint 2026/030), driven through the b2-isimplepir bench binary. Kept as the hint-based contrast to the InsPIRe implementations."
+  "notes": "Raven's own iSimplePIR crate (eprint 2026/030), driven through the b2-isimplepir bench binary. Kept as the hint-based contrast to the InsPIRe implementations.",
+  "online_work_scope": {
+    "kind": "full_database",
+    "leaks_shard_id": false,
+    "note": "The online answer is over the whole database; no index partition is revealed."
+  }
 }

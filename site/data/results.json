@@ -20,7 +20,13 @@
           "avx2",
           "rayon"
         ],
-        "language": "rust"
+        "language": "rust",
+        "online_work_scope": {
+          "kind": "shard",
+          "entries": 2048,
+          "leaks_shard_id": true,
+          "note": "setup() fixes shard_size_bytes = ring_dim * record_bytes = 2048 records, independent of N. The online answer therefore touches one 2048-record shard no matter how large the database is, and ClientQuery.shard_id is sent in cleartext, so the server learns which shard the query is in. The anonymity set is 2048 records, not N."
+        }
       },
       "params": {
         "num_records": 1048576,
@@ -66,7 +72,13 @@
           "avx2",
           "rayon"
         ],
-        "language": "rust"
+        "language": "rust",
+        "online_work_scope": {
+          "kind": "shard",
+          "entries": 2048,
+          "leaks_shard_id": true,
+          "note": "setup() fixes shard_size_bytes = ring_dim * record_bytes = 2048 records, independent of N. The online answer therefore touches one 2048-record shard no matter how large the database is, and ClientQuery.shard_id is sent in cleartext, so the server learns which shard the query is in. The anonymity set is 2048 records, not N."
+        }
       },
       "params": {
         "num_records": 1048576,
@@ -112,7 +124,13 @@
           "avx2",
           "rayon"
         ],
-        "language": "rust"
+        "language": "rust",
+        "online_work_scope": {
+          "kind": "shard",
+          "entries": 2048,
+          "leaks_shard_id": true,
+          "note": "setup() fixes shard_size_bytes = ring_dim * record_bytes = 2048 records, independent of N. The online answer therefore touches one 2048-record shard no matter how large the database is, and ClientQuery.shard_id is sent in cleartext, so the server learns which shard the query is in. The anonymity set is 2048 records, not N."
+        }
       },
       "params": {
         "num_records": 1048576,
@@ -158,7 +176,13 @@
           "avx2",
           "rayon"
         ],
-        "language": "rust"
+        "language": "rust",
+        "online_work_scope": {
+          "kind": "shard",
+          "entries": 2048,
+          "leaks_shard_id": true,
+          "note": "setup() fixes shard_size_bytes = ring_dim * record_bytes = 2048 records, independent of N. The online answer therefore touches one 2048-record shard no matter how large the database is, and ClientQuery.shard_id is sent in cleartext, so the server learns which shard the query is in. The anonymity set is 2048 records, not N."
+        }
       },
       "params": {
         "num_records": 16777216,
@@ -204,7 +228,13 @@
           "avx2",
           "rayon"
         ],
-        "language": "rust"
+        "language": "rust",
+        "online_work_scope": {
+          "kind": "shard",
+          "entries": 2048,
+          "leaks_shard_id": true,
+          "note": "setup() fixes shard_size_bytes = ring_dim * record_bytes = 2048 records, independent of N. The online answer therefore touches one 2048-record shard no matter how large the database is, and ClientQuery.shard_id is sent in cleartext, so the server learns which shard the query is in. The anonymity set is 2048 records, not N."
+        }
       },
       "params": {
         "num_records": 16777216,
@@ -250,7 +280,13 @@
           "avx2",
           "rayon"
         ],
-        "language": "rust"
+        "language": "rust",
+        "online_work_scope": {
+          "kind": "shard",
+          "entries": 2048,
+          "leaks_shard_id": true,
+          "note": "setup() fixes shard_size_bytes = ring_dim * record_bytes = 2048 records, independent of N. The online answer therefore touches one 2048-record shard no matter how large the database is, and ClientQuery.shard_id is sent in cleartext, so the server learns which shard the query is in. The anonymity set is 2048 records, not N."
+        }
       },
       "params": {
         "num_records": 16777216,
@@ -296,7 +332,13 @@
           "avx2",
           "rayon"
         ],
-        "language": "rust"
+        "language": "rust",
+        "online_work_scope": {
+          "kind": "shard",
+          "entries": 2048,
+          "leaks_shard_id": true,
+          "note": "setup() fixes shard_size_bytes = ring_dim * record_bytes = 2048 records, independent of N. The online answer therefore touches one 2048-record shard no matter how large the database is, and ClientQuery.shard_id is sent in cleartext, so the server learns which shard the query is in. The anonymity set is 2048 records, not N."
+        }
       },
       "params": {
         "num_records": 268435456,
@@ -340,7 +382,12 @@
         "backend": [
           "avx2"
         ],
-        "language": "rust"
+        "language": "rust",
+        "online_work_scope": {
+          "kind": "full_database",
+          "leaks_shard_id": false,
+          "note": "The online answer is over the whole database; no index partition is revealed."
+        }
       },
       "params": {
         "num_records": 1048576,
@@ -385,7 +432,12 @@
         "backend": [
           "avx2"
         ],
-        "language": "rust"
+        "language": "rust",
+        "online_work_scope": {
+          "kind": "full_database",
+          "leaks_shard_id": false,
+          "note": "The online answer is over the whole database; no index partition is revealed."
+        }
       },
       "params": {
         "num_records": 1048576,
@@ -430,7 +482,12 @@
         "backend": [
           "avx2"
         ],
-        "language": "rust"
+        "language": "rust",
+        "online_work_scope": {
+          "kind": "full_database",
+          "leaks_shard_id": false,
+          "note": "The online answer is over the whole database; no index partition is revealed."
+        }
       },
       "params": {
         "num_records": 1048576,
@@ -475,7 +532,12 @@
         "backend": [
           "avx2"
         ],
-        "language": "rust"
+        "language": "rust",
+        "online_work_scope": {
+          "kind": "full_database",
+          "leaks_shard_id": false,
+          "note": "The online answer is over the whole database; no index partition is revealed."
+        }
       },
       "params": {
         "num_records": 16777216,
@@ -520,7 +582,12 @@
         "backend": [
           "avx2"
         ],
-        "language": "rust"
+        "language": "rust",
+        "online_work_scope": {
+          "kind": "full_database",
+          "leaks_shard_id": false,
+          "note": "The online answer is over the whole database; no index partition is revealed."
+        }
       },
       "params": {
         "num_records": 16777216,
@@ -565,7 +632,12 @@
         "backend": [
           "avx2"
         ],
-        "language": "rust"
+        "language": "rust",
+        "online_work_scope": {
+          "kind": "full_database",
+          "leaks_shard_id": false,
+          "note": "The online answer is over the whole database; no index partition is revealed."
+        }
       },
       "params": {
         "num_records": 16777216,
@@ -610,7 +682,12 @@
         "backend": [
           "avx2"
         ],
-        "language": "rust"
+        "language": "rust",
+        "online_work_scope": {
+          "kind": "full_database",
+          "leaks_shard_id": false,
+          "note": "The online answer is over the whole database; no index partition is revealed."
+        }
       },
       "params": {
         "num_records": 268435456,
@@ -655,7 +732,12 @@
         "backend": [
           "avx2"
         ],
-        "language": "rust"
+        "language": "rust",
+        "online_work_scope": {
+          "kind": "full_database",
+          "leaks_shard_id": false,
+          "note": "The online answer is over the whole database; no index partition is revealed."
+        }
       },
       "params": {
         "num_records": 268435456,

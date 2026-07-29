@@ -57,7 +57,29 @@ one measurement, `metrics_spread` carries min/max/n alongside the median. PIR at
 these sizes is memory-bandwidth-bound, so variance is signal, not noise to be
 averaged away.
 
-## 6. What this benchmark does NOT do
+## 6. Latency is only comparable at equal scope
+
+`server_answer_ms` answers "how long did the online phase take", not "how long
+does a private read cost" — those differ when the online phase does not cover
+the whole database. Every row therefore carries
+`implementation.online_work_scope`.
+
+The `inspire-rs` lineage (`inspire-raven`, `inspire-upstream`,
+`inspire-lianghuiqiang9`) fixes `shard_size_bytes = ring_dim × record_bytes` in
+`setup()` — **2048 records, independent of N** — and sends `ClientQuery.shard_id`
+in cleartext. So its online answer touches one 64 KB shard however large the
+database is, and the server learns which shard the index falls in: the anonymity
+set is 2048 records, not N. That is the whole explanation for its per-query time
+being flat from 2²⁰ to 2²⁸. It is not evidence of good scaling.
+
+`inspire-poulpy`, `inspire2-poulpy` and `isimplepir-raven` answer over the whole
+database, and their latency grows with N accordingly.
+
+Plotting the two kinds on one axis without that distinction visible would be the
+most misleading thing this site could do, so the scope is a column in the
+implementations matrix and a banner whenever both kinds are present.
+
+## 7. What this benchmark does NOT do
 
 - **It does not verify correctness.** No round-trip check gates a number. An
   implementation that returns the wrong record would still be timed.

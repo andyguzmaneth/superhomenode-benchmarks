@@ -7,7 +7,12 @@
     "backend": [
       "avx2"
     ],
-    "language": "rust"
+    "language": "rust",
+    "online_work_scope": {
+      "kind": "full_database",
+      "leaks_shard_id": false,
+      "note": "The online answer is over the whole database; no index partition is revealed."
+    }
   },
   "params": {
     "num_records": 16777216,

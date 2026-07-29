@@ -4,11 +4,19 @@
   "repo": "https://github.com/poulpy-fhe/poulpy-pir",
   "commit": "625ac4094b2a99b23bc57e44e080dbc2dd526768",
   "language": "rust",
-  "backend": ["avx512f", "private-gemm-x86"],
+  "backend": [
+    "avx512f",
+    "private-gemm-x86"
+  ],
   "variant": "Recursion, gamma0=32 (InsPIRe2)",
   "security_bits_claimed": 128,
   "online_scans_full_db": false,
   "checkout": "poulpy-pir",
   "per_query_caveat": "Same measurement caveat as inspire-poulpy: one run averaged over the example's REPEATS=10, no cross-seed spread, no separately reported client decode.",
-  "notes": "The second InsPIRe construction from the paper: adds a recursive second PIR level, trading a larger query for a smaller response and less per-query work, which the authors expect to pay off on large databases. Published as its own implementation row rather than folded into inspire-poulpy — it is a different protocol and comparing it directly against single-level InsPIRe rows would be a category error. gamma0=32 with gamma1=1024; the g16 and g64 families exist in the crate and can be added as further rows if the width turns out to matter."
+  "notes": "The second InsPIRe construction from the paper: adds a recursive second PIR level, trading a larger query for a smaller response and less per-query work, which the authors expect to pay off on large databases. Published as its own implementation row rather than folded into inspire-poulpy — it is a different protocol and comparing it directly against single-level InsPIRe rows would be a category error. gamma0=32 with gamma1=1024; the g16 and g64 families exist in the crate and can be added as further rows if the width turns out to matter.",
+  "online_work_scope": {
+    "kind": "full_database",
+    "leaks_shard_id": false,
+    "note": "The online answer is over the whole database; no index partition is revealed."
+  }
 }

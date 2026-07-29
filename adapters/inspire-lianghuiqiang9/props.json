@@ -19,5 +19,11 @@
     "WARMUP": "1",
     "MEASURED": "4"
   },
-  "measurement_caveat": "Run with 1 seed x 4 measured iterations instead of the 3 x 16 used for inspire-raven. This implementation's per-query cost is ~2000x higher (4.0 s vs 1.9 ms at 2^20 x 8 B on the reference machine), so the default counts are unfinishable at the larger cells. Fewer iterations lowers confidence in the number; it does not change what is being measured. The counts actually used are recorded in params.scheme_params."
+  "measurement_caveat": "Run with 1 seed x 4 measured iterations instead of the 3 x 16 used for inspire-raven. This implementation's per-query cost is ~2000x higher (4.0 s vs 1.9 ms at 2^20 x 8 B on the reference machine), so the default counts are unfinishable at the larger cells. Fewer iterations lowers confidence in the number; it does not change what is being measured. The counts actually used are recorded in params.scheme_params.",
+  "online_work_scope": {
+    "kind": "shard",
+    "entries": 2048,
+    "leaks_shard_id": true,
+    "note": "setup() fixes shard_size_bytes = ring_dim * record_bytes = 2048 records, independent of N. The online answer therefore touches one 2048-record shard no matter how large the database is, and ClientQuery.shard_id is sent in cleartext, so the server learns which shard the query is in. The anonymity set is 2048 records, not N."
+  }
 }

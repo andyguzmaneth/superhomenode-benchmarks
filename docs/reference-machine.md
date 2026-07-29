@@ -61,7 +61,7 @@ not reachable and that absence is a published finding, not a gap:
 
 | Cell | Raw DB | Status at 32 GB |
 | --- | --- | --- |
-| 2²⁸ × 32 B | 8.6 GB | **iSimplePIR fits** (4,892 ms answer). **InsPIRe OOMs** — setup peaks near 40 GB (`dmesg`: total-vm ≈ 40 GB, anon-rss 31.9 GB). A scheme-level feasibility asymmetry |
+| 2²⁸ × 32 B | 8.6 GB | **iSimplePIR fits** (4,892 ms answer). **InsPIRe (inspire-rs lineage) OOMs** — setup peaks near 40 GB (`dmesg`: total-vm ≈ 40 GB, anon-rss 31.9 GB) |
 | 2²⁸ × 256 B | ≈ 68 GB | Out of reach for both, by a wide margin |
 
 A cell an implementation cannot fit on home-staker hardware is a real result. The

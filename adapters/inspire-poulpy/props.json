@@ -4,11 +4,19 @@
   "repo": "https://github.com/poulpy-fhe/poulpy-pir",
   "commit": "625ac4094b2a99b23bc57e44e080dbc2dd526768",
   "language": "rust",
-  "backend": ["avx512f", "private-gemm-x86"],
+  "backend": [
+    "avx512f",
+    "private-gemm-x86"
+  ],
   "variant": "Interpolation (InsPIRe)",
   "security_bits_claimed": 128,
   "online_scans_full_db": false,
   "checkout": "poulpy-pir",
   "per_query_caveat": "poulpy's example averages the online phase over its own REPEATS=10 and exposes no seed parameter, so this row reports a single run with no cross-seed spread, where the raven and upstream rows report a median over 3 seeds. client_decode_ms is not reported by the example and is omitted rather than invented.",
-  "notes": "Independent implementation of InsPIRe on the Poulpy FHE library — not a fork of inspire-rs. Interpolation construction (the direct analogue of the other InsPIRe rows here); the recursive InsPIRe² construction is published separately as inspire2-poulpy because it is a different protocol, not a tuning knob. Requires AVX-512F: the crate's avx512-fhe feature has a compile-time guard and only builds on an AVX-512 host. Database layouts follow the crate's DefaultPirParameters32B presets, which are 32-byte payloads only at 1/2/4/8/16/32 GiB — mapping to entries_log2 25..30. The cols choice per size follows the crate's own examples/README pairing."
+  "notes": "Independent implementation of InsPIRe on the Poulpy FHE library — not a fork of inspire-rs. Interpolation construction (the direct analogue of the other InsPIRe rows here); the recursive InsPIRe² construction is published separately as inspire2-poulpy because it is a different protocol, not a tuning knob. Requires AVX-512F: the crate's avx512-fhe feature has a compile-time guard and only builds on an AVX-512 host. Database layouts follow the crate's DefaultPirParameters32B presets, which are 32-byte payloads only at 1/2/4/8/16/32 GiB — mapping to entries_log2 25..30. The cols choice per size follows the crate's own examples/README pairing.",
+  "online_work_scope": {
+    "kind": "full_database",
+    "leaks_shard_id": false,
+    "note": "The online answer is over the whole database; no index partition is revealed."
+  }
 }

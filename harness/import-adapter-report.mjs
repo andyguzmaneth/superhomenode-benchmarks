@@ -103,6 +103,10 @@ const record = {
     forked_from: props.forked_from,
     language: props.language,
     backend: props.backend,
+    // What the online answer actually covers. Without this, a flat latency
+    // curve reads as "scales perfectly" when it may simply mean the online
+    // phase never touched more than one fixed-size shard.
+    online_work_scope: props.online_work_scope,
   }),
   params: {
     num_records: numRecords,

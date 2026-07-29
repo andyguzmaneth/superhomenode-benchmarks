@@ -22,6 +22,17 @@
         "commit": { "type": "string", "description": "Exact commit hash benchmarked (reproducibility)." },
         "forked_from": { "type": "string", "description": "Upstream this implementation descends from. Omit for independent implementations; drives the lineage column on the site." },
         "backend": { "type": "array", "items": { "type": "string" }, "description": "Acceleration this build actually used, e.g. ['avx512f','blas'] or ['avx2','rayon']. Two rows with different backends are not the same measurement." },
+        "online_work_scope": {
+          "type": "object",
+          "description": "What the per-query online answer actually covers. Decisive for reading server_answer_ms: an implementation whose online phase touches a fixed-size shard has a latency independent of N, which looks like perfect scaling but is not the same operation as full-database PIR.",
+          "additionalProperties": true,
+          "properties": {
+            "kind": { "enum": ["full_database", "shard"] },
+            "entries": { "type": "integer", "description": "Records covered by the online phase when kind is 'shard'." },
+            "leaks_shard_id": { "type": "boolean", "description": "Whether the query reveals which partition the index is in, i.e. whether the anonymity set is smaller than the database." },
+            "note": { "type": "string" }
+          }
+        },
         "language": { "type": "string" }
       }
     },

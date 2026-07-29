@@ -26,6 +26,19 @@
       <code>UNVERIFIED</code> — treat shapes as real, absolute numbers as provisional.
     </div>
 
+    <div id="scopeWarning" class="warning" hidden>
+      <strong>Server latency is not comparable across every row here.</strong>
+      The <code>inspire-rs</code> lineage (<code>inspire-raven</code>,
+      <code>inspire-upstream</code>, <code>inspire-lianghuiqiang9</code>) fixes its
+      shard at <code>ring_dim × record_bytes</code> = <b>2048 records</b>, independent
+      of N, and sends <code>shard_id</code> in cleartext — so its online answer
+      touches one 64 KB shard however large the database is, and the anonymity set
+      is 2048 records rather than N. That is why its per-query time is flat across
+      N. <code>inspire-poulpy</code>, <code>inspire2-poulpy</code> and
+      <code>isimplepir-raven</code> answer over the whole database. Check the
+      “online answer covers” column before reading any latency chart.
+    </div>
+
     <section class="controls" id="controls" hidden>
       <div class="control">
         <label for="recordBytes">Record size</label>
