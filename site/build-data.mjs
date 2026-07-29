@@ -35,6 +35,26 @@ for (const f of files) {
   }
 }
 
+// A cell may be measured more than once (a re-run after a harness fix, a
+// resumed suite). Keep only the newest row per (implementation, N, record size,
+// machine) so the explorer never plots the same point twice. The older files
+// stay on disk as history; `scripts/prune-superseded.mjs` removes them.
+const machineOf = (r) => (r.notes || "").match(/(?:Measured|MODELED) on ([^.]+)\./)?.[1]?.trim() || "?";
+const cellKey = (r) =>
+  `${r.implementation?.name}|${r.params?.num_records}|${r.params?.record_bytes}|${machineOf(r)}`;
+const newest = new Map();
+for (const r of records) {
+  const k = cellKey(r);
+  const prev = newest.get(k);
+  if (!prev || (r.environment?.timestamp || "") > (prev.environment?.timestamp || "")) {
+    newest.set(k, r);
+  }
+}
+const superseded = records.length - newest.size;
+records.length = 0;
+records.push(...newest.values());
+if (superseded > 0) console.log(`ignored ${superseded} superseded row(s)`);
+
 // Stable sort so the bundle is diff-friendly.
 records.sort((a, b) => {
   const k = (r) =>
