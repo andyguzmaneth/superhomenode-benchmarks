@@ -1,0 +1,28 @@
+[package]
+name = "poulpy-small-driver"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+# Depends on the pinned checkout that setup.sh produces. poulpy-pir itself pins
+# poulpy by git rev, so the FHE backends come transitively at the same revision
+# the published rows were measured against.
+[dependencies]
+poulpy-pir = { path = "../../../implementations/poulpy-pir" }
+poulpy-cpu-avx = { git = "https://github.com/poulpy-fhe/poulpy", rev = "f1dc3d4e04394ce9cba2aa396cc0fe19be4645ed", features = ["enable-avx"] }
+poulpy-cpu-avx512 = { git = "https://github.com/poulpy-fhe/poulpy", rev = "f1dc3d4e04394ce9cba2aa396cc0fe19be4645ed", features = ["enable-avx512f"], optional = true }
+
+[features]
+# Matches poulpy-pir's own feature name. Without it the driver builds against the
+# AVX2 backend, which type-checks anywhere but must never be used for published
+# numbers — the reference rows are all AVX-512.
+avx512-fhe = ["dep:poulpy-cpu-avx512"]
+
+[[bin]]
+name = "small-pir"
+path = "src/main.rs"
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1
