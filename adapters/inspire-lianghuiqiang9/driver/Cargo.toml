@@ -1,0 +1,22 @@
+[package]
+name = "inspire-lianghuiqiang9-driver"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+# Same driver source as the inspire-upstream adapter, built against this fork's
+# checkout instead of the crates.io release. The path is fixed by the adapter
+# contract: setup.sh always clones to implementations/inspire-lianghuiqiang9.
+[dependencies]
+inspire = { path = "../../../implementations/inspire-lianghuiqiang9", default-features = false }
+serde_json = "1.0"
+bincode = "1.3"
+
+[[bin]]
+name = "inspire-lianghuiqiang9-bench"
+path = "src/main.rs"
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1

@@ -1,0 +1,14 @@
+{
+  "scheme": "InsPIRe",
+  "implementation": "inspire-lianghuiqiang9",
+  "repo": "https://github.com/lianghuiqiang9/inspire-rs",
+  "commit": "a76dfdc90dc291eb2dd6343c5f87f3a963f20ba9",
+  "forked_from": "https://github.com/igor53627/inspire-rs",
+  "language": "rust",
+  "backend": ["avx2", "rayon"],
+  "variant": "TwoPacking + InspiRING",
+  "security_bits_claimed": 128,
+  "online_scans_full_db": false,
+  "per_query_caveat": "Inherits the upstream's behaviour: query() regenerates InspiRING packing keys on every call, so client_query_gen_ms and query_bytes include per-query key generation and shipping. inspire-raven's do not.",
+  "notes": "A second fork of the deleted igor53627/inspire-rs, diverged 2026-04-24 — after the upstream's last substantive commit but before Raven's patches. Declares the same crate name and version (inspire 0.2.0) and exports an identical public API, so it is benchmarked through the same shared driver as inspire-upstream; the interesting question is whether the fork changed anything measurable. Last pushed 2026-04-24."
+}

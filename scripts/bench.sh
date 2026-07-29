@@ -31,7 +31,12 @@ ADAPTER="$ROOT/adapters/$IMPL_ID"
 # --- cells ------------------------------------------------------------------
 # The published grid. `smoke` exists so a new adapter can be wired up in
 # minutes instead of hours; it is never published.
-FULL_CELLS="20:8 20:32 20:256 24:8 24:32 24:256 28:8 28:32 28:256"
+# The PSE 3x3 grid, plus a 32-byte sweep at 2^25..2^27. Those three exist so the
+# poulpy implementations can meet the others: their default parameterizations are
+# 32-byte payloads at power-of-two GiB database sizes, which land exactly on
+# entries_log2 25..30. Without them poulpy would only ever share one cell (2^28)
+# with the rest of the grid.
+FULL_CELLS="20:8 20:32 20:256 24:8 24:32 24:256 25:32 26:32 27:32 28:8 28:32 28:256"
 SMOKE_CELLS="20:32"
 if [ -z "$CELLS" ]; then
   case "$PROFILE" in
