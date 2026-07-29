@@ -257,7 +257,7 @@ function renderProps() {
         const scope = !sc
           ? "–"
           : sc.kind === "shard"
-            ? `<span class="warn-cell" title="${sc.note || ""}">one ${fmtNum(sc.entries)}-record shard` +
+            ? `<span class="warn-cell" title="${sc.note || ""}">one ${sc.entries?.toLocaleString("en-US")}-record shard` +
               (sc.leaks_shard_id ? " · shard id in clear" : "") + `</span>`
             : `<span title="${sc.note || ""}">whole database</span>`;
         // Implementations tag their variant verbosely (raven's runs to ~60

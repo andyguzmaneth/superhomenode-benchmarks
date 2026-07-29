@@ -50,14 +50,26 @@ docs/                    methodology + per-scheme notes
 | --- | --- | --- | --- | --- |
 | `inspire-raven` | InsPIRe | [hisoka-io/inspire-rs](https://github.com/hisoka-io/inspire-rs) via raven's `b1-inspire` | fork of the (now deleted) `igor53627/inspire-rs` | ✅ 7 cells |
 | `isimplepir-raven` | iSimplePIR | [hisoka-io/raven](https://github.com/hisoka-io/raven) `crates/isimplepir` | independent | ✅ 8 cells |
-| `inspire-upstream` | InsPIRe | crates.io `inspire` 0.2.0 — the only surviving copy of the deleted upstream | the pre-fork baseline | ⏭ next |
-| `inspire-poulpy` | InsPIRe + InsPIRe² | [poulpy-fhe/poulpy-pir](https://github.com/poulpy-fhe/poulpy-pir) | independent | ⏭ next |
-| `inspire-lianghuiqiang9` | InsPIRe | [lianghuiqiang9/inspire-rs](https://github.com/lianghuiqiang9/inspire-rs) | fork of the same deleted upstream | ⏭ next |
+| `inspire-upstream` | InsPIRe | crates.io `inspire` 0.2.0 — the only surviving copy of the deleted upstream | the pre-fork baseline | ✅ wired |
+| `inspire-poulpy` | InsPIRe (interpolation) | [poulpy-fhe/poulpy-pir](https://github.com/poulpy-fhe/poulpy-pir) | independent | ✅ wired |
+| `inspire2-poulpy` | InsPIRe² (recursion, γ₀=32) | [poulpy-fhe/poulpy-pir](https://github.com/poulpy-fhe/poulpy-pir) | independent | ✅ wired |
+| `inspire-lianghuiqiang9` | InsPIRe | [lianghuiqiang9/inspire-rs](https://github.com/lianghuiqiang9/inspire-rs) | fork of the same deleted upstream | ✅ wired |
 
 We don't reimplement the crypto. Each adapter builds its upstream at a pinned
 commit and translates that project's own output into one canonical report; the
 driver adds machine identity and peak RSS so all implementations are measured
 identically.
+
+## Read the scope column before the latency charts
+
+`server_answer_ms` is only comparable between implementations whose online phase
+covers the same thing. The `inspire-rs` lineage fixes its shard at
+`ring_dim × record_bytes` = **2048 records regardless of N** and sends
+`shard_id` in cleartext, so its online answer touches one 64 KB shard however
+large the database is — which is why its per-query time is flat across N, and
+why its anonymity set is 2048 records rather than N. `inspire-poulpy`,
+`inspire2-poulpy` and `isimplepir-raven` answer over the whole database. Every
+row carries `implementation.online_work_scope`; see `docs/methodology.md` §6.
 
 ## Quick start
 
