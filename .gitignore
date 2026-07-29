@@ -14,3 +14,6 @@ bench-out*/
 implementations/*/
 !implementations/README.md
 .vercel
+
+# adapter driver build artifacts
+adapters/*/driver/target/

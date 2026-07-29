@@ -1,0 +1,13 @@
+{
+  "scheme": "InsPIRe",
+  "implementation": "inspire-upstream",
+  "repo": "https://crates.io/crates/inspire/0.2.0",
+  "commit": "0.2.0",
+  "language": "rust",
+  "backend": ["avx2", "rayon"],
+  "variant": "TwoPacking + InspiRING",
+  "security_bits_claimed": 128,
+  "online_scans_full_db": false,
+  "per_query_caveat": "Upstream 0.2.0's query() calls maybe_generate_packing_keys() on EVERY query — there is no session or key-cache API. Raven's fork added pir/session.rs (ClientSession + a packing-key pre-exchange handshake, keys uploaded once and referenced by handle). So client_query_gen_ms and query_bytes for this row include per-query InspiRING key generation and shipping, while inspire-raven's do not. That is a real difference between the implementations, not a harness artifact — but the two per-query numbers are not measuring the same work, and any comparison must say so.",
+  "notes": "The pre-fork baseline. github.com/igor53627/inspire-rs — the upstream that inspire-raven and inspire-lianghuiqiang9 both descend from — has been DELETED from GitHub; crates.io inspire 0.2.0 (published 2026-02-15) is the only surviving copy. Its secure_128_d2048 uses the 2-CRT moduli [268369921, 249561089] (q ~ 2^56), which is exactly the parameter set Raven's fork replaced with a single-prime q = 2^60 - 2^14 + 1, calling it under-provisioned. Benchmarked through a driver crate in this repo, since the published crate ships no BenchReport emitter."
+}

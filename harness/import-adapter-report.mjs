@@ -131,6 +131,7 @@ const record = {
     `Measured on ${args.machine}. security_bits=${props.security_bits_claimed} is claimed by the ` +
     `implementation and is published as a label only — it is not verified here. ` +
     `Scheme params are whatever this implementation chose; compare across implementations with that in mind.` +
+    (props.per_query_caveat ? ` CAVEAT: ${props.per_query_caveat}` : "") +
     (props.notes ? ` ${props.notes}` : ""),
 };
 
