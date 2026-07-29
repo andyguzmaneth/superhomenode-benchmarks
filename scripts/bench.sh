@@ -66,6 +66,25 @@ done <<< "$(jsonenv "$ADAPTER/props.json" bench_env)"
 # failure, which is the honest result: not reachable on this machine in this
 # time. Raise with CELL_TIMEOUT=<seconds> for a deliberate long run.
 CELL_TIMEOUT="${CELL_TIMEOUT:-5400}"
+
+# Cap each cell's memory in its own cgroup. Cells that do not fit are a expected
+# and interesting result, but a *global* OOM does not just kill the cell — it
+# takes the driver down with it and the whole remaining suite silently stops
+# (observed: 2^28x32B on the inspire-rs lineage peaks ~40 GB and killed a run
+# with four adapters still queued). Confining the kill to the cell turns "the
+# suite died" into "that cell did not fit", which is what we actually want to
+# publish. Left slightly under total RAM so the driver and node survive.
+CELL_MEMORY_MAX="${CELL_MEMORY_MAX:-28G}"
+CELL_CONFINE=()
+if command -v systemd-run >/dev/null 2>&1 && [ "${NO_CGROUP:-0}" != "1" ]; then
+  CELL_CONFINE=(systemd-run --scope --quiet --collect
+    -p MemoryMax="$CELL_MEMORY_MAX" -p MemorySwapMax=0)
+  # guest-exec runs us as root; keep the workload as the invoking user.
+  [ "$(id -u)" = "0" ] && CELL_CONFINE+=(--uid="${BENCH_USER:-andy}")
+  echo "==> each cell confined to MemoryMax=$CELL_MEMORY_MAX (no swap)"
+else
+  echo "!! systemd-run unavailable — a cell that exhausts RAM may take the suite down" >&2
+fi
 CHECKOUT="$(jsonval "$ADAPTER/props.json" checkout)"
 [ -n "$CHECKOUT" ] || CHECKOUT="$IMPL_ID"
 IMPL_DIR="$ROOT/implementations/$CHECKOUT"
@@ -148,14 +167,24 @@ for cell in $CELLS; do
   if [ -n "$TIME_BIN" ]; then
     env IMPL_DIR="$IMPL_DIR" ENTRIES_LOG2="$elog2" RECORD_BYTES="$rbytes" \
         OUT_JSON="$REPORT" RAW_DIR="$RAW_DIR" \
-      $TIME_BIN -o "$TIMELOG" timeout -k 30 "$CELL_TIMEOUT" bash "$ADAPTER/bench.sh"
+      $TIME_BIN -o "$TIMELOG" "${CELL_CONFINE[@]}" timeout -k 30 "$CELL_TIMEOUT" bash "$ADAPTER/bench.sh"
   else
     env IMPL_DIR="$IMPL_DIR" ENTRIES_LOG2="$elog2" RECORD_BYTES="$rbytes" \
         OUT_JSON="$REPORT" RAW_DIR="$RAW_DIR" \
-      timeout -k 30 "$CELL_TIMEOUT" bash "$ADAPTER/bench.sh"
+      "${CELL_CONFINE[@]}" timeout -k 30 "$CELL_TIMEOUT" bash "$ADAPTER/bench.sh"
   fi
   rc=$?
   set -e
+
+  # A confined cell that exceeds MemoryMax is killed by the cgroup OOM killer;
+  # systemd then tears down the scope, so this surfaces as 137 (SIGKILL) or 143
+  # (SIGTERM) depending on which death is observed first. `timeout` reports 124
+  # separately, so neither code is ambiguous with the time budget.
+  if [ $rc -eq 137 ] || [ $rc -eq 143 ]; then
+    echo "!! $IMPL_ID 2^$elog2 x${rbytes} KILLED — did not fit in $CELL_MEMORY_MAX; recording nothing, continuing"
+    failed=$((failed + 1))
+    continue
+  fi
 
   if [ $rc -eq 124 ]; then
     echo "!! $IMPL_ID 2^$elog2 x${rbytes} EXCEEDED the ${CELL_TIMEOUT}s budget — recording nothing, continuing"
