@@ -171,3 +171,7 @@ code { background: var(--card); border: 1px solid var(--line); padding: 0.05rem 
 /* Flags a property that limits how a row may be compared (e.g. an online phase
    that only covers a shard). Not a status colour — it must read as a caveat. */
 .warn-cell { border-bottom: 1px dotted var(--axis); cursor: help; }
+
+/* Marks a chart whose y-axis is logarithmic. Without it a reader compares
+   curve shapes across cards that do not share a scale type. */
+.axis-note { fill: var(--muted); font-size: 9px; letter-spacing: 0.03em; }

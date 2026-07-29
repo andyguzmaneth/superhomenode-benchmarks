@@ -156,15 +156,35 @@ function chartSvg(pts, metric) {
   const ns = uniqueSorted(pts.map((p) => p.n));
   const xs = ns.map(Math.log2);
   const xMin = Math.min(...xs), xMax = Math.max(...xs);
-  // Include the top of any error bar so whiskers are never clipped.
-  const yMax = Math.max(...pts.map((p) => p.spread?.max ?? p.y)) * 1.08 || 1;
   const px = (n) => M.l + (xMax === xMin ? 0.5 : (Math.log2(n) - xMin) / (xMax - xMin)) * (CW - M.l - M.r);
-  const py = (y) => CH - M.b - (y / yMax) * (CH - M.t - M.b);
   const fmt = FMT[metric.kind];
 
+  // Implementations here differ by three orders of magnitude on latency (1.9 ms
+  // to 4.8 s). On a linear axis everything except the slowest series collapses
+  // onto the baseline and the chart says nothing. Switch to log whenever the
+  // spread demands it — still one axis, so the comparison stays honest.
+  const positives = pts.map((p) => p.y).filter((y) => y > 0);
+  const lo = positives.length ? Math.min(...positives) : 1;
+  const hiRaw = Math.max(...pts.map((p) => p.spread?.max ?? p.y)) || 1;
+  const useLog = positives.length > 0 && hiRaw / lo >= 100;
+
+  let py, gridVals, yMax;
+  if (useLog) {
+    const lMin = Math.floor(Math.log10(lo));
+    const lMax = Math.ceil(Math.log10(hiRaw));
+    py = (y) =>
+      CH - M.b - ((Math.log10(Math.max(y, 10 ** lMin)) - lMin) / (lMax - lMin)) * (CH - M.t - M.b);
+    gridVals = [];
+    for (let e = lMin; e <= lMax; e++) gridVals.push(10 ** e);
+  } else {
+    yMax = hiRaw * 1.08 || 1;
+    py = (y) => CH - M.b - (y / yMax) * (CH - M.t - M.b);
+    gridVals = [0, 1, 2, 3, 4].map((i) => (yMax * i) / 4);
+  }
+
   let s = "";
-  for (let i = 0; i <= 4; i++) {
-    const y = (yMax * i) / 4, yy = py(y);
+  for (const y of gridVals) {
+    const yy = py(y);
     s += `<line x1="${M.l}" y1="${yy}" x2="${CW - M.r}" y2="${yy}" stroke="var(--line)" stroke-width="1"/>`;
     s += `<text x="${M.l - 7}" y="${yy + 4}" text-anchor="end">${fmt(y)}</text>`;
   }
@@ -191,6 +211,10 @@ function chartSvg(pts, metric) {
       s += `<circle cx="${x}" cy="${py(p.y).toFixed(1)}" r="4" fill="${color}" stroke="var(--card)" stroke-width="2"/>`;
       hover.push({ x: px(p.n), y: py(p.y), p });
     }
+  }
+
+  if (useLog) {
+    s += `<text x="${M.l}" y="${M.t + 8}" class="axis-note">log scale</text>`;
   }
 
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
