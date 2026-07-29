@@ -47,9 +47,25 @@ if [ -z "$CELLS" ]; then
 fi
 
 jsonval() { node -e 'const j=require(process.argv[1]);const v=process.argv[2].split(".").reduce((o,k)=>o?.[k],j);process.stdout.write(v==null?"":Array.isArray(v)?v.join(","):String(v))' "$1" "$2"; }
+# `KEY=VALUE` lines from an object in props.json, for `export`.
+jsonenv() { node -e 'const j=require(process.argv[1]);const o=j[process.argv[2]]||{};for(const [k,v] of Object.entries(o))console.log(`${k}=${v}`)' "$1" "$2"; }
 
 REF="$ROOT/machines/reference.json"
 MACHINE="$(jsonval "$REF" label)"
+
+# Per-implementation iteration counts. Implementations differ in per-query cost
+# by three orders of magnitude here, so a seed/iteration count that is cheap for
+# one is unfinishable for another. Changing these changes the confidence in a
+# number, not the number itself — and each row records the counts it actually
+# ran (params.scheme_params.seeds / measured_per_seed), so a reader can see it.
+while IFS= read -r kv; do
+  [ -n "$kv" ] && export "${kv?}"
+done <<< "$(jsonenv "$ADAPTER/props.json" bench_env)"
+
+# No cell may run forever. A cell that blows the budget is recorded as a
+# failure, which is the honest result: not reachable on this machine in this
+# time. Raise with CELL_TIMEOUT=<seconds> for a deliberate long run.
+CELL_TIMEOUT="${CELL_TIMEOUT:-5400}"
 CHECKOUT="$(jsonval "$ADAPTER/props.json" checkout)"
 [ -n "$CHECKOUT" ] || CHECKOUT="$IMPL_ID"
 IMPL_DIR="$ROOT/implementations/$CHECKOUT"
@@ -132,14 +148,20 @@ for cell in $CELLS; do
   if [ -n "$TIME_BIN" ]; then
     env IMPL_DIR="$IMPL_DIR" ENTRIES_LOG2="$elog2" RECORD_BYTES="$rbytes" \
         OUT_JSON="$REPORT" RAW_DIR="$RAW_DIR" \
-      $TIME_BIN -o "$TIMELOG" bash "$ADAPTER/bench.sh"
+      $TIME_BIN -o "$TIMELOG" timeout -k 30 "$CELL_TIMEOUT" bash "$ADAPTER/bench.sh"
   else
     env IMPL_DIR="$IMPL_DIR" ENTRIES_LOG2="$elog2" RECORD_BYTES="$rbytes" \
         OUT_JSON="$REPORT" RAW_DIR="$RAW_DIR" \
-      bash "$ADAPTER/bench.sh"
+      timeout -k 30 "$CELL_TIMEOUT" bash "$ADAPTER/bench.sh"
   fi
   rc=$?
   set -e
+
+  if [ $rc -eq 124 ]; then
+    echo "!! $IMPL_ID 2^$elog2 x${rbytes} EXCEEDED the ${CELL_TIMEOUT}s budget — recording nothing, continuing"
+    failed=$((failed + 1))
+    continue
+  fi
 
   if [ $rc -ne 0 ] || [ ! -f "$REPORT" ]; then
     echo "!! $IMPL_ID 2^$elog2 x${rbytes} FAILED (rc=$rc) — recording nothing, continuing"

@@ -132,6 +132,7 @@ const record = {
     `implementation and is published as a label only — it is not verified here. ` +
     `Scheme params are whatever this implementation chose; compare across implementations with that in mind.` +
     (props.per_query_caveat ? ` CAVEAT: ${props.per_query_caveat}` : "") +
+    (props.measurement_caveat ? ` CAVEAT: ${props.measurement_caveat}` : "") +
     (props.notes ? ` ${props.notes}` : ""),
 };
 
