@@ -23,3 +23,7 @@ if ! grep -qm1 avx512f /proc/cpuinfo 2>/dev/null; then
   echo "!! this host has no AVX-512F — poulpy-pir's example cannot be built here" >&2
   exit 1
 fi
+
+# poulpy-hal uses #![feature(...)]: the dependency tree only builds on nightly.
+rustup toolchain install nightly --profile minimal --no-self-update
+rustup run nightly rustc --version
