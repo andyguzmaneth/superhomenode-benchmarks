@@ -29,8 +29,9 @@ the packed server path (requires `p ≤ 1024`).
 ## Reproduce
 
 ```bash
-scripts/bench-cell.sh isimplepir 20 32          # 2^20 entries x 32 B
+scripts/bench.sh --impl isimplepir-raven --cells "20:32"   # 2^20 entries x 32 B
 ```
 
-Emits a raven `BenchReport`; `harness/import-bench-report.mjs` normalizes it into
-`results/isimplepir/`.
+The adapter emits raven `BenchReport`s per seed, `adapters/_lib/raven-to-adapter.mjs`
+collapses them into the canonical report, and `harness/import-adapter-report.mjs`
+writes the row into `results/isimplepir/`.

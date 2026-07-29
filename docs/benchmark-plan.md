@@ -1,16 +1,45 @@
 # Benchmark plan
 
-**Goal.** Compare PIR *schemes* against each other on **one fixed machine at
-home-staker specs**, over a database shaped like a **realistic subset of Ethereum
-state**. The question we're answering: *which PIR scheme is actually usable by a
-home staker serving private reads over Ethereum state?*
+**Goal.** Compare **different implementations of the same PIR scheme** on one
+frozen home-staker machine, over a database shaped like a realistic subset of
+Ethereum state. The question: *given the same protocol, how much does the
+implementation actually cost you?* — with a secondary cross-scheme contrast
+(silent preprocessing vs. client hint) kept for context.
+
+This is a **performance** benchmark. Correctness and security are out of scope by
+decision; see `docs/methodology.md` §6 for exactly what that does and does not
+license.
+
+## Why implementations
+
+InsPIRe has at least four independent CPU implementations, and the upstream that
+most of them forked — `igor53627/inspire-rs` — **has been deleted from GitHub**.
+The surviving copy of that baseline is crates.io `inspire` 0.2.0. That makes fork
+lineage part of the result: rows carry `forked_from`, and the site renders it.
+
+| Implementation | Scheme / variant | Source | Lineage | Backend |
+| --- | --- | --- | --- | --- |
+| `inspire-raven` | InsPIRe, TwoPacking + InspiRING | [hisoka-io/inspire-rs](https://github.com/hisoka-io/inspire-rs) via raven `b1-inspire` | fork of deleted upstream, 6 documented patches | AVX2, rayon |
+| `inspire-upstream` | InsPIRe | crates.io `inspire` 0.2.0 | **the pre-fork baseline** | AVX2 |
+| `inspire-poulpy` | InsPIRe **and InsPIRe²** | [poulpy-fhe/poulpy-pir](https://github.com/poulpy-fhe/poulpy-pir) | independent, on the Poulpy FHE library | AVX-512, optional BLAS GEMM |
+| `inspire-lianghuiqiang9` | InsPIRe | [lianghuiqiang9/inspire-rs](https://github.com/lianghuiqiang9/inspire-rs) | fork of the same deleted upstream, diverged before Raven's fixes | AVX2 |
+| `isimplepir-raven` | iSimplePIR (eprint 2026/030) | [hisoka-io/raven](https://github.com/hisoka-io/raven) | independent | AVX2 |
+
+Explicitly excluded: `rkdud007/inspire-rs` and `SoraSuegami/InsPIRe-GPU` (GPU — a
+different machine class, out of scope), `p0mvn/ipir-sp` (a YPIR+SP hybrid, not
+InsPIRe).
+
+The most interesting single comparison available: `inspire-raven` vs.
+`inspire-upstream` at the same cells isolates the cost of Raven's patches —
+including replacing the upstream's under-provisioned moduli, which should show up
+as a measurable slowdown bought in exchange for the security claim actually
+holding.
 
 ## Database model: a subset of Ethereum state
 
-We model state as flat indexed leaves (`index -> value`), the same shape Hisoka's
-`raven/examples/eth-state` uses (`ENTRY_SIZE = 32`, present-tag + big-endian value).
-We sweep the **PSE 3×3 grid** (Privacy & Scaling Explorations / EF), which Hisoka's
-harness already targets:
+State is modelled as flat indexed leaves (`index -> value`), the shape
+`raven/examples/eth-state` uses (`ENTRY_SIZE = 32`, present-tag + big-endian
+value). We sweep the PSE 3×3 grid:
 
 | entries (log₂) | ≈ count | Ethereum-state analogue |
 | --- | --- | --- |
@@ -21,65 +50,37 @@ harness already targets:
 | record size | Ethereum-state analogue |
 | --- | --- |
 | 8 B | compact balance |
-| 32 B | storage slot / balance word (the default, matches `eth-state`) |
+| 32 B | storage slot / balance word (the default) |
 | 256 B | account leaf (nonce + balance + codeHash + storageRoot, padded) |
 
-## Schemes
+## The machine
 
-| Scheme | Family | Source | Status |
-| --- | --- | --- | --- |
-| **iSimplePIR** | client-preprocessing / hint (eprint 2026/030) | `hisoka-io/raven` `crates/isimplepir` | ✅ real numbers flowing |
-| **InsPIRe** | silent preprocessing (eprint 2025/1352) | `hisoka-io/inspire-rs` (raven vendors a fork) | ⏭ next: run `b1-inspire`, import |
-| Spiral / Respire / YPIR | FHE-composition / high-rate | TBD | later |
+Frozen: `ryzen9900x-8t-32g`. Full spec, run-a-node mapping, and the two
+unreachable cells are in [`reference-machine.md`](reference-machine.md).
 
-The interesting axis for home stakers: **hint-based schemes (iSimplePIR) push a large
-one-time download onto the client** (22 MB hint at 2²⁰×32 B) but keep server compute
-tiny; **silent-preprocessing schemes (InsPIRe) carry no hint** but do more per-query
-server work. The explorer is built to make that trade-off visible.
+## Metrics
 
-## ⚠️ The gating decision: the reference machine
-
-Comparisons are only meaningful on **one pinned machine**, and the premise is
-*home-staker hardware* — so a cloud server is the wrong place to publish from. Every
-result record already carries the exact CPU/cores/threads it ran on; we just need to
-fix which machine is authoritative.
-
-Recommended home-staker reference spec (aligned with typical EthStaker / EF guidance):
-- **CPU:** 8-core modern consumer x86 (e.g. Ryzen 7 / Intel i7, mini-PC / NUC class)
-- **RAM:** 32 GB
-- **Storage:** NVMe SSD
-- **Threads:** pinned to physical cores, recorded per run
-
-Until that machine is designated, numbers produced here are labeled
-`dev-vm-… (NOT home-staker reference)` and are **not publishable** — only smoke/dev.
+Per-query: `server_answer_ms`, `query_bytes`, `response_bytes`,
+`client_query_gen_ms`, `client_decode_ms`.
+One-time: `preprocessing_ms`, `offline_hint_bytes`,
+`preprocessing_throughput_mbps`.
+Resource: `peak_memory_bytes` (whole run, measured by the driver — setup peak is
+what OOMs).
+Derived, conditional: `server_throughput_mbps`, only where the online phase scans
+the database.
 
 ## Reproducing a data point
 
 ```bash
-# 1. get the crypto (kept out of this repo; see implementations/)
-git clone https://github.com/hisoka-io/raven
-git clone https://github.com/hisoka-io/inspire-rs raven/crates/inspire   # for InsPIRe
-
-# 2. run a scheme's bench on the reference machine (example: iSimplePIR, 2^20 x 32B)
-cd raven
-taskset -c 0-7 cargo run --release \
-  --manifest-path benches/b2-bench/Cargo.toml --bin b2-isimplepir -- \
-  --entries-log2 20 --record-bytes 32 --full-bench --warmup 4 --measured 16 \
-  --seeds 0,1,2 --out-dir ./bench-out
-
-# 3. import the BenchReport into this repo's schema
-node harness/import-bench-report.mjs --file <path>/cell-2e20x32.json \
-  --scheme iSimplePIR --impl raven-isimplepir \
-  --repo https://github.com/hisoka-io/raven --commit <sha> \
-  --machine "<reference-machine-label>" --cpu "<cpu>" --cores 8 --threads 8 \
-  --features avx2 --security-bits 128
-
-# 4. refresh the site
-node site/build-data.mjs
+scripts/bench.sh --impl inspire-raven --cells "24:32"
 ```
 
-## Current status
+That single command pins the upstream commit, prebuilds it (so rustc stays out of
+the peak-RSS figure), runs the cell, measures peak RSS, writes the row under
+`results/inspire/`, and rebuilds `site/data/results.json`.
 
-One **real** iSimplePIR point (2²⁰ × 32 B) is imported, measured on the dev VM
-(Xeon, 4 threads) — a placeholder until the reference machine is chosen. The InsPIRe
-`mock-*` rows remain as clearly-badged placeholders until `b1-inspire` is wired.
+## Status
+
+15 published rows on the frozen machine: `inspire-raven` (7 cells) and
+`isimplepir-raven` (8 cells). Next: the `inspire-upstream` baseline, then
+`inspire-poulpy`, then `inspire-lianghuiqiang9`.

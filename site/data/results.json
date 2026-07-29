@@ -1,100 +1,25 @@
 {
-  "generated_from": "26 record(s)",
+  "generated_from": "15 record(s)",
   "schemes": [
     "InsPIRe",
     "iSimplePIR"
   ],
   "implementations": [
-    "raven-inspire",
-    "raven-isimplepir"
+    "inspire-raven",
+    "isimplepir-raven"
   ],
   "records": [
     {
       "scheme": "InsPIRe",
       "implementation": {
-        "name": "raven-inspire",
+        "name": "inspire-raven",
         "repo": "https://github.com/hisoka-io/inspire-rs",
-        "commit": "3be3cc7d56db9535ab93101864c5468c654dbddf",
-        "language": "rust"
-      },
-      "params": {
-        "num_records": 262144,
-        "record_bytes": 32,
-        "security_bits": 128,
-        "threads": 4,
-        "scheme_params": {
-          "variant": "inspire-default-q-twopacking-inspiring-commit-e-handshake-solinas",
-          "throughput_qps_per_core": 53.789468022161266,
-          "measured_queries": 5
-        }
-      },
-      "environment": {
-        "cpu_model": "Intel(R) Xeon(R) Processor @ 2.80GHz",
-        "cpu_features": [
-          "avx2"
-        ],
-        "logical_cores": 4,
-        "os": "linux",
-        "timestamp": "2026-07-27T18:35:56.437Z",
-        "runner_version": "raven-bench@3be3cc7d56db"
-      },
-      "metrics": {
-        "query_bytes": 98840,
-        "response_bytes": 32879,
-        "offline_hint_bytes": 0,
-        "preprocessing_ms": 9593.595458,
-        "server_answer_ms": 14.909,
-        "server_throughput_mbps": 562.6539674022403,
-        "client_query_gen_ms": 3.609
-      },
-      "notes": "Measured on dev-vm-xeon-4t (NOT home-staker reference). Variant \"inspire-default-q-twopacking-inspiring-commit-e-handshake-solinas\"; client_query_gen_ms includes decode. security_bits=128 is nominal — confirm against scheme params."
-    },
-    {
-      "scheme": "InsPIRe",
-      "implementation": {
-        "name": "raven-inspire",
-        "repo": "https://github.com/hisoka-io/inspire-rs",
-        "commit": "3be3cc7d56db9535ab93101864c5468c654dbddf",
-        "language": "rust"
-      },
-      "params": {
-        "num_records": 1048576,
-        "record_bytes": 8,
-        "security_bits": 128,
-        "threads": 4,
-        "scheme_params": {
-          "variant": "inspire-default-q-twopacking-inspiring-commit-e-handshake-solinas",
-          "throughput_qps_per_core": 127.45023068491753,
-          "measured_queries": 5
-        }
-      },
-      "environment": {
-        "cpu_model": "Intel(R) Xeon(R) Processor @ 2.80GHz",
-        "cpu_features": [
-          "avx2"
-        ],
-        "logical_cores": 4,
-        "os": "linux",
-        "timestamp": "2026-07-27T18:38:09.834Z",
-        "runner_version": "raven-bench@3be3cc7d56db"
-      },
-      "metrics": {
-        "query_bytes": 98840,
-        "response_bytes": 32879,
-        "offline_hint_bytes": 0,
-        "preprocessing_ms": 8779.69551,
-        "server_answer_ms": 4.207,
-        "server_throughput_mbps": 1993.9643451390539,
-        "client_query_gen_ms": 3.619
-      },
-      "notes": "Measured on dev-vm-xeon-4t (NOT home-staker reference). Variant \"inspire-default-q-twopacking-inspiring-commit-e-handshake-solinas\"; client_query_gen_ms includes decode. security_bits=128 is nominal — confirm against scheme params."
-    },
-    {
-      "scheme": "InsPIRe",
-      "implementation": {
-        "name": "raven-inspire",
-        "repo": "https://github.com/hisoka-io/raven",
         "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+        "forked_from": "https://github.com/igor53627/inspire-rs",
+        "backend": [
+          "avx2",
+          "rayon"
+        ],
         "language": "rust"
       },
       "params": {
@@ -125,57 +50,22 @@
         "offline_hint_bytes": 0,
         "preprocessing_ms": 3439.6684419999997,
         "server_answer_ms": 1.888,
-        "server_throughput_mbps": 4443.118644067797,
-        "client_query_gen_ms": 2.322
+        "client_query_gen_ms": 2.322,
+        "preprocessing_throughput_mbps": 2.438783894857736
       },
-      "notes": "Measured on ryzen9900x-8t-32g. Variant \"inspire-default-q-twopacking-inspiring-commit-e-handshake-solinas\"; client_query_gen_ms includes decode. security_bits=128 is nominal — confirm against scheme params."
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. Raven's fork, driven through raven's b1-inspire bench binary. UPSTREAM.md documents 6 local patches, including replacing upstream's under-provisioned 2-CRT moduli in secure_128_d{2048,4096} with a single-prime q, and a CRS shrink from ~34.9 to ~1.1 MiB."
     },
     {
       "scheme": "InsPIRe",
       "implementation": {
-        "name": "raven-inspire",
+        "name": "inspire-raven",
         "repo": "https://github.com/hisoka-io/inspire-rs",
-        "commit": "3be3cc7d56db9535ab93101864c5468c654dbddf",
-        "language": "rust"
-      },
-      "params": {
-        "num_records": 1048576,
-        "record_bytes": 32,
-        "security_bits": 128,
-        "threads": 4,
-        "scheme_params": {
-          "variant": "inspire-default-q-twopacking-inspiring-commit-e-handshake-solinas",
-          "throughput_qps_per_core": 51.85162140020118,
-          "measured_queries": 5
-        }
-      },
-      "environment": {
-        "cpu_model": "Intel(R) Xeon(R) Processor @ 2.80GHz",
-        "cpu_features": [
-          "avx2"
-        ],
-        "logical_cores": 4,
-        "os": "linux",
-        "timestamp": "2026-07-27T18:13:17.024Z",
-        "runner_version": "raven-bench@3be3cc7d56db"
-      },
-      "metrics": {
-        "query_bytes": 98840,
-        "response_bytes": 32879,
-        "offline_hint_bytes": 0,
-        "preprocessing_ms": 8049.338379,
-        "server_answer_ms": 15.398,
-        "server_throughput_mbps": 2179.142226263151,
-        "client_query_gen_ms": 3.652
-      },
-      "notes": "Measured on dev-vm-xeon-4t (NOT home-staker reference). Variant \"inspire-default-q-twopacking-inspiring-commit-e-handshake-solinas\"; client_query_gen_ms includes decode. security_bits=128 is nominal — confirm against scheme params."
-    },
-    {
-      "scheme": "InsPIRe",
-      "implementation": {
-        "name": "raven-inspire",
-        "repo": "https://github.com/hisoka-io/raven",
         "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+        "forked_from": "https://github.com/igor53627/inspire-rs",
+        "backend": [
+          "avx2",
+          "rayon"
+        ],
         "language": "rust"
       },
       "params": {
@@ -206,57 +96,22 @@
         "offline_hint_bytes": 0,
         "preprocessing_ms": 3513.009624,
         "server_answer_ms": 6.598,
-        "server_throughput_mbps": 5085.545923006972,
-        "client_query_gen_ms": 2.308
+        "client_query_gen_ms": 2.308,
+        "preprocessing_throughput_mbps": 9.55147739156891
       },
-      "notes": "Measured on ryzen9900x-8t-32g. Variant \"inspire-default-q-twopacking-inspiring-commit-e-handshake-solinas\"; client_query_gen_ms includes decode. security_bits=128 is nominal — confirm against scheme params."
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. Raven's fork, driven through raven's b1-inspire bench binary. UPSTREAM.md documents 6 local patches, including replacing upstream's under-provisioned 2-CRT moduli in secure_128_d{2048,4096} with a single-prime q, and a CRS shrink from ~34.9 to ~1.1 MiB."
     },
     {
       "scheme": "InsPIRe",
       "implementation": {
-        "name": "raven-inspire",
+        "name": "inspire-raven",
         "repo": "https://github.com/hisoka-io/inspire-rs",
-        "commit": "3be3cc7d56db9535ab93101864c5468c654dbddf",
-        "language": "rust"
-      },
-      "params": {
-        "num_records": 1048576,
-        "record_bytes": 256,
-        "security_bits": 128,
-        "threads": 4,
-        "scheme_params": {
-          "variant": "inspire-default-q-twopacking-inspiring-commit-e-handshake-solinas",
-          "throughput_qps_per_core": 4.3241971695535,
-          "measured_queries": 5
-        }
-      },
-      "environment": {
-        "cpu_model": "Intel(R) Xeon(R) Processor @ 2.80GHz",
-        "cpu_features": [
-          "avx2"
-        ],
-        "logical_cores": 4,
-        "os": "linux",
-        "timestamp": "2026-07-27T18:39:11.061Z",
-        "runner_version": "raven-bench@3be3cc7d56db"
-      },
-      "metrics": {
-        "query_bytes": 98840,
-        "response_bytes": 32879,
-        "offline_hint_bytes": 0,
-        "preprocessing_ms": 22165.459495,
-        "server_answer_ms": 219.313,
-        "server_throughput_mbps": 1223.9833297615737,
-        "client_query_gen_ms": 3.924
-      },
-      "notes": "Measured on dev-vm-xeon-4t (NOT home-staker reference). Variant \"inspire-default-q-twopacking-inspiring-commit-e-handshake-solinas\"; client_query_gen_ms includes decode. security_bits=128 is nominal — confirm against scheme params."
-    },
-    {
-      "scheme": "InsPIRe",
-      "implementation": {
-        "name": "raven-inspire",
-        "repo": "https://github.com/hisoka-io/raven",
         "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+        "forked_from": "https://github.com/igor53627/inspire-rs",
+        "backend": [
+          "avx2",
+          "rayon"
+        ],
         "language": "rust"
       },
       "params": {
@@ -287,57 +142,22 @@
         "offline_hint_bytes": 0,
         "preprocessing_ms": 4194.352578,
         "server_answer_ms": 96.337,
-        "server_throughput_mbps": 2786.421167360412,
-        "client_query_gen_ms": 2.345
+        "client_query_gen_ms": 2.345,
+        "preprocessing_throughput_mbps": 63.9992587671298
       },
-      "notes": "Measured on ryzen9900x-8t-32g. Variant \"inspire-default-q-twopacking-inspiring-commit-e-handshake-solinas\"; client_query_gen_ms includes decode. security_bits=128 is nominal — confirm against scheme params."
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. Raven's fork, driven through raven's b1-inspire bench binary. UPSTREAM.md documents 6 local patches, including replacing upstream's under-provisioned 2-CRT moduli in secure_128_d{2048,4096} with a single-prime q, and a CRS shrink from ~34.9 to ~1.1 MiB."
     },
     {
       "scheme": "InsPIRe",
       "implementation": {
-        "name": "raven-inspire",
+        "name": "inspire-raven",
         "repo": "https://github.com/hisoka-io/inspire-rs",
-        "commit": "3be3cc7d56db9535ab93101864c5468c654dbddf",
-        "language": "rust"
-      },
-      "params": {
-        "num_records": 4194304,
-        "record_bytes": 32,
-        "security_bits": 128,
-        "threads": 4,
-        "scheme_params": {
-          "variant": "inspire-default-q-twopacking-inspiring-commit-e-handshake-solinas",
-          "throughput_qps_per_core": 53.77674048420577,
-          "measured_queries": 5
-        }
-      },
-      "environment": {
-        "cpu_model": "Intel(R) Xeon(R) Processor @ 2.80GHz",
-        "cpu_features": [
-          "avx2"
-        ],
-        "logical_cores": 4,
-        "os": "linux",
-        "timestamp": "2026-07-27T18:35:56.499Z",
-        "runner_version": "raven-bench@3be3cc7d56db"
-      },
-      "metrics": {
-        "query_bytes": 98840,
-        "response_bytes": 32879,
-        "offline_hint_bytes": 0,
-        "preprocessing_ms": 12486.833315,
-        "server_answer_ms": 14.991,
-        "server_throughput_mbps": 8953.220465612701,
-        "client_query_gen_ms": 3.566
-      },
-      "notes": "Measured on dev-vm-xeon-4t (NOT home-staker reference). Variant \"inspire-default-q-twopacking-inspiring-commit-e-handshake-solinas\"; client_query_gen_ms includes decode. security_bits=128 is nominal — confirm against scheme params."
-    },
-    {
-      "scheme": "InsPIRe",
-      "implementation": {
-        "name": "raven-inspire",
-        "repo": "https://github.com/hisoka-io/raven",
         "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+        "forked_from": "https://github.com/igor53627/inspire-rs",
+        "backend": [
+          "avx2",
+          "rayon"
+        ],
         "language": "rust"
       },
       "params": {
@@ -368,17 +188,22 @@
         "offline_hint_bytes": 0,
         "preprocessing_ms": 3791.513067,
         "server_answer_ms": 1.887,
-        "server_throughput_mbps": 71127.57180710121,
-        "client_query_gen_ms": 2.321
+        "client_query_gen_ms": 2.321,
+        "preprocessing_throughput_mbps": 35.39951613728673
       },
-      "notes": "Measured on ryzen9900x-8t-32g. Variant \"inspire-default-q-twopacking-inspiring-commit-e-handshake-solinas\"; client_query_gen_ms includes decode. security_bits=128 is nominal — confirm against scheme params."
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. Raven's fork, driven through raven's b1-inspire bench binary. UPSTREAM.md documents 6 local patches, including replacing upstream's under-provisioned 2-CRT moduli in secure_128_d{2048,4096} with a single-prime q, and a CRS shrink from ~34.9 to ~1.1 MiB."
     },
     {
       "scheme": "InsPIRe",
       "implementation": {
-        "name": "raven-inspire",
-        "repo": "https://github.com/hisoka-io/raven",
+        "name": "inspire-raven",
+        "repo": "https://github.com/hisoka-io/inspire-rs",
         "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+        "forked_from": "https://github.com/igor53627/inspire-rs",
+        "backend": [
+          "avx2",
+          "rayon"
+        ],
         "language": "rust"
       },
       "params": {
@@ -409,17 +234,22 @@
         "offline_hint_bytes": 0,
         "preprocessing_ms": 4907.525393,
         "server_answer_ms": 6.619,
-        "server_throughput_mbps": 81110.57742861459,
-        "client_query_gen_ms": 2.31
+        "client_query_gen_ms": 2.31,
+        "preprocessing_throughput_mbps": 109.3974801976129
       },
-      "notes": "Measured on ryzen9900x-8t-32g. Variant \"inspire-default-q-twopacking-inspiring-commit-e-handshake-solinas\"; client_query_gen_ms includes decode. security_bits=128 is nominal — confirm against scheme params."
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. Raven's fork, driven through raven's b1-inspire bench binary. UPSTREAM.md documents 6 local patches, including replacing upstream's under-provisioned 2-CRT moduli in secure_128_d{2048,4096} with a single-prime q, and a CRS shrink from ~34.9 to ~1.1 MiB."
     },
     {
       "scheme": "InsPIRe",
       "implementation": {
-        "name": "raven-inspire",
-        "repo": "https://github.com/hisoka-io/raven",
+        "name": "inspire-raven",
+        "repo": "https://github.com/hisoka-io/inspire-rs",
         "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+        "forked_from": "https://github.com/igor53627/inspire-rs",
+        "backend": [
+          "avx2",
+          "rayon"
+        ],
         "language": "rust"
       },
       "params": {
@@ -450,17 +280,22 @@
         "offline_hint_bytes": 0,
         "preprocessing_ms": 15612.651301,
         "server_answer_ms": 101.298,
-        "server_throughput_mbps": 42399.329661000214,
-        "client_query_gen_ms": 2.353
+        "client_query_gen_ms": 2.353,
+        "preprocessing_throughput_mbps": 275.0953193789004
       },
-      "notes": "Measured on ryzen9900x-8t-32g. Variant \"inspire-default-q-twopacking-inspiring-commit-e-handshake-solinas\"; client_query_gen_ms includes decode. security_bits=128 is nominal — confirm against scheme params."
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. Raven's fork, driven through raven's b1-inspire bench binary. UPSTREAM.md documents 6 local patches, including replacing upstream's under-provisioned 2-CRT moduli in secure_128_d{2048,4096} with a single-prime q, and a CRS shrink from ~34.9 to ~1.1 MiB."
     },
     {
       "scheme": "InsPIRe",
       "implementation": {
-        "name": "raven-inspire",
-        "repo": "https://github.com/hisoka-io/raven",
+        "name": "inspire-raven",
+        "repo": "https://github.com/hisoka-io/inspire-rs",
         "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+        "forked_from": "https://github.com/igor53627/inspire-rs",
+        "backend": [
+          "avx2",
+          "rayon"
+        ],
         "language": "rust"
       },
       "params": {
@@ -491,137 +326,20 @@
         "offline_hint_bytes": 0,
         "preprocessing_ms": 9379.533581,
         "server_answer_ms": 1.9,
-        "server_throughput_mbps": 1130254.5515789473,
-        "client_query_gen_ms": 2.33
+        "client_query_gen_ms": 2.33,
+        "preprocessing_throughput_mbps": 228.9542043274017
       },
-      "notes": "Measured on ryzen9900x-8t-32g. Variant \"inspire-default-q-twopacking-inspiring-commit-e-handshake-solinas\"; client_query_gen_ms includes decode. security_bits=128 is nominal — confirm against scheme params."
-    },
-    {
-      "scheme": "InsPIRe",
-      "implementation": {
-        "name": "raven-inspire",
-        "repo": "https://github.com/hisoka-io/raven",
-        "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
-        "language": "rust"
-      },
-      "params": {
-        "num_records": 268435456,
-        "record_bytes": 32,
-        "security_bits": 128,
-        "threads": 8,
-        "scheme_params": {
-          "variant": "inspire-default-q-twopacking-inspiring-commit-e-handshake-solinas",
-          "throughput_qps_per_core": 111.5425639452605,
-          "measured_queries": 16
-        }
-      },
-      "environment": {
-        "cpu_model": "AMD Ryzen 9 9900X 12-Core Processor",
-        "cpu_features": [
-          "avx2"
-        ],
-        "logical_cores": 8,
-        "os": "linux",
-        "timestamp": "2026-07-28T02:09:17.585Z",
-        "runner_version": "raven-bench@5a899b5dc60c"
-      },
-      "metrics": {
-        "query_bytes": 98840,
-        "response_bytes": 32879,
-        "offline_hint_bytes": 0,
-        "preprocessing_ms": 27077.425855,
-        "server_answer_ms": 6.613,
-        "server_throughput_mbps": 1298946.7098140025,
-        "client_query_gen_ms": 2.302
-      },
-      "notes": "Measured on ryzen9900x-8t-48g. Variant \"inspire-default-q-twopacking-inspiring-commit-e-handshake-solinas\"; client_query_gen_ms includes decode. security_bits=128 is nominal — confirm against scheme params."
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. Raven's fork, driven through raven's b1-inspire bench binary. UPSTREAM.md documents 6 local patches, including replacing upstream's under-provisioned 2-CRT moduli in secure_128_d{2048,4096} with a single-prime q, and a CRS shrink from ~34.9 to ~1.1 MiB."
     },
     {
       "scheme": "iSimplePIR",
       "implementation": {
-        "name": "raven-isimplepir",
+        "name": "isimplepir-raven",
         "repo": "https://github.com/hisoka-io/raven",
         "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
-        "language": "rust"
-      },
-      "params": {
-        "num_records": 262144,
-        "record_bytes": 32,
-        "security_bits": 128,
-        "threads": 4,
-        "scheme_params": {
-          "variant": "isimplepir-default-q-setup-owned",
-          "throughput_qps_per_core": 140.87284816724426,
-          "measured_queries": 5
-        }
-      },
-      "environment": {
-        "cpu_model": "Intel(R) Xeon(R) Processor @ 2.80GHz",
-        "cpu_features": [
+        "backend": [
           "avx2"
         ],
-        "logical_cores": 4,
-        "os": "linux",
-        "timestamp": "2026-07-27T18:35:56.276Z",
-        "runner_version": "raven-bench@5a899b5dc60c"
-      },
-      "metrics": {
-        "query_bytes": 10932,
-        "response_bytes": 10932,
-        "offline_hint_bytes": 11186208,
-        "preprocessing_ms": 2454.079233,
-        "server_answer_ms": 1.672,
-        "server_throughput_mbps": 5017.11004784689,
-        "client_query_gen_ms": 5.448
-      },
-      "notes": "Measured on dev-vm-xeon-4t (NOT home-staker reference). Variant \"isimplepir-default-q-setup-owned\"; client_query_gen_ms includes decode. security_bits=128 is nominal — confirm against scheme params."
-    },
-    {
-      "scheme": "iSimplePIR",
-      "implementation": {
-        "name": "raven-isimplepir",
-        "repo": "https://github.com/hisoka-io/raven",
-        "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
-        "language": "rust"
-      },
-      "params": {
-        "num_records": 1048576,
-        "record_bytes": 8,
-        "security_bits": 128,
-        "threads": 4,
-        "scheme_params": {
-          "variant": "isimplepir-default-q-setup-owned",
-          "throughput_qps_per_core": 174.91691446562882,
-          "measured_queries": 5
-        }
-      },
-      "environment": {
-        "cpu_model": "Intel(R) Xeon(R) Processor @ 2.80GHz",
-        "cpu_features": [
-          "avx2"
-        ],
-        "logical_cores": 4,
-        "os": "linux",
-        "timestamp": "2026-07-27T18:38:09.760Z",
-        "runner_version": "raven-bench@5a899b5dc60c"
-      },
-      "metrics": {
-        "query_bytes": 10932,
-        "response_bytes": 10932,
-        "offline_hint_bytes": 11186208,
-        "preprocessing_ms": 2501.751316,
-        "server_answer_ms": 1.074,
-        "server_throughput_mbps": 7810.6219739292355,
-        "client_query_gen_ms": 4.651
-      },
-      "notes": "Measured on dev-vm-xeon-4t (NOT home-staker reference). Variant \"isimplepir-default-q-setup-owned\"; client_query_gen_ms includes decode. security_bits=128 is nominal — confirm against scheme params."
-    },
-    {
-      "scheme": "iSimplePIR",
-      "implementation": {
-        "name": "raven-isimplepir",
-        "repo": "https://github.com/hisoka-io/raven",
-        "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
         "language": "rust"
       },
       "params": {
@@ -653,56 +371,20 @@
         "preprocessing_ms": 473.45568399999996,
         "server_answer_ms": 0.432,
         "server_throughput_mbps": 19418.074074074073,
-        "client_query_gen_ms": 2.622
+        "client_query_gen_ms": 2.622,
+        "preprocessing_throughput_mbps": 17.717831432772492
       },
-      "notes": "Measured on ryzen9900x-8t-32g. Variant \"isimplepir-default-q-setup-owned\"; client_query_gen_ms includes decode. security_bits=128 is nominal — confirm against scheme params."
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. Raven's own iSimplePIR crate (eprint 2026/030), driven through the b2-isimplepir bench binary. Kept as the hint-based contrast to the InsPIRe implementations."
     },
     {
       "scheme": "iSimplePIR",
       "implementation": {
-        "name": "raven-isimplepir",
+        "name": "isimplepir-raven",
         "repo": "https://github.com/hisoka-io/raven",
         "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
-        "language": "rust"
-      },
-      "params": {
-        "num_records": 1048576,
-        "record_bytes": 32,
-        "security_bits": 128,
-        "threads": 4,
-        "scheme_params": {
-          "variant": "isimplepir-default-q-setup-owned",
-          "throughput_qps_per_core": 61.221990939145336,
-          "measured_queries": 5
-        }
-      },
-      "environment": {
-        "cpu_model": "Intel(R) Xeon(R) Processor @ 2.80GHz",
-        "cpu_features": [
+        "backend": [
           "avx2"
         ],
-        "logical_cores": 4,
-        "os": "linux",
-        "timestamp": "2026-07-27T17:58:42.341Z",
-        "runner_version": "raven-bench@5a899b5dc60c"
-      },
-      "metrics": {
-        "query_bytes": 21856,
-        "response_bytes": 21856,
-        "offline_hint_bytes": 22372384,
-        "preprocessing_ms": 10110.676373,
-        "server_answer_ms": 3.89,
-        "server_throughput_mbps": 8625.817994858611,
-        "client_query_gen_ms": 12.501
-      },
-      "notes": "Measured on dev-vm-xeon-4t (NOT home-staker reference). Variant \"isimplepir-default-q-setup-owned\"; client_query_gen_ms includes decode. security_bits=128 is nominal — confirm against scheme params."
-    },
-    {
-      "scheme": "iSimplePIR",
-      "implementation": {
-        "name": "raven-isimplepir",
-        "repo": "https://github.com/hisoka-io/raven",
-        "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
         "language": "rust"
       },
       "params": {
@@ -734,56 +416,20 @@
         "preprocessing_ms": 1829.5168390000001,
         "server_answer_ms": 2.188,
         "server_throughput_mbps": 15335.663619744057,
-        "client_query_gen_ms": 3.992
+        "client_query_gen_ms": 3.992,
+        "preprocessing_throughput_mbps": 18.340597519911647
       },
-      "notes": "Measured on ryzen9900x-8t-32g. Variant \"isimplepir-default-q-setup-owned\"; client_query_gen_ms includes decode. security_bits=128 is nominal — confirm against scheme params."
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. Raven's own iSimplePIR crate (eprint 2026/030), driven through the b2-isimplepir bench binary. Kept as the hint-based contrast to the InsPIRe implementations."
     },
     {
       "scheme": "iSimplePIR",
       "implementation": {
-        "name": "raven-isimplepir",
+        "name": "isimplepir-raven",
         "repo": "https://github.com/hisoka-io/raven",
         "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
-        "language": "rust"
-      },
-      "params": {
-        "num_records": 1048576,
-        "record_bytes": 256,
-        "security_bits": 128,
-        "threads": 4,
-        "scheme_params": {
-          "variant": "isimplepir-default-q-setup-owned",
-          "throughput_qps_per_core": 8.05962835441732,
-          "measured_queries": 5
-        }
-      },
-      "environment": {
-        "cpu_model": "Intel(R) Xeon(R) Processor @ 2.80GHz",
-        "cpu_features": [
+        "backend": [
           "avx2"
         ],
-        "logical_cores": 4,
-        "os": "linux",
-        "timestamp": "2026-07-27T18:39:11.011Z",
-        "runner_version": "raven-bench@5a899b5dc60c"
-      },
-      "metrics": {
-        "query_bytes": 61796,
-        "response_bytes": 61796,
-        "offline_hint_bytes": 63270944,
-        "preprocessing_ms": 82567.627121,
-        "server_answer_ms": 25.038,
-        "server_throughput_mbps": 10721.122134355779,
-        "client_query_gen_ms": 61.284
-      },
-      "notes": "Measured on dev-vm-xeon-4t (NOT home-staker reference). Variant \"isimplepir-default-q-setup-owned\"; client_query_gen_ms includes decode. security_bits=128 is nominal — confirm against scheme params."
-    },
-    {
-      "scheme": "iSimplePIR",
-      "implementation": {
-        "name": "raven-isimplepir",
-        "repo": "https://github.com/hisoka-io/raven",
-        "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
         "language": "rust"
       },
       "params": {
@@ -815,56 +461,20 @@
         "preprocessing_ms": 14602.594106,
         "server_answer_ms": 14.961,
         "server_throughput_mbps": 17942.347169306864,
-        "client_query_gen_ms": 13.259
+        "client_query_gen_ms": 13.259,
+        "preprocessing_throughput_mbps": 18.382723922299782
       },
-      "notes": "Measured on ryzen9900x-8t-32g. Variant \"isimplepir-default-q-setup-owned\"; client_query_gen_ms includes decode. security_bits=128 is nominal — confirm against scheme params."
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. Raven's own iSimplePIR crate (eprint 2026/030), driven through the b2-isimplepir bench binary. Kept as the hint-based contrast to the InsPIRe implementations."
     },
     {
       "scheme": "iSimplePIR",
       "implementation": {
-        "name": "raven-isimplepir",
+        "name": "isimplepir-raven",
         "repo": "https://github.com/hisoka-io/raven",
         "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
-        "language": "rust"
-      },
-      "params": {
-        "num_records": 4194304,
-        "record_bytes": 32,
-        "security_bits": 128,
-        "threads": 4,
-        "scheme_params": {
-          "variant": "isimplepir-default-q-setup-owned",
-          "throughput_qps_per_core": 23.016654851450507,
-          "measured_queries": 5
-        }
-      },
-      "environment": {
-        "cpu_model": "Intel(R) Xeon(R) Processor @ 2.80GHz",
-        "cpu_features": [
+        "backend": [
           "avx2"
         ],
-        "logical_cores": 4,
-        "os": "linux",
-        "timestamp": "2026-07-27T18:35:56.376Z",
-        "runner_version": "raven-bench@5a899b5dc60c"
-      },
-      "metrics": {
-        "query_bytes": 43700,
-        "response_bytes": 43700,
-        "offline_hint_bytes": 44740640,
-        "preprocessing_ms": 41236.069968,
-        "server_answer_ms": 13.585,
-        "server_throughput_mbps": 9879.847478836951,
-        "client_query_gen_ms": 23.833
-      },
-      "notes": "Measured on dev-vm-xeon-4t (NOT home-staker reference). Variant \"isimplepir-default-q-setup-owned\"; client_query_gen_ms includes decode. security_bits=128 is nominal — confirm against scheme params."
-    },
-    {
-      "scheme": "iSimplePIR",
-      "implementation": {
-        "name": "raven-isimplepir",
-        "repo": "https://github.com/hisoka-io/raven",
-        "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
         "language": "rust"
       },
       "params": {
@@ -896,16 +506,20 @@
         "preprocessing_ms": 7310.928736,
         "server_answer_ms": 8.93,
         "server_throughput_mbps": 15029.980739081746,
-        "client_query_gen_ms": 11.59
+        "client_query_gen_ms": 11.59,
+        "preprocessing_throughput_mbps": 18.358505854269072
       },
-      "notes": "Measured on ryzen9900x-8t-32g. Variant \"isimplepir-default-q-setup-owned\"; client_query_gen_ms includes decode. security_bits=128 is nominal — confirm against scheme params."
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. Raven's own iSimplePIR crate (eprint 2026/030), driven through the b2-isimplepir bench binary. Kept as the hint-based contrast to the InsPIRe implementations."
     },
     {
       "scheme": "iSimplePIR",
       "implementation": {
-        "name": "raven-isimplepir",
+        "name": "isimplepir-raven",
         "repo": "https://github.com/hisoka-io/raven",
         "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+        "backend": [
+          "avx2"
+        ],
         "language": "rust"
       },
       "params": {
@@ -937,16 +551,20 @@
         "preprocessing_ms": 29309.900575,
         "server_answer_ms": 28.493,
         "server_throughput_mbps": 18842.20376934686,
-        "client_query_gen_ms": 20.731
+        "client_query_gen_ms": 20.731,
+        "preprocessing_throughput_mbps": 18.317049920596666
       },
-      "notes": "Measured on ryzen9900x-8t-32g. Variant \"isimplepir-default-q-setup-owned\"; client_query_gen_ms includes decode. security_bits=128 is nominal — confirm against scheme params."
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. Raven's own iSimplePIR crate (eprint 2026/030), driven through the b2-isimplepir bench binary. Kept as the hint-based contrast to the InsPIRe implementations."
     },
     {
       "scheme": "iSimplePIR",
       "implementation": {
-        "name": "raven-isimplepir",
+        "name": "isimplepir-raven",
         "repo": "https://github.com/hisoka-io/raven",
         "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+        "backend": [
+          "avx2"
+        ],
         "language": "rust"
       },
       "params": {
@@ -978,16 +596,20 @@
         "preprocessing_ms": 264162.487696,
         "server_answer_ms": 243.173,
         "server_throughput_mbps": 17662.188219909283,
-        "client_query_gen_ms": 62.063
+        "client_query_gen_ms": 62.063,
+        "preprocessing_throughput_mbps": 16.258808483597704
       },
-      "notes": "Measured on ryzen9900x-8t-32g. Variant \"isimplepir-default-q-setup-owned\"; client_query_gen_ms includes decode. security_bits=128 is nominal — confirm against scheme params."
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. Raven's own iSimplePIR crate (eprint 2026/030), driven through the b2-isimplepir bench binary. Kept as the hint-based contrast to the InsPIRe implementations."
     },
     {
       "scheme": "iSimplePIR",
       "implementation": {
-        "name": "raven-isimplepir",
+        "name": "isimplepir-raven",
         "repo": "https://github.com/hisoka-io/raven",
         "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+        "backend": [
+          "avx2"
+        ],
         "language": "rust"
       },
       "params": {
@@ -1019,16 +641,20 @@
         "preprocessing_ms": 131551.819314,
         "server_answer_ms": 121.895,
         "server_throughput_mbps": 17617.487575372248,
-        "client_query_gen_ms": 39.736
+        "client_query_gen_ms": 39.736,
+        "preprocessing_throughput_mbps": 16.324241346097907
       },
-      "notes": "Measured on ryzen9900x-8t-32g. Variant \"isimplepir-default-q-setup-owned\"; client_query_gen_ms includes decode. security_bits=128 is nominal — confirm against scheme params."
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. Raven's own iSimplePIR crate (eprint 2026/030), driven through the b2-isimplepir bench binary. Kept as the hint-based contrast to the InsPIRe implementations."
     },
     {
       "scheme": "iSimplePIR",
       "implementation": {
-        "name": "raven-isimplepir",
+        "name": "isimplepir-raven",
         "repo": "https://github.com/hisoka-io/raven",
         "commit": "5a899b5dc60c079af5d3914d67c93b9b72859ec9",
+        "backend": [
+          "avx2"
+        ],
         "language": "rust"
       },
       "params": {
@@ -1060,9 +686,10 @@
         "preprocessing_ms": 718930.377822,
         "server_answer_ms": 4892.141,
         "server_throughput_mbps": 1755.8640668778762,
-        "client_query_gen_ms": 277.707
+        "client_query_gen_ms": 277.707,
+        "preprocessing_throughput_mbps": 11.948214816048269
       },
-      "notes": "Measured on ryzen9900x-8t-32g. Variant \"isimplepir-default-q-setup-owned\"; client_query_gen_ms includes decode. security_bits=128 is nominal — confirm against scheme params."
+      "notes": "Measured on ryzen9900x-8t-32g. security_bits=128 is claimed by the implementation and is published as a label only — it is not verified here. Scheme params are whatever this implementation chose; compare across implementations with that in mind. Raven's own iSimplePIR crate (eprint 2026/030), driven through the b2-isimplepir bench binary. Kept as the hint-based contrast to the InsPIRe implementations."
     }
   ]
 }

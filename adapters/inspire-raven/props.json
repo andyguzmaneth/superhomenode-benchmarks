@@ -1,0 +1,14 @@
+{
+  "scheme": "InsPIRe",
+  "implementation": "inspire-raven",
+  "repo": "https://github.com/hisoka-io/inspire-rs",
+  "commit": "3be3cc7d56db9535ab93101864c5468c654dbddf",
+  "forked_from": "https://github.com/igor53627/inspire-rs",
+  "language": "rust",
+  "backend": ["avx2", "rayon"],
+  "variant": "TwoPacking + InspiRING",
+  "security_bits_claimed": 128,
+  "online_scans_full_db": false,
+  "checkout": "raven",
+  "notes": "Raven's fork, driven through raven's b1-inspire bench binary. UPSTREAM.md documents 6 local patches, including replacing upstream's under-provisioned 2-CRT moduli in secure_128_d{2048,4096} with a single-prime q, and a CRS shrink from ~34.9 to ~1.1 MiB."
+}

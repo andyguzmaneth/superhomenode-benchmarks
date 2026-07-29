@@ -1,0 +1,16 @@
+{
+  "label": "ryzen9900x-8t-32g",
+  "frozen": "2026-07-29",
+  "why": "Every number published here comes from this one configuration. Implementations are the axis under comparison, so the machine must not move: a second host would make cross-implementation gaps unreadable.",
+  "host": "Proxmox VM 100 on a Ryzen 9 9900X / 64 GB DDR5-6000 homelab. Reshaped for benchmarking: 8 cores pinned via `qm set 100 --affinity 0-7`, `--cpu host` (exposes AVX-512 on Zen 5), `--memory 32768`.",
+  "cpu_model": "AMD Ryzen 9 9900X 12-Core Processor",
+  "logical_cores": 8,
+  "threads": 8,
+  "ram_bytes": 34359738368,
+  "cpu_features": ["avx2", "avx512f"],
+  "os": "linux",
+  "tolerance": {
+    "ram_bytes_pct": 5,
+    "note": "The guest reports slightly less RAM than provisioned; anything outside this band is a different machine and the driver refuses to label it as the reference."
+  }
+}

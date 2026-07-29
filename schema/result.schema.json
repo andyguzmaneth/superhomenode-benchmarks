@@ -17,9 +17,11 @@
       "required": ["name"],
       "additionalProperties": false,
       "properties": {
-        "name": { "type": "string", "description": "e.g. 'poulpy', 'hisoka-raven', 'paper-ref', 'mock-inspire'." },
+        "name": { "type": "string", "description": "Adapter id, e.g. 'inspire-raven', 'inspire-poulpy'." },
         "repo": { "type": "string", "description": "Source repository URL." },
         "commit": { "type": "string", "description": "Exact commit hash benchmarked (reproducibility)." },
+        "forked_from": { "type": "string", "description": "Upstream this implementation descends from. Omit for independent implementations; drives the lineage column on the site." },
+        "backend": { "type": "array", "items": { "type": "string" }, "description": "Acceleration this build actually used, e.g. ['avx512f','blas'] or ['avx2','rayon']. Two rows with different backends are not the same measurement." },
         "language": { "type": "string" }
       }
     },
@@ -65,10 +67,25 @@
         "offline_hint_bytes": { "type": "integer", "description": "One-time offline download (hint/params), 0 for silent-preprocessing schemes." },
         "preprocessing_ms": { "type": "number", "description": "One-time server preprocessing time." },
         "server_answer_ms": { "type": "number", "description": "Per-query server compute time." },
-        "server_throughput_mbps": { "type": "number", "description": "Database bytes processed / server_answer_ms, in MB/s." },
+        "server_throughput_mbps": { "type": "number", "description": "Online throughput: database bytes / server_answer_ms, in MB/s. Present ONLY for implementations whose online answer scans the whole database (props.json online_scans_full_db). Omitted for silent-preprocessing schemes, where the online phase touches preprocessed state and this ratio would exceed DRAM bandwidth." },
+        "preprocessing_throughput_mbps": { "type": "number", "description": "Offline throughput: database bytes / preprocessing_ms, in MB/s. Well-defined for every implementation, since the offline phase touches the whole database once." },
         "client_query_gen_ms": { "type": "number", "description": "Per-query client query-generation time." },
         "client_decode_ms": { "type": "number", "description": "Per-query client response-decode time." },
         "peak_memory_bytes": { "type": "integer", "description": "Peak server RSS during answer." }
+      }
+    },
+    "metrics_spread": {
+      "type": "object",
+      "description": "Observed variation for the metrics above, where the implementation exposed it. Keyed by the same metric names. Kept separate so the headline values in `metrics` stay scalar.",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "min": { "type": "number" },
+          "max": { "type": "number" },
+          "p95": { "type": "number" },
+          "n": { "type": "integer", "description": "How many independent measurements the spread is over." }
+        }
       }
     },
     "notes": { "type": "string", "description": "Free-form caveats, e.g. 'single-threaded only', 'estimated from paper Table 3'." }

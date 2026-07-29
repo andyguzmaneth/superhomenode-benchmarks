@@ -1,73 +1,90 @@
 # superhomenode-benchmarks
 
-Reproducible, apples-to-apples benchmarks for **PIR (Private Information Retrieval)**
-schemes on **home-staker hardware**, over databases shaped like Ethereum state —
-presented as an interactive explorer.
+Reproducible, apples-to-apples **performance** benchmarks for PIR (Private
+Information Retrieval) — comparing **different implementations of the same
+scheme** against each other, on **one frozen home-staker-class machine**, over
+databases shaped like Ethereum state. Presented as an interactive explorer.
 
-Presentation model: [ethproofs.org/csp-benchmarks](https://ethproofs.org/csp-benchmarks)
-(per-metric comparison charts, a scheme-properties matrix, an all-results table, and
-an explicit host-machine block). Reference hardware follows the staking tier of
+Presentation model: [ethproofs.org/csp-benchmarks](https://ethproofs.org/csp-benchmarks).
+Reference hardware follows the staking tier of
 [ethereum.org/run-a-node](https://ethereum.org/en/run-a-node/).
 
 The project is **data-first**: every benchmark run emits one standardized JSON
-record. The harness produces those records; the site only ever *reads* them. This
-keeps the presentation reproducible and means the website never depends on being
-able to build every cryptographic library.
+record. The harness produces those records; the site only ever *reads* them. The
+website therefore never depends on being able to build every cryptographic
+library.
+
+## Scope
+
+This is a **performance** benchmark, and deliberately nothing else:
+
+- **In scope:** per-query server latency, preprocessing time, upload/download
+  sizes, offline hint size, peak memory, throughput where it is well-defined.
+- **Out of scope:** correctness and security verification. `security_bits` is
+  published as a **claim made by the implementation**, never as a checked fact.
+  Where two implementations of one scheme chose different parameters, we record
+  what each actually ran and leave the interpretation to the reader.
+- **One machine, frozen.** See [`machines/reference.json`](machines/reference.json).
+  A row that cannot be produced on that machine is not published — including
+  cells an implementation cannot fit in 32 GB, which is itself a result.
 
 ## Layout
 
 ```
-schema/            JSON Schema for a benchmark result record (the contract)
-harness/           Rust workspace that runs implementations and emits records
-  pir-bench-core/    result types + the `PirImplementation` trait
-  pir-bench-runner/  CLI that drives an adapter and writes results/
-implementations/   external PIR implementations, pinned as git submodules
-results/           committed result records — the single source of truth
-site/              static interactive explorer, built from results/
-docs/              methodology + per-scheme notes
+machines/reference.json  the frozen host; the driver refuses to mislabel any other
+adapters/                one directory per implementation (the contract: adapters/README.md)
+  _lib/                    shared translators
+  inspire-raven/           props.json + setup.sh + bench.sh
+  isimplepir-raven/
+schema/                  JSON Schema for a result record (the contract)
+harness/                 import-adapter-report.mjs — canonical report -> results/
+implementations/         upstream checkouts, pinned by each adapter (not committed)
+results/                 committed result records — the single source of truth
+site/                    static explorer, built from results/
+docs/                    methodology + per-scheme notes
 ```
 
-## Status
+## Implementations
 
-Project #1: compare PIR **schemes** on one home-staker-class machine over a database
-shaped like a subset of Ethereum state (full plan + the reference-machine decision in
-[`docs/benchmark-plan.md`](docs/benchmark-plan.md)).
+| Implementation | Scheme | Source | Lineage | Status |
+| --- | --- | --- | --- | --- |
+| `inspire-raven` | InsPIRe | [hisoka-io/inspire-rs](https://github.com/hisoka-io/inspire-rs) via raven's `b1-inspire` | fork of the (now deleted) `igor53627/inspire-rs` | ✅ 7 cells |
+| `isimplepir-raven` | iSimplePIR | [hisoka-io/raven](https://github.com/hisoka-io/raven) `crates/isimplepir` | independent | ✅ 8 cells |
+| `inspire-upstream` | InsPIRe | crates.io `inspire` 0.2.0 — the only surviving copy of the deleted upstream | the pre-fork baseline | ⏭ next |
+| `inspire-poulpy` | InsPIRe + InsPIRe² | [poulpy-fhe/poulpy-pir](https://github.com/poulpy-fhe/poulpy-pir) | independent | ⏭ next |
+| `inspire-lianghuiqiang9` | InsPIRe | [lianghuiqiang9/inspire-rs](https://github.com/lianghuiqiang9/inspire-rs) | fork of the same deleted upstream | ⏭ next |
 
-| Scheme | Source | Status |
-| --- | --- | --- |
-| **iSimplePIR** (eprint 2026/030) | [hisoka-io/raven](https://github.com/hisoka-io) `crates/isimplepir` | ✅ real numbers (dev VM, 5 cells) |
-| **InsPIRe** (eprint 2025/1352) | [hisoka-io/inspire-rs](https://github.com/hisoka-io) (raven vendors a fork) | ✅ real numbers (dev VM, 5 cells) |
-| Spiral / Respire / YPIR | TBD | later |
-
-All current rows are labeled **dev VM (NOT reference)** — authoritative numbers come
-from the reference machine (see [`docs/reference-machine.md`](docs/reference-machine.md)).
-
-We don't reimplement the crypto: Hisoka's `raven` bench binaries emit a `BenchReport`
-JSON per (scheme, cell); [`harness/import-bench-report.mjs`](harness/import-bench-report.mjs)
-normalizes those into our schema. `harness/`'s `mock-*` adapters remain so the pipeline
-runs with zero external code, and produce clearly-badged placeholder rows for InsPIRe
-until it's wired.
-
-> **Note:** Poulpy has **no** InsPIRe implementation — it's the FHE backend library
-> only. See `docs/schemes/inspire.md`.
+We don't reimplement the crypto. Each adapter builds its upstream at a pinned
+commit and translates that project's own output into one canonical report; the
+driver adds machine identity and peak RSS so all implementations are measured
+identically.
 
 ## Quick start
 
 ```bash
-# 1. run the mock adapter to produce a result record
-cd harness
-cargo run -p pir-bench-runner -- --adapter mock-inspire --records 1048576 --record-bytes 256
+# wire up / smoke-test one adapter (one cell, not published)
+scripts/bench.sh --impl inspire-raven --profile smoke
 
-# 2. regenerate the site's data bundle from results/
-node ../site/build-data.mjs
+# the published grid for one implementation
+scripts/bench.sh --impl inspire-raven
 
-# 3. serve the explorer
-cd ../site && python3 -m http.server 8080   # open http://localhost:8080
+# every adapter, full grid
+scripts/run-suite.sh
+
+# serve the explorer
+cd site && python3 -m http.server 8080   # http://localhost:8080
 ```
+
+`scripts/bench.sh` refuses to write rows unless it is running on the frozen
+reference machine. Use `--allow-machine-mismatch` for throwaway runs; those rows
+are labelled `…-UNVERIFIED`.
 
 ## Fairness rules (see `docs/methodology.md`)
 
-Numbers are only comparable when the row records **how** they were produced. Every
-record therefore carries the database shape (`N`, record size), security level,
-thread count, and the exact CPU / features it ran on. One-time **preprocessing** is
-always reported separately from **per-query** cost.
+Numbers are only comparable when the row records **how** they were produced.
+Every record carries the database shape (`N`, record size), the claimed security
+level, thread count, the exact CPU/features, the implementation's commit, and
+its lineage. One-time **preprocessing** is always reported separately from
+**per-query** cost. Online throughput is reported only for implementations whose
+online phase actually scans the database — for silent-preprocessing schemes that
+ratio is meaningless and is omitted rather than faked.

@@ -36,12 +36,25 @@ over HTTPS; `respond()`/`extract()`, variants `no-packing` / `two-packing` /
 `crates/inspire` submodule and drives it via `benches/b1-bench` (`b1-inspire`), which
 emits the same `BenchReport` JSON as the iSimplePIR bench.
 
-Consequence: "paper reference" and "Hisoka's InsPIRe" are the **same lineage**, not
-two independent codebases. The project was therefore reframed (see
-`docs/benchmark-plan.md`) to a **cross-scheme** comparison on Ethereum-shaped data.
+### Correction (2026-07-29)
 
-**Next step:** run `b1-inspire` on the reference machine and import via
-`harness/import-bench-report.mjs --scheme InsPIRe --impl raven-inspire`.
+The paragraph above is **out of date on two counts**, both re-checked directly:
+
+1. **Poulpy now has an InsPIRe implementation.** `poulpy-fhe/poulpy-pir` (created
+   May 2026, actively developed) implements both InsPIRe and InsPIRe² on Poulpy,
+   with AVX-512, a pluggable BLAS GEMM, and presets reconstructed from the paper's
+   Table 2. It is an independent codebase, not a fork of `inspire-rs`.
+2. **The upstream `igor53627/inspire-rs` has been deleted from GitHub** (404). The
+   only surviving copy of that pre-fork baseline is crates.io `inspire` 0.2.0.
+
+So there *are* multiple independent lineages, and the project is now an
+**implementation** comparison — see `docs/benchmark-plan.md` for the roster.
+
+Reproduce Raven's implementation with:
+
+```bash
+scripts/bench.sh --impl inspire-raven --cells "24:32"
+```
 
 ## Shared parameter grid (starting point)
 

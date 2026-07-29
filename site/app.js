@@ -64,7 +64,7 @@ async function load() {
   }
   state.records = bundle.records || [];
   if (!state.records.length) {
-    el("status").textContent = "No records yet. Produce some with scripts/bench-cell.sh, then rebuild data.";
+    el("status").textContent = "No records yet. Produce some with scripts/bench.sh --impl <id>, then rebuild data.";
     return;
   }
   el("status").hidden = true;
