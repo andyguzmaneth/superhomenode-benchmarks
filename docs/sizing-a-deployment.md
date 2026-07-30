@@ -88,13 +88,8 @@ dedicated machine** — it leaves ~3 GiB, which will not co-exist with a node.
 
 Three real costs sit outside every figure above:
 
-1. **Keyword lookup.** PIR retrieves by position. Going from an address to an
-   index needs `keccak256(abi.encode(addr, slot))` and then a minimal perfect
-   hash over the key set (poulpy has a `keyword` module; raven has
-   `binary-fuse-filter`). The MPHF parameters are a client download, and an MPHF
-   is not incrementally updatable — adding one key can re-shuffle every position,
-   so clients re-download at index-rebuild cadence. **This may exceed the
-   per-query cost entirely and is not measured yet.**
+1. ~~**Keyword lookup.**~~ **Measured — see below. It is ~4% of traffic, not the
+   dominant cost I expected.**
 2. **Integrity.** PIR gives privacy, not authenticity — a server can return
    garbage. The fix is a Merkle proof against a state root the client already
    trusts from its consensus client (not a ZKP, which would be far more
@@ -102,6 +97,44 @@ Three real costs sit outside every figure above:
    is where these schemes get expensive.
 3. **Freshness.** A server may return a valid but stale record. The root must be
    pinned to a recent block the client knows independently.
+
+## The keyword layer costs ~4% of traffic
+
+PIR retrieves by position, so a real lookup needs `address → index`. poulpy's
+`keyword` module does this with a minimal perfect hash (`ptr_hash`), and each
+32-byte payload stores an 8-byte key tag plus a 24-byte value so an out-of-set
+address is rejected rather than returning someone else's balance (false-accept
+probability 2⁻⁶⁴; balances must fit 192 bits, which is ~10³⁹ tokens at 18
+decimals).
+
+Measured with
+[`keyword-sizing`](../adapters/inspire-poulpy/small-driver/src/bin/keyword-sizing.rs),
+matching poulpy's documented 2.116 bits/key:
+
+| Keys | MPHF blob | Build |
+| --- | --- | --- |
+| 2²⁰ | 0.28 MB | 0.20 s |
+| 2²³ | 2.22 MB | 2.6 s |
+| 2²⁵ | 8.87 MB | 8.1 s |
+
+Re-deriving the MPHF permutes every index, so it forces a full database rewrite
+and a full client re-download. `KeywordDirectory` defers that: an append-only
+`key → index` delta consulted before the MPHF, with re-derivation triggered at
+`DEFAULT_REBUILD_THRESHOLD` = 400,000 new keys.
+
+At 2²³ keys, 10k new holders/day, 600 lookups/month at 289 KB:
+
+| | Per month |
+| --- | --- |
+| MPHF re-download (every 40 days) | 1.66 MB |
+| Delta tail (20 B/key) | 6.00 MB |
+| **Keyword layer** | **7.66 MB (4.1%)** |
+| PIR queries | 177.74 MB |
+
+The cost is driven by **holder growth rate**, not index size — the delta tail is
+3.6× the MPHF re-download. At 100k new holders/day it would be 60 MB/month
+(~25%). Index size barely matters: going from 1M to 33M keys moves the total
+from 6.2 to 12.7 MB.
 
 ## Preprocessing is not a constraint
 
