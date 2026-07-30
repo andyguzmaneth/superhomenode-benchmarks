@@ -71,6 +71,15 @@ why its anonymity set is 2048 records rather than N. `inspire-poulpy`,
 `inspire2-poulpy` and `isimplepir-raven` answer over the whole database. Every
 row carries `implementation.online_work_scope`; see `docs/methodology.md` §6.
 
+## Sizing a real deployment
+
+[`docs/sizing-a-deployment.md`](docs/sizing-a-deployment.md) turns the grid into
+a configuration: which construction to pick at which scale (it inverts — memory
+binds at 4 GiB, bandwidth at 240 MiB), the `rows`/`cols` design rule, and a
+worked single-contract config that co-exists with an execution and consensus
+client. It is also explicit about the three costs none of these numbers include:
+keyword lookup, integrity proofs, and freshness.
+
 ## Quick start
 
 ```bash
